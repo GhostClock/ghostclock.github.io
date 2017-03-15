@@ -84,15 +84,19 @@
 
 
 
-<meta name="description" content="穷折腾 二次元 Mac Win10 iOS Java">
-<meta property="og:type" content="website">
-<meta property="og:title" content="GC的笔记本">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="swift 3 中代理和闭包(Block)的用法其实Swift中不管是代理还是闭包，个人感觉和OC都差不多
+代理，闭包:1.新建一个类，使其继承自UIView123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960import UIK">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swift3中代理和闭包的用法">
+<meta property="og:url" content="http://yoursite.com/2017/03/15/swift3中代理和闭包的用法/index.html">
 <meta property="og:site_name" content="GC的笔记本">
-<meta property="og:description" content="穷折腾 二次元 Mac Win10 iOS Java">
+<meta property="og:description" content="swift 3 中代理和闭包(Block)的用法其实Swift中不管是代理还是闭包，个人感觉和OC都差不多
+代理，闭包:1.新建一个类，使其继承自UIView123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960import UIK">
+<meta property="og:updated_time" content="2017-03-15T14:21:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GC的笔记本">
-<meta name="twitter:description" content="穷折腾 二次元 Mac Win10 iOS Java">
+<meta name="twitter:title" content="swift3中代理和闭包的用法">
+<meta name="twitter:description" content="swift 3 中代理和闭包(Block)的用法其实Swift中不管是代理还是闭包，个人感觉和OC都差不多
+代理，闭包:1.新建一个类，使其继承自UIView123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960import UIK">
 
 
 
@@ -110,7 +114,7 @@
   };
 </script>
 
-  <title> GC的笔记本 </title>
+  <title> swift3中代理和闭包的用法 | GC的笔记本 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans,zh-tw,en,default">
@@ -131,9 +135,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -210,9 +212,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -232,10 +234,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/03/15/swift3中代理和闭包的用法/" itemprop="url">
-                  swift3中代理和闭包的用法
-                </a>
+                swift3中代理和闭包的用法
               
             
           </h1>
@@ -275,22 +274,23 @@
       
 
       
-        
-          
-            <h1 id="swift-3-中代理和闭包-Block-的用法"><a href="#swift-3-中代理和闭包-Block-的用法" class="headerlink" title="swift 3 中代理和闭包(Block)的用法"></a>swift 3 中代理和闭包(Block)的用法</h1><p>其实Swift中不管是代理还是闭包，个人感觉和OC都差不多</p>
+        <h1 id="swift-3-中代理和闭包-Block-的用法"><a href="#swift-3-中代理和闭包-Block-的用法" class="headerlink" title="swift 3 中代理和闭包(Block)的用法"></a>swift 3 中代理和闭包(Block)的用法</h1><p>其实Swift中不管是代理还是闭包，个人感觉和OC都差不多</p>
 <h3 id="代理，闭包"><a href="#代理，闭包" class="headerlink" title="代理，闭包:"></a>代理，闭包:</h3><h4 id="1-新建一个类，使其继承自UIView"><a href="#1-新建一个类，使其继承自UIView" class="headerlink" title="1.新建一个类，使其继承自UIView"></a>1.新建一个类，使其继承自UIView</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">import UIKit</div><div class="line">//定义一个代理</div><div class="line">protocol MainViewDelegate &#123;</div><div class="line">    func getTextFieldString(string:String);</div><div class="line">&#125;</div><div class="line">//定义一个block</div><div class="line">typealias GetTextFieldBlock = (_ textField:String) -&gt; Void</div><div class="line"></div><div class="line">class MainView: UIView &#123;</div><div class="line">    var delegate : MainViewDelegate!</div><div class="line">    var textField : UITextField!</div><div class="line">    var textFieldBlock : GetTextFieldBlock!</div><div class="line">    </div><div class="line">    </div><div class="line">    func initWithFrame(frame:CGRect) -&gt; MainView &#123;</div><div class="line">        self.frame = frame</div><div class="line">        CreateUI()</div><div class="line">        return self</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    func CreateUI() -&gt; Void &#123;</div><div class="line">        let button1 = UIButton();</div><div class="line">        button1.addTarget(self, action:#selector(buttonAction1), for: UIControlEvents.touchUpInside);</div><div class="line">        button1.frame = CGRect(x:10,y:100,width:100,height:50)</div><div class="line">        button1.backgroundColor = UIColor.red</div><div class="line">        self.addSubview(button1)</div><div class="line">        </div><div class="line">        textField = UITextField()</div><div class="line">        textField.frame = CGRect(x:10,y:200,width:100,height:50)</div><div class="line">        textField.backgroundColor = UIColor.white</div><div class="line">        textField.textColor = UIColor.purple</div><div class="line">        self.addSubview(textField)</div><div class="line">        </div><div class="line">        </div><div class="line">        let button2 = UIButton()</div><div class="line">        button2.addTarget(self, action: #selector(buttonAction2), for: .touchUpInside)</div><div class="line">        button2.frame = CGRect(x:10,y:300,width:100,height:50)</div><div class="line">        button2.backgroundColor = UIColor.darkGray</div><div class="line">        self.addSubview(button2)</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    func buttonAction1()&#123;</div><div class="line">        delegate.getTextFieldString(string: textField.text!)//传值</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    func buttonAction2() &#123;</div><div class="line">        if textFieldBlock != nil &#123;</div><div class="line">            textFieldBlock(textField.text!)//传值</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    //该方法在外部使用</div><div class="line">    func getStringAction(_ getStringBlock:@escaping GetTextFieldBlock) &#123;</div><div class="line">        textFieldBlock = getStringBlock</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    override func touchesBegan(_ touches: Set&lt;UITouch&gt;, with event: UIEvent?) &#123;</div><div class="line">        self.endEditing(true)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="2-在外部调用时："><a href="#2-在外部调用时：" class="headerlink" title="2.在外部调用时："></a>2.在外部调用时：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">import UIKit</div><div class="line"></div><div class="line">class ViewController: UIViewController,MainViewDelegate &#123;//遵循代理</div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        super.viewDidLoad()</div><div class="line">        // Do any additional setup after loading the view, typically from a nib.</div><div class="line">        view.backgroundColor = UIColor.orange;</div><div class="line">        createUI()</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    func createUI() &#123;</div><div class="line">        let mainView = MainView().initWithFrame(frame: self.view.bounds)</div><div class="line">        mainView.delegate = self</div><div class="line">        self.view.addSubview(mainView)</div><div class="line">        </div><div class="line">        mainView.getStringAction &#123; (string) in</div><div class="line">            print(&quot;+++ \(string) +++&quot;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    func getTextFieldString(string: String) &#123;</div><div class="line">        print(&quot;=== \(string) ====&quot;)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">   </div><div class="line">    override func didReceiveMemoryWarning() &#123;</div><div class="line">        super.didReceiveMemoryWarning()</div><div class="line">        // Dispose of any resources that can be recreated.</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
-          
+      
+    </div>
+
+    <div>
+      
         
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
@@ -298,239 +298,32 @@
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/08/19/test/" rel="next" title="Test">
+                <i class="fa fa-chevron-left"></i> Test
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/08/19/test/" itemprop="url">
-                  Test
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-19T20:53:00+08:00" content="2016-08-19">
-              2016-08-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Test/" itemprop="url" rel="index">
-                    <span itemprop="name">Test</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>经过两天的折腾，博客终于搭建起来了</p>
-<h2 id="两个-号的是大标题"><a href="#两个-号的是大标题" class="headerlink" title="两个#号的是大标题"></a>两个#号的是大标题</h2><p>我是大标题下面的数据</p>
-<h3 id="三个-号的是次标题"><a href="#三个-号的是次标题" class="headerlink" title="三个#号的是次标题"></a>三个#号的是次标题</h3><p>我是次标题下面的数据</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ 这是一段代码</div></pre></td></tr></table></figure>
-<h3 id="超链接1"><a href="#超链接1" class="headerlink" title="超链接1"></a>超链接1</h3><p>这是一个超链接:<a href="https://www.google.com.hk/#hl=zh-CN&amp;gws_rd=ssl" target="_blank" rel="external">Google</a></p>
-<h3 id="超链接2"><a href="#超链接2" class="headerlink" title="超链接2"></a>超链接2</h3><p>这也是一个超链接:<a href="https://github.com/GhostClock?tab=overview&amp;from=2016-08-19" target="_blank" rel="external">GhostClock</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/19/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-19T18:59:07+08:00" content="2016-08-19">
-              2016-08-19
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
@@ -538,6 +331,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -557,8 +354,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://img1.gtimg.com/comic/pics/hv1/70/76/1989/129354175.jpg"
@@ -601,6 +407,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#swift-3-中代理和闭包-Block-的用法"><span class="nav-number">1.</span> <span class="nav-text">swift 3 中代理和闭包(Block)的用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代理，闭包"><span class="nav-number">1.0.1.</span> <span class="nav-text">代理，闭包:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-新建一个类，使其继承自UIView"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">1.新建一个类，使其继承自UIView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-在外部调用时："><span class="nav-number">1.0.1.2.</span> <span class="nav-text">2.在外部调用时：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -697,6 +514,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
