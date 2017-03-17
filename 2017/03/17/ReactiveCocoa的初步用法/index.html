@@ -1,0 +1,557 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ReactiveCocoa," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="ReactiveCocoa的初步用法1.创建UI便于测试12345678910111213141516171819202122232425262728293031323334353637383940//创建一个UITextFieldUITextField *textFild = [[UITextField alloc]init];textFild.backgroundColor = [UIColo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactiveCocoa的初步用法">
+<meta property="og:url" content="http://yoursite.com/2017/03/17/ReactiveCocoa的初步用法/index.html">
+<meta property="og:site_name" content="GC的笔记本">
+<meta property="og:description" content="ReactiveCocoa的初步用法1.创建UI便于测试12345678910111213141516171819202122232425262728293031323334353637383940//创建一个UITextFieldUITextField *textFild = [[UITextField alloc]init];textFild.backgroundColor = [UIColo">
+<meta property="og:updated_time" content="2017-03-17T12:49:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReactiveCocoa的初步用法">
+<meta name="twitter:description" content="ReactiveCocoa的初步用法1.创建UI便于测试12345678910111213141516171819202122232425262728293031323334353637383940//创建一个UITextFieldUITextField *textFild = [[UITextField alloc]init];textFild.backgroundColor = [UIColo">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> ReactiveCocoa的初步用法 | GC的笔记本 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans,zh-tw,en,default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">GC的笔记本</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">😄</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ReactiveCocoa的初步用法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-17T20:41:28+08:00" content="2017-03-17">
+              2017-03-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="ReactiveCocoa的初步用法"><a href="#ReactiveCocoa的初步用法" class="headerlink" title="ReactiveCocoa的初步用法"></a>ReactiveCocoa的初步用法</h1><h2 id="1-创建UI便于测试"><a href="#1-创建UI便于测试" class="headerlink" title="1.创建UI便于测试"></a>1.创建UI便于测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">//创建一个UITextField</div><div class="line">UITextField *textFild = [[UITextField alloc]init];</div><div class="line">textFild.backgroundColor = [UIColor orangeColor];</div><div class="line">[self addSubview:textFild];</div><div class="line">[textFild mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">    make.left.mas_equalTo(10);</div><div class="line">    make.top.mas_equalTo(64 + 5);</div><div class="line">    make.width.mas_equalTo(100);</div><div class="line">    make.height.mas_equalTo(50);</div><div class="line">&#125;];</div><div class="line">//创建一个UIButton</div><div class="line">UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];</div><div class="line">button.backgroundColor = [UIColor redColor];</div><div class="line">[self addSubview:button];</div><div class="line">[button mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">    make.top.equalTo(textFild.mas_bottom).offset(5);</div><div class="line">    make.left.equalTo(textFild);</div><div class="line">    make.width.height.mas_equalTo(50);</div><div class="line">&#125;];</div><div class="line">//创建一个UIView</div><div class="line">UIView *view = [[UIView alloc]init];</div><div class="line">view.backgroundColor = [UIColor brownColor];</div><div class="line">[self addSubview:view];</div><div class="line">[view mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">     make.top.equalTo(button.mas_bottom).offset(5);</div><div class="line">     make.left.equalTo(button);</div><div class="line">     make.width.height.mas_equalTo(50);</div><div class="line">&#125;];</div><div class="line">//创建一个UIScrollView</div><div class="line">UIScrollView *sc = [[UIScrollView alloc]init];</div><div class="line">[self addSubview:sc];</div><div class="line">[sc mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">    make.top.equalTo(textFild.mas_top);</div><div class="line">    make.width.equalTo(@50);</div><div class="line">    make.height.equalTo(@200);</div><div class="line">     make.right.equalTo(@(-50));</div><div class="line">&#125;];</div><div class="line">sc.contentSize = CGSizeMake(50, 800);</div><div class="line">sc.backgroundColor = [UIColor redColor];</div><div class="line">sc.delegate = self;</div></pre></td></tr></table></figure>
+<h2 id="2-监听textField的触发事件"><a href="#2-监听textField的触发事件" class="headerlink" title="2.监听textField的触发事件"></a>2.监听textField的触发事件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[[textFild rac_signalForControlEvents:UIControlEventEditingChanged] subscribeNext:^(__kindof UIControl * _Nullable x) &#123;</div><div class="line">        NSLog(@&quot;----&quot;);</div><div class="line">&#125;];</div><div class="line">    </div><div class="line">[textFild.rac_textSignal subscribeNext:^(NSString * _Nullable x) &#123;</div><div class="line">//        NSLog(@&quot;=======&quot;);</div><div class="line">     NSLog(@&quot;%@&quot;,textFild.text);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h2 id="3-监听Button的点击事件"><a href="#3-监听Button的点击事件" class="headerlink" title="3.监听Button的点击事件"></a>3.监听Button的点击事件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[[button rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) &#123;</div><div class="line">        NSLog(@&quot;clicking&quot;);</div><div class="line">        if ([_delegate respondsToSelector:@selector(getClickButtonPostTextFieldText:)]) &#123;</div><div class="line">            [_delegate getClickButtonPostTextFieldText:textFild.text];</div><div class="line">        &#125;</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h2 id="4-动态修改UIButton的背景颜色"><a href="#4-动态修改UIButton的背景颜色" class="headerlink" title="4.动态修改UIButton的背景颜色"></a>4.动态修改UIButton的背景颜色</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[[textFild.rac_textSignal map:^id _Nullable(NSString * _Nullable value) &#123;</div><div class="line">        return (value.length &gt;= 3) ? [UIColor redColor] :  [UIColor brownColor] ;</div><div class="line">    &#125;]subscribeNext:^(id  _Nullable x) &#123;</div><div class="line">        button.backgroundColor = x;</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h2 id="5-监听手势点击"><a href="#5-监听手势点击" class="headerlink" title="5.监听手势点击"></a>5.监听手势点击</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]init];</div><div class="line">[view addGestureRecognizer:tap];</div><div class="line">[[tap rac_gestureSignal]subscribeNext:^(__kindof UIGestureRecognizer * _Nullable x) &#123;</div><div class="line">     NSLog(@&quot;Tap Click&quot;);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h2 id="6-监听代理"><a href="#6-监听代理" class="headerlink" title="6.监听代理"></a>6.监听代理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[[self rac_signalForSelector:@selector(scrollViewWillBeginDragging:) fromProtocol:@protocol(UIScrollViewDelegate)] subscribeNext:^(id  _Nullable x) &#123;//这里的x是表示 当页面有多个UIScrollView时,可以做判断是哪一个</div><div class="line">//        NSLog(@&quot;点击了&quot;);</div><div class="line">//        NSLog(@&quot;--- %@ ---&quot;,[x first]);</div><div class="line">&#125;];</div><div class="line">    </div><div class="line">[[self rac_signalForSelector:@selector(scrollViewDidEndDecelerating:) fromProtocol:@protocol(UIScrollViewDelegate)] subscribeNext:^(id  _Nullable x) &#123;</div><div class="line">        </div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h3 id="1-监听自定义的代理"><a href="#1-监听自定义的代理" class="headerlink" title="1.监听自定义的代理"></a>1.监听自定义的代理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[[self rac_signalForSelector:@selector(getClickButtonPostTextFieldText:) fromProtocol:@protocol(TestClickDelegate)] subscribeNext:^(id  _Nullable x) &#123;</div><div class="line">        NSLog(@&quot;******* %@ *****&quot;,[x first]);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h2 id="7-监听通知-gt-键盘弹出和隐藏的通知"><a href="#7-监听通知-gt-键盘弹出和隐藏的通知" class="headerlink" title="7.监听通知 -&gt; 键盘弹出和隐藏的通知"></a>7.监听通知 -&gt; 键盘弹出和隐藏的通知</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIKeyboardWillShowNotification object:nil] subscribeNext:^(NSNotification * _Nullable x) &#123;</div><div class="line">        NSLog(@&quot;键盘弹出&quot;);</div><div class="line">[[NSNotificationCenter defaultCenter] postNotificationName:@&quot;SHOW_LEYBOARD&quot; object:nil];</div><div class="line">&#125;];</div><div class="line">[[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIKeyboardWillHideNotification object:nil] subscribeNext:^(NSNotification * _Nullable x) &#123;</div><div class="line">        NSLog(@&quot;键盘隐藏&quot;);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h2 id="8-KVO-–-gt-监听UIScrollView的滚动"><a href="#8-KVO-–-gt-监听UIScrollView的滚动" class="headerlink" title="8.KVO –&gt; 监听UIScrollView的滚动"></a>8.KVO –&gt; 监听UIScrollView的滚动</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[RACObserve(sc, contentOffset) subscribeNext:^(id  _Nullable x) &#123;</div><div class="line">        NSLog(@&quot;contentSize -- %@&quot;,x);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h2 id="9-timers"><a href="#9-timers" class="headerlink" title="9.timers"></a>9.timers</h2><h3 id="1-延时执行"><a href="#1-延时执行" class="headerlink" title="1.延时执行"></a>1.延时执行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[[RACScheduler mainThreadScheduler] afterDelay:5 schedule:^&#123;</div><div class="line">        NSLog(@&quot;这是延时5秒后执行的&quot;);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h3 id="2-定时执行"><a href="#2-定时执行" class="headerlink" title="2.定时执行"></a>2.定时执行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[[RACSignal interval:2 onScheduler:[RACScheduler mainThreadScheduler]]subscribeNext:^(NSDate * _Nullable x) &#123;</div><div class="line">        NSLog(@&quot;每隔2秒执行一次&quot;);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ReactiveCocoa/" rel="tag">#ReactiveCocoa</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/16/ReactiveObjC/" rel="next" title="ReactiveObjC">
+                <i class="fa fa-chevron-left"></i> ReactiveObjC
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://img1.gtimg.com/comic/pics/hv1/70/76/1989/129354175.jpg"
+               alt="GhostClock(鬼钟)" />
+          <p class="site-author-name" itemprop="name">GhostClock(鬼钟)</p>
+          <p class="site-description motion-element" itemprop="description">穷折腾 二次元 Mac Win10 iOS Java</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ReactiveCocoa的初步用法"><span class="nav-number">1.</span> <span class="nav-text">ReactiveCocoa的初步用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-创建UI便于测试"><span class="nav-number">1.1.</span> <span class="nav-text">1.创建UI便于测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-监听textField的触发事件"><span class="nav-number">1.2.</span> <span class="nav-text">2.监听textField的触发事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-监听Button的点击事件"><span class="nav-number">1.3.</span> <span class="nav-text">3.监听Button的点击事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-动态修改UIButton的背景颜色"><span class="nav-number">1.4.</span> <span class="nav-text">4.动态修改UIButton的背景颜色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-监听手势点击"><span class="nav-number">1.5.</span> <span class="nav-text">5.监听手势点击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-监听代理"><span class="nav-number">1.6.</span> <span class="nav-text">6.监听代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-监听自定义的代理"><span class="nav-number">1.6.1.</span> <span class="nav-text">1.监听自定义的代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-监听通知-gt-键盘弹出和隐藏的通知"><span class="nav-number">1.7.</span> <span class="nav-text">7.监听通知 -> 键盘弹出和隐藏的通知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-KVO-–-gt-监听UIScrollView的滚动"><span class="nav-number">1.8.</span> <span class="nav-text">8.KVO –> 监听UIScrollView的滚动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-timers"><span class="nav-number">1.9.</span> <span class="nav-text">9.timers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-延时执行"><span class="nav-number">1.9.1.</span> <span class="nav-text">1.延时执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-定时执行"><span class="nav-number">1.9.2.</span> <span class="nav-text">2.定时执行</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GhostClock(鬼钟)</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
