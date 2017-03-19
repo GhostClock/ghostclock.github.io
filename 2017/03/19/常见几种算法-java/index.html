@@ -1,0 +1,565 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="几种常见的算法记录记录几种常见的算法，使用java实现的
+排序的介绍排序就是将一群数据，依据指定的顺序进行排列的过程排序的分类:
+1.内部排序指将需要处理的所有数据都加载到内部存储起中进行排序包括(交换式排序法,选择式排序法,插入式排序法)
+2.外部排序法由于数据量过大,无法全部加载到内存中,需要借助外部存储进行排序包括(合并排序法,直接合并排序法)排序(Sorting)是数据处理中一种很重要的运">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见几种算法 java实现">
+<meta property="og:url" content="http://yoursite.com/2017/03/19/常见几种算法-java/index.html">
+<meta property="og:site_name" content="GC的笔记本">
+<meta property="og:description" content="几种常见的算法记录记录几种常见的算法，使用java实现的
+排序的介绍排序就是将一群数据，依据指定的顺序进行排列的过程排序的分类:
+1.内部排序指将需要处理的所有数据都加载到内部存储起中进行排序包括(交换式排序法,选择式排序法,插入式排序法)
+2.外部排序法由于数据量过大,无法全部加载到内存中,需要借助外部存储进行排序包括(合并排序法,直接合并排序法)排序(Sorting)是数据处理中一种很重要的运">
+<meta property="og:updated_time" content="2017-03-19T09:22:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常见几种算法 java实现">
+<meta name="twitter:description" content="几种常见的算法记录记录几种常见的算法，使用java实现的
+排序的介绍排序就是将一群数据，依据指定的顺序进行排列的过程排序的分类:
+1.内部排序指将需要处理的所有数据都加载到内部存储起中进行排序包括(交换式排序法,选择式排序法,插入式排序法)
+2.外部排序法由于数据量过大,无法全部加载到内存中,需要借助外部存储进行排序包括(合并排序法,直接合并排序法)排序(Sorting)是数据处理中一种很重要的运">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 常见几种算法 java实现 | GC的笔记本 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans,zh-tw,en,default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">GC的笔记本</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">😄</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                常见几种算法 java实现
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-19T16:44:57+08:00" content="2017-03-19">
+              2017-03-19
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="几种常见的算法记录"><a href="#几种常见的算法记录" class="headerlink" title="几种常见的算法记录"></a>几种常见的算法记录</h2><p>记录几种常见的算法，使用java实现的</p>
+<h3 id="排序的介绍"><a href="#排序的介绍" class="headerlink" title="排序的介绍"></a>排序的介绍</h3><p>排序就是将一群数据，依据指定的顺序进行排列的过程<br>排序的分类:</p>
+<h4 id="1-内部排序"><a href="#1-内部排序" class="headerlink" title="1.内部排序"></a>1.内部排序</h4><p>指将需要处理的所有数据都加载到内部存储起中进行排序<br>包括(交换式排序法,选择式排序法,插入式排序法)</p>
+<h4 id="2-外部排序法"><a href="#2-外部排序法" class="headerlink" title="2.外部排序法"></a>2.外部排序法</h4><p>由于数据量过大,无法全部加载到内存中,需要借助外部存储进行排序<br>包括(合并排序法,直接合并排序法)<br>排序(Sorting)是数据处理中一种很重要的运算,同时也是很常见的运算,一般数据处理工作<br>中25%的时间都在进行排序,简单的说,排序就是把一组记录(元素)按照某个域值的递增(从小到大)<br>或者递减(从大到小)的次序重新排列的过程</p>
+<h4 id="3交换式排序"><a href="#3交换式排序" class="headerlink" title="3交换式排序"></a>3交换式排序</h4><p>交换式排序属于内部排序法,是运用数据值比较后,依判断规则对数据位置进行交换,以达到排序的目的交换式排序又可分为:<br>  1.冒泡排序法（Bubble sort）<br>  2.快速排序法 (Quick sort)</p>
+<h3 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1.冒泡排序"></a>1.冒泡排序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">class Bubble &#123;</div><div class="line">	// 排序方法</div><div class="line">	/*</div><div class="line">	 * 交换式排序 - 冒泡排序</div><div class="line">	 * 基本思想:通过对待排序序列从后向前(从下标较大的元素开始)，依次比较相邻元素的排序码</div><div class="line">	 * 		  若发现逆序则交换,使排序码较小的元素逐渐从后部移到前部(从下标较大的单元移向较小</div><div class="line">	 * 		  的单元),就像水底下的气泡一样逐渐向上冒的过程</div><div class="line">	 * 因为排序的过程中,各元素不断接近自己的位置,如果一趟比较下来,没有进行交换的过程,就说明序列</div><div class="line">	 * 有序,因此在排序过程中设置一个标志flag判断元素是否进行过交换,从而减少不必要的比较</div><div class="line">	 * */</div><div class="line">	// 冒泡排序</div><div class="line">	public static void Sort(int[] array) &#123;</div><div class="line">		int temp = 0;// 中间变量</div><div class="line">		// 外部循环 它决定一共走几趟</div><div class="line">		for (int i = 0; i &lt; array.length - 1; i++) &#123;</div><div class="line">			// 内层循环 开始逐个比较 如果发现前一个数比后一个数大 则交换</div><div class="line">			for (int j = 0; j &lt; array.length - 1 - i; j++) &#123;</div><div class="line">				if (array[j] &gt; array[j + 1]) &#123;</div><div class="line">					// 换位</div><div class="line">					temp = array[j];</div><div class="line">					array[j] = array[j + 1];</div><div class="line">					array[j + 1] = temp;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-选择排序法"><a href="#2-选择排序法" class="headerlink" title="2.选择排序法"></a>2.选择排序法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">class Selection&#123;</div><div class="line">	/*</div><div class="line">	 * 选择式排序法 - 选择排序法</div><div class="line">	 * 选择式排序法也属于内部排序法,是从欲排序的数据中，按照指定的规则选出某一元素</div><div class="line">	 * 经过和其他元素,重整,再依原则交换位置后达到排序的目的</div><div class="line">	 * </div><div class="line">	 * 基本思想:第一次从R[0]-R[n - 1]中选取最小值,与R[0]交换,第二次从R[1]-R[n - 1]中</div><div class="line">	 * 选取最小值,与R[1]交换,第三次从R[2]-R[n - 1]中选取最小值与R[2]交换,...,第R[i - 1] -</div><div class="line">	 * R[n - 1]中选取最小值，与R[i - 1]交换，... ，第R[n-2]-R[n - 1]中选取最小值,与R[n - 2]</div><div class="line">	 * 交换,总共通过n - 1次,得到一个按排序码从小到大排列的有序序列</div><div class="line">	 * </div><div class="line">	 * */</div><div class="line">	static void Sort(int[] array)&#123;</div><div class="line">		int temp = 0;</div><div class="line">		for (int i = 0; i &lt; array.length - 1; i++) &#123;</div><div class="line">			//认为第一个数就是最小的</div><div class="line">			int min = array[i];</div><div class="line">			//记录最小数的下标</div><div class="line">			int minIndex = i;</div><div class="line">			for (int j = i + 1; j &lt; array.length; j++) &#123;</div><div class="line">				if (min &gt; array[j]) &#123;</div><div class="line">					//修改最小值</div><div class="line">					min = array[j];</div><div class="line">					minIndex = j;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			//当退出for找到这次的最小值</div><div class="line">			temp = array[i];</div><div class="line">			array[i] = array[minIndex];</div><div class="line">			array[minIndex] = temp;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-插入式排序-插入式排序法"><a href="#3-插入式排序-插入式排序法" class="headerlink" title="3. 插入式排序 - 插入式排序法"></a>3. 插入式排序 - 插入式排序法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">class InsterSort&#123;</div><div class="line">	//插入式排序 - 插入式排序法</div><div class="line">	/*</div><div class="line">	 * 插入式排序属于内部排序法,是对欲排序的元素以插入的方式找寻元素的适当位置，以达到排序的目的</div><div class="line">	 * 插入式排序可分为:</div><div class="line">	 * 1.插入式排序(INsertion sort)</div><div class="line">	 * 2.谢耳排序法(shell sort)</div><div class="line">	 * 3.二叉树排序法(Binary-tree sort)</div><div class="line">	 * </div><div class="line">	 * */</div><div class="line">	</div><div class="line">	/*</div><div class="line">	 * 插入式排序</div><div class="line">	 * 基本思想:</div><div class="line">	 * 把n个待排序的元素看成为一个有序表和一个无序表，开始时有序表中只包含一个元素,无序表中包含有n-1个元素，</div><div class="line">	 * 排序过程中每次从无序表中取出一个元素,把它的排序码依次与有序表元素的排序码进行比较,将它插入到有序表中的适当位置,</div><div class="line">	 * 使之成为新的有序表</div><div class="line">	 * </div><div class="line">	 * */</div><div class="line">	public static void sort(int array[]) &#123;</div><div class="line">		for (int i = 1; i &lt; array.length; i++) &#123;</div><div class="line">			int insertVal = array[i];</div><div class="line">			//insertVal准备和前一个数比较</div><div class="line">			int index = i - 1;</div><div class="line">			while (index &gt;= 0 &amp;&amp; insertVal &lt; array[index]) &#123;</div><div class="line">				//就把这个array[index]向后移动</div><div class="line">				array[index + 1] = array[index];</div><div class="line">				//让index向前移动</div><div class="line">				index --;</div><div class="line">			&#125;</div><div class="line">			//将insertVal插入到适当位置</div><div class="line">			array[index + 1]  = insertVal;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="4-快速排序"><a href="#4-快速排序" class="headerlink" title="4.快速排序"></a>4.快速排序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">class QuickSort&#123;</div><div class="line">	/*</div><div class="line">	 * 快速排序</div><div class="line">	 * 快速排序对冒泡排序的一种改进，是有C.A.R. Hoare在1962年提出来的</div><div class="line">	 * </div><div class="line">	 * 基本思想:</div><div class="line">	 * 是通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另一部分的所有数据</div><div class="line">	 * 都要小,然后再按此方法对这两部分数据分别进行快速排序,整个过程可以递归进行,</div><div class="line">	 * 以此来达到整个数据变成有序序列</div><div class="line">	 * </div><div class="line">	 * */</div><div class="line">	/**</div><div class="line">	 * @param array</div><div class="line">	 *  目标数组</div><div class="line">	 * @param left</div><div class="line">	 * 	起始位</div><div class="line">	 * @param right</div><div class="line">	 *  结束位</div><div class="line">	 * </div><div class="line">	 * **/</div><div class="line">	public static void sort(int[] array,int left,int right) &#123;</div><div class="line">		if (left &lt; right) &#123;</div><div class="line">			int i = left, j = right, x = array[left];</div><div class="line">			while (i &lt; j) &#123;</div><div class="line">				while (i &lt; j &amp;&amp; array[j] &gt;= x) &#123;//从右向左找到第一个小于x的数</div><div class="line">					j --;</div><div class="line">				&#125;</div><div class="line">				if (i &lt; j) &#123;</div><div class="line">					array[i ++] = array[j];</div><div class="line">				&#125;</div><div class="line">				</div><div class="line">				while (i &lt; j &amp;&amp; array[i] &lt; x	) &#123;</div><div class="line">					i ++;</div><div class="line">				&#125;</div><div class="line">				if (i &lt; j) &#123;</div><div class="line">					array[j --] = array[i];</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			array[i] = x;</div><div class="line">			sort(array,left,i - 1);//递归调用</div><div class="line">			sort(array,i + 1,right);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="main函数里面使用"><a href="#main函数里面使用" class="headerlink" title="main函数里面使用"></a>main函数里面使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">public static void main(String[] args) &#123;</div><div class="line">		// TODO Auto-generated method stub</div><div class="line">//		int array[] = &#123; 1, 5, 4, 6, 8, 4, 1, 3, 6, 9, 41, 3, 6, 1, 3, -10&#125;;</div><div class="line">		</div><div class="line">		//创建100000个数据</div><div class="line">		int len = 80000000;</div><div class="line">		int array[] = new int[len];</div><div class="line">		for (int i = 0; i &lt; len; i++) &#123;</div><div class="line">			//让程序随机产生1 - 100000数</div><div class="line">			int t = (int) (Math.random() * len);//会随机产生一个0 ~ 1</div><div class="line">			array[i] = t;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		//在排序前打印系统时间</div><div class="line">		Calendar calendar1 = Calendar.getInstance();</div><div class="line">		System.out.println(&quot;排序前&quot; + calendar1.getTime());</div><div class="line">		</div><div class="line">//		Bubble.Sort(array);//冒泡排序</div><div class="line">		</div><div class="line">//		Selection.Sort(array); //选择排序</div><div class="line">		</div><div class="line">//		InsterSort.sort(array);//插入排序</div><div class="line">		</div><div class="line">		QuickSort.sort(array, 0, array.length - 1);;//快速排序</div><div class="line">		</div><div class="line">		calendar1 = Calendar.getInstance();//重新获取单例</div><div class="line">		System.out.println(&quot;排序前&quot; + calendar1.getTime());</div><div class="line">		</div><div class="line">//		for (int i = 0; i &lt; array.length; i++) &#123;</div><div class="line">//			System.out.print(array[i] + &quot; &quot;);</div><div class="line">//		&#125;</div><div class="line"></div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/17/ReactiveCocoa的初步用法/" rel="next" title="ReactiveCocoa的初步用法">
+                <i class="fa fa-chevron-left"></i> ReactiveCocoa的初步用法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://img1.gtimg.com/comic/pics/hv1/70/76/1989/129354175.jpg"
+               alt="GhostClock(鬼钟)" />
+          <p class="site-author-name" itemprop="name">GhostClock(鬼钟)</p>
+          <p class="site-description motion-element" itemprop="description">穷折腾 二次元 Mac Win10 iOS Java</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#几种常见的算法记录"><span class="nav-number">1.</span> <span class="nav-text">几种常见的算法记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#排序的介绍"><span class="nav-number">1.1.</span> <span class="nav-text">排序的介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-内部排序"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.内部排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-外部排序法"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.外部排序法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3交换式排序"><span class="nav-number">1.1.3.</span> <span class="nav-text">3交换式排序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-冒泡排序"><span class="nav-number">1.2.</span> <span class="nav-text">1.冒泡排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-选择排序法"><span class="nav-number">1.3.</span> <span class="nav-text">2.选择排序法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-插入式排序-插入式排序法"><span class="nav-number">1.4.</span> <span class="nav-text">3. 插入式排序 - 插入式排序法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-快速排序"><span class="nav-number">1.5.</span> <span class="nav-text">4.快速排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#main函数里面使用"><span class="nav-number">2.</span> <span class="nav-text">main函数里面使用</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GhostClock(鬼钟)</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
