@@ -233,6 +233,104 @@
             
               
                 
+                <a class="post-title-link" href="/2017/06/30/PythonSocket编程/" itemprop="url">
+                  PythonSocket编程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-30T00:03:32+08:00" content="2017-06-30">
+              2017-06-30
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Python-Socket编程"><a href="#Python-Socket编程" class="headerlink" title="Python Socket编程"></a>Python Socket编程</h1><p>目的: 客户端发送两个整数，让服务器给我们做加法，然后再用Json格式传给客户端</p>
+<h2 id="UDP编程"><a href="#UDP编程" class="headerlink" title="UDP编程"></a>UDP编程</h2><h3 id="UDPClient-py"><a href="#UDPClient-py" class="headerlink" title="UDPClient.py"></a>UDPClient.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"> #coding:utf8</div><div class="line">from socket import *</div><div class="line">import json</div><div class="line">serverName = &apos;127.0.0.1&apos;</div><div class="line">serverPort = 12000</div><div class="line">clentSocket = socket(AF_INET,SOCK_DGRAM)</div><div class="line">message1 = raw_input(&quot;InputNumber1&gt; &quot;)</div><div class="line">message2 = raw_input(&quot;InputNumber2&gt; &quot;)</div><div class="line">d = &#123;</div><div class="line">   &quot;message1&quot; : message1,</div><div class="line">   &quot;message2&quot; : message2</div><div class="line">&#125;   </div><div class="line">data = json.dumps(d)  </div><div class="line">clentSocket.sendto(data,(serverName,serverPort))</div><div class="line">modifidMessage, serverAddress = clentSocket.recvfrom(2048)</div><div class="line">mes = json.loads(modifidMessage)</div><div class="line">print int(mes[&apos;sum&apos;])</div><div class="line">clentSocket.close()</div></pre></td></tr></table></figure>
+<h3 id="UDPServer-py"><a href="#UDPServer-py" class="headerlink" title="UDPServer.py"></a>UDPServer.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import json</div><div class="line">from socket import *</div><div class="line">serverPort = 12000</div><div class="line">serverSocket = socket(AF_INET,SOCK_DGRAM)</div><div class="line">serverSocket.bind((&apos;127.0.0.1&apos;,serverPort))</div><div class="line">print &quot;The server is ready to receive&quot;</div><div class="line">while True:</div><div class="line">   message, clientAddress = serverSocket.recvfrom(2048)</div><div class="line">   dic = json.loads(message)</div><div class="line">   print dic</div><div class="line">   num1 = int(dic[&quot;message1&quot;])</div><div class="line">   num2 = int(dic[&quot;message2&quot;])</div><div class="line">   sum = num1 + num2</div><div class="line">   data = &#123;</div><div class="line">       &quot;sum&quot; : sum</div><div class="line">   &#125;</div><div class="line">   d = json.dumps(data)</div><div class="line">   print d</div><div class="line">   serverSocket.sendto(d, clientAddress)</div></pre></td></tr></table></figure>
+<h2 id="TCP编程"><a href="#TCP编程" class="headerlink" title="TCP编程"></a>TCP编程</h2><h3 id="TCPClient-py"><a href="#TCPClient-py" class="headerlink" title="TCPClient.py"></a>TCPClient.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># coding:utf8</div><div class="line">from socket import *</div><div class="line">import json</div><div class="line">serverName = &apos;127.0.0.1&apos;</div><div class="line">serverPort = 12000</div><div class="line">clientSocket = socket(AF_INET, SOCK_STREAM)</div><div class="line">clientSocket.connect((serverName,serverPort)) #创建与服务器的连接 也就是三处握手</div><div class="line">number1 = raw_input(&apos;Input Number1:&apos;) </div><div class="line">number2 = raw_input(&apos;Input Number2:&apos;) </div><div class="line">d = &#123;</div><div class="line">   &apos;num1&apos; : number1,</div><div class="line">   &apos;num2&apos; : number2</div><div class="line">&#125;</div><div class="line">jsonStr = json.dumps(d)</div><div class="line">clientSocket.send(jsonStr)</div><div class="line">serverData = clientSocket.recv(1024)</div><div class="line">print &apos;From Server: &apos;, serverData</div><div class="line">data = json.loads(serverData)</div><div class="line">print int(data[&apos;sum&apos;])</div><div class="line">clientSocket.close()</div></pre></td></tr></table></figure>
+<h3 id="TCPServer-py"><a href="#TCPServer-py" class="headerlink" title="TCPServer.py"></a>TCPServer.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">from socket import *</div><div class="line">import json</div><div class="line">serverPort = 12000</div><div class="line">serverSocket = socket(AF_INET, SOCK_STREAM)</div><div class="line">serverSocket.bind((&apos;127.0.0.1&apos;, serverPort))</div><div class="line">serverSocket.listen(1)</div><div class="line">print &apos;The server is ready to receive&apos;</div><div class="line">while True:</div><div class="line">   connectionSocket, address = serverSocket.accept()</div><div class="line">   sentence = connectionSocket.recv(1024)</div><div class="line">   jsonData = json.loads(sentence)</div><div class="line">   print jsonData</div><div class="line">   num1 = int(jsonData[&apos;num1&apos;])</div><div class="line">   num2 = int(jsonData[&apos;num2&apos;])</div><div class="line">   sum = num1 + num2</div><div class="line">   dic = &#123;</div><div class="line">       &apos;sum&apos; : sum</div><div class="line">   &#125;</div><div class="line">   clientData = json.dumps(dic)</div><div class="line">   connectionSocket.send(clientData)</div><div class="line">   connectionSocket.close()</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/05/11/Mac下配置CGI环境/" itemprop="url">
                   Mac下配置CGI环境
                 </a>
@@ -659,101 +757,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/16/ReactiveObjC/" itemprop="url">
-                  ReactiveObjC
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-16T22:54:09+08:00" content="2017-03-16">
-              2017-03-16
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Unable-to-find-a-specification-for-ReactiveObjC"><a href="#Unable-to-find-a-specification-for-ReactiveObjC" class="headerlink" title="Unable to find a specification for ReactiveObjC"></a>Unable to find a specification for ReactiveObjC</h1><p>今天Pod ReactiveObjC的时候遇到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Unable to find a specification for `ReactiveObjC`</div></pre></td></tr></table></figure></p>
-<p>1.先cd到工程目录<br>2.依次在终端输入一下命令，等它done<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pod repo remove master</div><div class="line">pod setup</div><div class="line">pod install</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -799,7 +802,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -809,7 +812,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
