@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="iOS," />
 
 
 
@@ -84,15 +84,19 @@
 
 
 
-<meta name="description" content="穷折腾 二次元 Mac Win10 iOS Java">
-<meta property="og:type" content="website">
-<meta property="og:title" content="GC的笔记本">
-<meta property="og:url" content="http://yoursite.com/tags/ReactiveCocoa/index.html">
+<meta name="description" content="iOS SDK开发技巧在用XCode开发SDK的时候用好PROJECT_DIR可以免于重复手动的粘贴复制在RunScript里面添加下面的代码
+1234# copy framework to SDK/buildrm -rf &amp;quot;$&amp;#123;PROJECT_DIR&amp;#125;/../SDK/build/$&amp;#123;PROJECT_NAME&amp;#125;.framework&amp;quot;cd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用好PROJECT_DIR">
+<meta property="og:url" content="http://yoursite.com/2017/06/30/用好PROJECT-DIR/index.html">
 <meta property="og:site_name" content="GC的笔记本">
-<meta property="og:description" content="穷折腾 二次元 Mac Win10 iOS Java">
+<meta property="og:description" content="iOS SDK开发技巧在用XCode开发SDK的时候用好PROJECT_DIR可以免于重复手动的粘贴复制在RunScript里面添加下面的代码
+1234# copy framework to SDK/buildrm -rf &amp;quot;$&amp;#123;PROJECT_DIR&amp;#125;/../SDK/build/$&amp;#123;PROJECT_NAME&amp;#125;.framework&amp;quot;cd">
+<meta property="og:updated_time" content="2017-06-30T14:21:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GC的笔记本">
-<meta name="twitter:description" content="穷折腾 二次元 Mac Win10 iOS Java">
+<meta name="twitter:title" content="用好PROJECT_DIR">
+<meta name="twitter:description" content="iOS SDK开发技巧在用XCode开发SDK的时候用好PROJECT_DIR可以免于重复手动的粘贴复制在RunScript里面添加下面的代码
+1234# copy framework to SDK/buildrm -rf &amp;quot;$&amp;#123;PROJECT_DIR&amp;#125;/../SDK/build/$&amp;#123;PROJECT_NAME&amp;#125;.framework&amp;quot;cd">
 
 
 
@@ -110,7 +114,7 @@
   };
 </script>
 
-  <title> 标签: ReactiveCocoa | GC的笔记本 </title>
+  <title> 用好PROJECT_DIR | GC的笔记本 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans,zh-tw,en,default">
@@ -131,7 +135,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -209,46 +213,123 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        ReactiveCocoa
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                用好PROJECT_DIR
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-30T22:05:45+08:00" content="2017-06-30">
+              2017-06-30
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h1 id="iOS-SDK开发技巧"><a href="#iOS-SDK开发技巧" class="headerlink" title="iOS SDK开发技巧"></a>iOS SDK开发技巧</h1><p>在用XCode开发SDK的时候用好PROJECT_DIR可以免于重复手动的粘贴复制<br>在RunScript里面添加下面的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># copy framework to SDK/build</div><div class="line">rm -rf &quot;$&#123;PROJECT_DIR&#125;/../SDK/build/$&#123;PROJECT_NAME&#125;.framework&quot;</div><div class="line">cd &quot;$&#123;CONFIGURATION_BUILD_DIR&#125;&quot;</div><div class="line">cp -r &quot;$&#123;PROJECT_NAME&#125;.framework&quot; &quot;$&#123;PROJECT_DIR&#125;/../SDK/build/&quot;</div></pre></td></tr></table></figure>
+<p>上面的文件名按照自己的需要修改</p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/03/17/ReactiveCocoa的初步用法/" itemprop="url">
-              
-                <span itemprop="name">ReactiveCocoa的初步用法</span>
-              
-            </a>
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-17T20:41:28+08:00"
-              content="2017-03-17" >
-          03-17
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/30/PythonSocket编程/" rel="next" title="PythonSocket编程">
+                <i class="fa fa-chevron-left"></i> PythonSocket编程
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -256,6 +337,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -275,8 +360,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://img1.gtimg.com/comic/pics/hv1/70/76/1989/129354175.jpg"
@@ -319,6 +413,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iOS-SDK开发技巧"><span class="nav-number">1.</span> <span class="nav-text">iOS SDK开发技巧</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -415,6 +520,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
