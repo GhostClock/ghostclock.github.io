@@ -233,6 +233,106 @@
             
               
                 
+                <a class="post-title-link" href="/2017/12/24/贝塞尔曲线的基本用法/" itemprop="url">
+                  贝塞尔曲线的基本用法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-12-24T17:50:25+08:00" content="2017-12-24">
+              2017-12-24
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="画五边形"><a href="#画五边形" class="headerlink" title="画五边形"></a>画五边形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">// 画五边形</div><div class="line">- (void)drawPentagons &#123;</div><div class="line">    UIBezierPath *apath = (&#123;</div><div class="line">        UIBezierPath *path = [UIBezierPath bezierPath];</div><div class="line">        path.lineJoinStyle = kCGLineCapRound;</div><div class="line">        path.lineCapStyle = kCGLineCapRound;</div><div class="line">        path.lineWidth = 5.0;</div><div class="line">        </div><div class="line">        //设置起始点</div><div class="line">        [path moveToPoint:CGPointMake(100, 0)];</div><div class="line">        //增加线条</div><div class="line">        [path addLineToPoint:CGPointMake(200, 40)];</div><div class="line">        [path addLineToPoint:CGPointMake(160, 140)];</div><div class="line">        [path addLineToPoint:CGPointMake(40, 140)];</div><div class="line">        [path addLineToPoint:CGPointMake(0, 40)];</div><div class="line">        </div><div class="line">        //关闭路径</div><div class="line">        [path closePath];</div><div class="line">        </div><div class="line">        path;</div><div class="line">    &#125;);</div><div class="line">    //根据坐标连线</div><div class="line">    [apath stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="画矩形"><a href="#画矩形" class="headerlink" title="画矩形"></a>画矩形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 画矩形</div><div class="line">- (void)drawRectangle &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(10, 40, 200, 100)];</div><div class="line">    path.lineWidth = 5.0;</div><div class="line">//    path.lineCapStyle = kCGLineCapRound;</div><div class="line">//    path.lineJoinStyle = kCGLineCapSquare;</div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="画圆和椭圆"><a href="#画圆和椭圆" class="headerlink" title="画圆和椭圆"></a>画圆和椭圆</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 画圆和椭圆</div><div class="line">- (void)drawCircle &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(100, 40, 200, 200)];</div><div class="line">    path.lineWidth = 5.0;</div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="画带指定圆角的矩形"><a href="#画带指定圆角的矩形" class="headerlink" title="画带指定圆角的矩形"></a>画带指定圆角的矩形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 画带指定圆角的矩形</div><div class="line">- (void)drawOtherRectangle &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(10, 40, 200, 100) byRoundingCorners:UIRectCornerAllCorners  cornerRadii:CGSizeMake(100, 100)];</div><div class="line">    path.lineWidth = 5.0;</div><div class="line">    path.lineJoinStyle = kCGLineCapRound;</div><div class="line">    path.lineCapStyle = kCGLineCapRound;</div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="画圆弧"><a href="#画圆弧" class="headerlink" title="画圆弧"></a>画圆弧</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 画圆弧</div><div class="line">- (void)drawCircleArc &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(100, 200) radius:100 startAngle:M_PI endAngle:M_PI / 2 clockwise: NO];</div><div class="line">    path.lineWidth = 5.0;</div><div class="line">    path.lineJoinStyle = kCGLineCapRound;</div><div class="line">    path.lineCapStyle = kCGLineCapRound;</div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="画贝塞尔曲线"><a href="#画贝塞尔曲线" class="headerlink" title="画贝塞尔曲线"></a>画贝塞尔曲线</h3><p><img src="/2017/12/24/贝塞尔曲线的基本用法/二贝塞尔曲线.png" alt=""><br><img src="/2017/12/24/贝塞尔曲线的基本用法/三贝塞尔曲线.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">// 画贝塞尔曲线</div><div class="line">- (void)drawBezierArc &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPath];</div><div class="line">    path.lineWidth = 2.0;</div><div class="line">    path.lineJoinStyle = kCGLineCapRound;</div><div class="line">    path.lineCapStyle = kCGLineCapRound;</div><div class="line">    </div><div class="line">    // 曲线1</div><div class="line">    /*</div><div class="line">    // 设置起始点</div><div class="line">    [path moveToPoint:CGPointMake(100, 300)];</div><div class="line">    // 设置结束点和控制点</div><div class="line">    [path addQuadCurveToPoint:CGPointMake(300, 300) controlPoint:CGPointMake(100, 50)];</div><div class="line">    */</div><div class="line">    </div><div class="line">    // 曲线2</div><div class="line">//    [path moveToPoint:CGPointMake(10, 100)];</div><div class="line">//    [path addQuadCurveToPoint:CGPointMake(310, 100) controlPoint:CGPointMake(150, -90)];</div><div class="line">    </div><div class="line">    // 曲线3 三次贝塞尔曲线</div><div class="line">    [path moveToPoint:CGPointMake(10, 100)];</div><div class="line">    [path addCurveToPoint:CGPointMake(310, 100) controlPoint1:CGPointMake(100, -100) controlPoint2:CGPointMake(100, 400)];   </div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/11/02/在Swift中同时用代理和Block-Closure-回调/" itemprop="url">
                   在Swift中同时用代理和Block(Closure)回调
                 </a>
@@ -599,102 +699,6 @@ virtualenv py3`
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/30/用好PROJECT-DIR/" itemprop="url">
-                  用好PROJECT_DIR
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-30T22:05:45+08:00" content="2017-06-30">
-              2017-06-30
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="iOS-SDK开发技巧"><a href="#iOS-SDK开发技巧" class="headerlink" title="iOS SDK开发技巧"></a>iOS SDK开发技巧</h1><p>在用XCode开发SDK的时候用好PROJECT_DIR可以免于重复手动的粘贴复制<br>在RunScript里面添加下面的代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># copy framework to SDK/build</div><div class="line">rm -rf &quot;$&#123;PROJECT_DIR&#125;/../SDK/build/$&#123;PROJECT_NAME&#125;.framework&quot;</div><div class="line">cd &quot;$&#123;CONFIGURATION_BUILD_DIR&#125;&quot;</div><div class="line">cp -r &quot;$&#123;PROJECT_NAME&#125;.framework&quot; &quot;$&#123;PROJECT_DIR&#125;/../SDK/build/&quot;</div></pre></td></tr></table></figure>
-<p>上面的文件名按照自己的需要修改</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -740,7 +744,7 @@ virtualenv py3`
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
