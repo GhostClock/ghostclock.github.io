@@ -233,6 +233,405 @@
             
               
                 
+                <a class="post-title-link" href="/2018/02/17/理解消息转发机制/" itemprop="url">
+                  理解消息转发机制
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-17T14:28:38+08:00" content="2018-02-17">
+              2018-02-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="理解消息转发机制分为两大阶段"><a href="#理解消息转发机制分为两大阶段" class="headerlink" title="理解消息转发机制分为两大阶段:"></a>理解消息转发机制分为两大阶段:</h3><h4 id="第一阶段"><a href="#第一阶段" class="headerlink" title="第一阶段:"></a>第一阶段:</h4><p>先征询接受者所属的类, 看其是否能动态添加方法,以处理当前这个‘未知的选择器’,这个叫做‘动态方法解析’</p>
+<h4 id="第二阶段"><a href="#第二阶段" class="headerlink" title="第二阶段:"></a>第二阶段:</h4><p>涉及‘完整的消息转发机制’, 如果运行期系统已经把第一阶段执行完,那么接受者就无法再以动态新增的方法的手段来响应包含该选择器的消息了,此时,运行期系统会请求接受者以其他手段来处理与消息有关的方法调用，</p>
+<h5 id="这个细节分为两步-首先请接受者看看有没有其他对象能处理这条消息"><a href="#这个细节分为两步-首先请接受者看看有没有其他对象能处理这条消息" class="headerlink" title="这个细节分为两步,首先请接受者看看有没有其他对象能处理这条消息,"></a>这个细节分为两步,首先请接受者看看有没有其他对象能处理这条消息,</h5><ol>
+<li>若有,则运行期系统会把消息转给那个对象,消息转发结束,一切如常;</li>
+<li>若没有,则穷完整的消息转发机制,运行期系统会把消息有关的全部细节都封装到NSInvocation对象中,再给接受者最后一个机会，令其设法解决当前还未处理的这条消息；</li>
+</ol>
+<p>// 创建GCMessageForwarding，在 GCMessageForwarding.h写一个放方法但是不去实现<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-(void)lowercasseString;</div></pre></td></tr></table></figure></p>
+<p>在外部调用时: 就会发生Crash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">方法没实现，由NSobject的doesNotRecognizeSelector抛出, 此异常表明:接受者的类型是GCMessageForwarding，而该接受者无法理解该选择器</div><div class="line">     -[GCMessageForwarding lowercasseString]: unrecognized selector sent to instance 0x1740044d0</div><div class="line">     *** Terminating app due to uncaught exception &apos;NSInvalidArgumentException&apos;, reason: &apos;-[GCMessageForwarding lowercasseString]: unrecognized selector sent to instance 0x1740044d0&apos;</div></pre></td></tr></table></figure>
+<h5 id="GCMessageForwarding-m里面实现"><a href="#GCMessageForwarding-m里面实现" class="headerlink" title="GCMessageForwarding.m里面实现"></a>GCMessageForwarding.m里面实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">void messageForwarding() &#123;</div><div class="line">    NSLog(@&quot;show Test02&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</div><div class="line">    NSString *selString = NSStringFromSelector(sel);</div><div class="line">    if ([selString isEqualToString:@&quot;lowercasseString&quot;]) &#123;</div><div class="line">        class_addMethod(self, sel, (IMP)messageForwarding, &quot;v@:@&quot;);</div><div class="line">    &#125;</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这时就会打印 <code>show Test02</code></p>
+<h3 id="方法-resolveInstanceMethod-也没实现"><a href="#方法-resolveInstanceMethod-也没实现" class="headerlink" title="方法 resolveInstanceMethod 也没实现"></a>方法 <code>resolveInstanceMethod</code> 也没实现</h3><p>如果方法 <code>resolveInstanceMethod</code> 也没实现，就会掉用备用方法 <code>forwardingTargetForSelector</code>,把这条消息转给其他接受者来处理</p>
+<h3 id="整个调用流程"><a href="#整个调用流程" class="headerlink" title="整个调用流程"></a>整个调用流程</h3><p>lowercasseString(未实现) -&gt; resolveInstanceMethod(未实现) -&gt;forwardingTargetForSelector(未实现) -&gt;  resolveInstanceMethod(未实现) -&gt; NSobject的doesNotRecognizeSelector抛出异常</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/02/17/在手机上查看相关图层/" itemprop="url">
+                  在手机上查看相关图层
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-17T14:10:22+08:00" content="2018-02-17">
+              2018-02-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># if DEBUG</div><div class="line">#在应用启动的时候加入下面代码，然后双击状态栏</div><div class="line">id overlayClass = NSClassFromString(@&quot;UIDebuggingInformationOverlay&quot;);</div><div class="line">[overlayClass performSelector:NSSelectorFromString(@&quot;prepareDebuggingOverlay&quot;)];</div><div class="line">#endif</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/12/24/贝塞尔曲线的基本用法/" itemprop="url">
+                  贝塞尔曲线的基本用法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-12-24T17:50:25+08:00" content="2017-12-24">
+              2017-12-24
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="画五边形"><a href="#画五边形" class="headerlink" title="画五边形"></a>画五边形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">// 画五边形</div><div class="line">- (void)drawPentagons &#123;</div><div class="line">    UIBezierPath *apath = (&#123;</div><div class="line">        UIBezierPath *path = [UIBezierPath bezierPath];</div><div class="line">        path.lineJoinStyle = kCGLineCapRound;</div><div class="line">        path.lineCapStyle = kCGLineCapRound;</div><div class="line">        path.lineWidth = 5.0;</div><div class="line">        </div><div class="line">        //设置起始点</div><div class="line">        [path moveToPoint:CGPointMake(100, 0)];</div><div class="line">        //增加线条</div><div class="line">        [path addLineToPoint:CGPointMake(200, 40)];</div><div class="line">        [path addLineToPoint:CGPointMake(160, 140)];</div><div class="line">        [path addLineToPoint:CGPointMake(40, 140)];</div><div class="line">        [path addLineToPoint:CGPointMake(0, 40)];</div><div class="line">        </div><div class="line">        //关闭路径</div><div class="line">        [path closePath];</div><div class="line">        </div><div class="line">        path;</div><div class="line">    &#125;);</div><div class="line">    //根据坐标连线</div><div class="line">    [apath stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="画矩形"><a href="#画矩形" class="headerlink" title="画矩形"></a>画矩形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 画矩形</div><div class="line">- (void)drawRectangle &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(10, 40, 200, 100)];</div><div class="line">    path.lineWidth = 5.0;</div><div class="line">//    path.lineCapStyle = kCGLineCapRound;</div><div class="line">//    path.lineJoinStyle = kCGLineCapSquare;</div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="画圆和椭圆"><a href="#画圆和椭圆" class="headerlink" title="画圆和椭圆"></a>画圆和椭圆</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 画圆和椭圆</div><div class="line">- (void)drawCircle &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(100, 40, 200, 200)];</div><div class="line">    path.lineWidth = 5.0;</div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="画带指定圆角的矩形"><a href="#画带指定圆角的矩形" class="headerlink" title="画带指定圆角的矩形"></a>画带指定圆角的矩形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 画带指定圆角的矩形</div><div class="line">- (void)drawOtherRectangle &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(10, 40, 200, 100) byRoundingCorners:UIRectCornerAllCorners  cornerRadii:CGSizeMake(100, 100)];</div><div class="line">    path.lineWidth = 5.0;</div><div class="line">    path.lineJoinStyle = kCGLineCapRound;</div><div class="line">    path.lineCapStyle = kCGLineCapRound;</div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="画圆弧"><a href="#画圆弧" class="headerlink" title="画圆弧"></a>画圆弧</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 画圆弧</div><div class="line">- (void)drawCircleArc &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(100, 200) radius:100 startAngle:M_PI endAngle:M_PI / 2 clockwise: NO];</div><div class="line">    path.lineWidth = 5.0;</div><div class="line">    path.lineJoinStyle = kCGLineCapRound;</div><div class="line">    path.lineCapStyle = kCGLineCapRound;</div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="画贝塞尔曲线"><a href="#画贝塞尔曲线" class="headerlink" title="画贝塞尔曲线"></a>画贝塞尔曲线</h3><p><img src="/2017/12/24/贝塞尔曲线的基本用法/二贝塞尔曲线.png" alt=""><br><img src="/2017/12/24/贝塞尔曲线的基本用法/三贝塞尔曲线.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">// 画贝塞尔曲线</div><div class="line">- (void)drawBezierArc &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPath];</div><div class="line">    path.lineWidth = 2.0;</div><div class="line">    path.lineJoinStyle = kCGLineCapRound;</div><div class="line">    path.lineCapStyle = kCGLineCapRound;</div><div class="line">    </div><div class="line">    // 曲线1</div><div class="line">    /*</div><div class="line">    // 设置起始点</div><div class="line">    [path moveToPoint:CGPointMake(100, 300)];</div><div class="line">    // 设置结束点和控制点</div><div class="line">    [path addQuadCurveToPoint:CGPointMake(300, 300) controlPoint:CGPointMake(100, 50)];</div><div class="line">    */</div><div class="line">    </div><div class="line">    // 曲线2</div><div class="line">//    [path moveToPoint:CGPointMake(10, 100)];</div><div class="line">//    [path addQuadCurveToPoint:CGPointMake(310, 100) controlPoint:CGPointMake(150, -90)];</div><div class="line">    </div><div class="line">    // 曲线3 三次贝塞尔曲线</div><div class="line">    [path moveToPoint:CGPointMake(10, 100)];</div><div class="line">    [path addCurveToPoint:CGPointMake(310, 100) controlPoint1:CGPointMake(100, -100) controlPoint2:CGPointMake(100, 400)];   </div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/11/02/在Swift中同时用代理和Block-Closure-回调/" itemprop="url">
+                  在Swift中同时用代理和Block(Closure)回调
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-11-02T22:34:46+08:00" content="2017-11-02">
+              2017-11-02
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>目的：</p>
+<p>A页面push到B页面，点击B页面的按钮传值到A页面，分别用delegate和Block来实现 </p>
+<p>1.在页面B定义delegate和Block</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">importUIKit</div><div class="line"></div><div class="line">@objcprotocolDetailedViewControllerDelegate &#123;</div><div class="line"></div><div class="line">	@objcoptionalfuncchangeValue (value:Int) -&gt;Void;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">classDetailedViewController:UIViewController&#123;</div><div class="line">	var_title:String?</div><div class="line">	vardelegate:DetailedViewControllerDelegate?</div><div class="line">	varcount:Int=0</div><div class="line">	</div><div class="line">	varchangeBlock:((Int) -&gt; ())?</div><div class="line">	</div><div class="line">	overridefuncviewDidLoad() &#123;</div><div class="line">	super.viewDidLoad()</div><div class="line">	navigationItem.title=_title</div><div class="line">	self.view.backgroundColor=UIColor.brown</div><div class="line">	</div><div class="line">	weakvarweakSelf =self</div><div class="line">	letbtn =CGButton.shendInstance().createButton(frame:CGRect(), bgColor:UIColor.red, title:&quot;按钮&quot;, superView:self.view) &#123; (action)in</div><div class="line">		weakSelf?.count+=1</div><div class="line">		letcout = weakSelf?.count</div><div class="line">		// Block回调</div><div class="line">		if(weakSelf?.changeBlock! !=nil) &#123;</div><div class="line">			weakSelf?.changeBlock!(cout!)</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		// 代理回调</div><div class="line">		if((weakSelf?.delegate?.changeValue) !=nil) &#123;</div><div class="line">			weakSelf?.delegate?.changeValue!(value: cout!)</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	funcchangeValue(value:@escaping(Int) -&gt; ()) -&gt;Void&#123;</div><div class="line">		self.changeBlock= value</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.在push的时候</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">moiveView.clickdidSelectItemAt&#123; (collection, indexPath)in</div><div class="line">	letdataModel =self._movieView.dataSource[indexPath.item]as!MovieModel</div><div class="line">	letDetailedVC =DetailedViewController()</div><div class="line">	DetailedVC.delegate=self</div><div class="line">	//Block的回调</div><div class="line">	DetailedVC.changeValue(value: &#123; (value)in</div><div class="line">		print(&quot;blockChange\(value)&quot;)</div><div class="line">	&#125;)</div><div class="line">	DetailedVC._title= dataModel.titleasString</div><div class="line">	self.navigationController!.pushViewController(DetailedVC, animated:true)</div><div class="line">&#125;</div><div class="line"></div><div class="line">// delegate的回调</div><div class="line">funcchangeValue(value:Int) &#123;</div><div class="line">	print(&quot;delegateChange\(value)&quot;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/10/29/用Alamofire发起网络请求/" itemprop="url">
                   用Alamofire发起网络请求 - swift4
                 </a>
@@ -307,398 +706,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/27/Python创建虚拟环境/" itemprop="url">
-                  Python创建虚拟环境
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-07-27T00:04:22+08:00" content="2017-07-27">
-              2017-07-27
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Python创建虚拟环境"><a href="#Python创建虚拟环境" class="headerlink" title="Python创建虚拟环境"></a>Python创建虚拟环境</h1><h2 id="1-通过pip安装virtualenv"><a href="#1-通过pip安装virtualenv" class="headerlink" title="1.通过pip安装virtualenv"></a>1.通过pip安装virtualenv</h2><pre><code>`pip install virtualenv`
-</code></pre><h2 id="2-查看virtualenv-的版本"><a href="#2-查看virtualenv-的版本" class="headerlink" title="2.查看virtualenv 的版本"></a>2.查看virtualenv 的版本</h2><pre><code>`virtualenv --version`
-</code></pre><h2 id="3-创建不同Python版本的解析器"><a href="#3-创建不同Python版本的解析器" class="headerlink" title="3.创建不同Python版本的解析器"></a>3.创建不同Python版本的解析器</h2><pre><code>`virtualenv -p /usr/bin/python2.7 py2
-virtualenv py3`
-</code></pre><h2 id="4-启动虚拟环境"><a href="#4-启动虚拟环境" class="headerlink" title="4.启动虚拟环境"></a>4.启动虚拟环境</h2><p><code>source py2/bin/activate</code></p>
-<h2 id="5-退出虚拟环境"><a href="#5-退出虚拟环境" class="headerlink" title="5.退出虚拟环境"></a>5.退出虚拟环境</h2><p><code>deactivate</code></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/27/iOS插到Mac用终端抓包/" itemprop="url">
-                  iOS插到Mac用终端抓包
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-07-27T00:00:13+08:00" content="2017-07-27">
-              2017-07-27
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="iOS插到Mac用终端抓包"><a href="#iOS插到Mac用终端抓包" class="headerlink" title="iOS插到Mac用终端抓包"></a>iOS插到Mac用终端抓包</h1><p><code>ifconfig -l</code> # 查看当前能抓包的端口<br><code>rvictl -s xxxxxxxxxxxxxx</code># 加入手机的Device ID<br><code>sudo tcpdump -i rvi0 -w ~/desktop/抓包/100.pcap</code> # 存放包路径</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/30/用好PROJECT-DIR/" itemprop="url">
-                  用好PROJECT_DIR
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-30T22:05:45+08:00" content="2017-06-30">
-              2017-06-30
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="iOS-SDK开发技巧"><a href="#iOS-SDK开发技巧" class="headerlink" title="iOS SDK开发技巧"></a>iOS SDK开发技巧</h1><p>在用XCode开发SDK的时候用好PROJECT_DIR可以免于重复手动的粘贴复制<br>在RunScript里面添加下面的代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># copy framework to SDK/build</div><div class="line">rm -rf &quot;$&#123;PROJECT_DIR&#125;/../SDK/build/$&#123;PROJECT_NAME&#125;.framework&quot;</div><div class="line">cd &quot;$&#123;CONFIGURATION_BUILD_DIR&#125;&quot;</div><div class="line">cp -r &quot;$&#123;PROJECT_NAME&#125;.framework&quot; &quot;$&#123;PROJECT_DIR&#125;/../SDK/build/&quot;</div></pre></td></tr></table></figure>
-<p>上面的文件名按照自己的需要修改</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/30/PythonSocket编程/" itemprop="url">
-                  PythonSocket编程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-30T00:03:32+08:00" content="2017-06-30">
-              2017-06-30
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Python-Socket编程"><a href="#Python-Socket编程" class="headerlink" title="Python Socket编程"></a>Python Socket编程</h1><p>目的: 客户端发送两个整数，让服务器给我们做加法，然后再用Json格式传给客户端</p>
-<h2 id="UDP编程"><a href="#UDP编程" class="headerlink" title="UDP编程"></a>UDP编程</h2><h3 id="UDPClient-py"><a href="#UDPClient-py" class="headerlink" title="UDPClient.py"></a>UDPClient.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"> #coding:utf8</div><div class="line">from socket import *</div><div class="line">import json</div><div class="line">serverName = &apos;127.0.0.1&apos;</div><div class="line">serverPort = 12000</div><div class="line">clentSocket = socket(AF_INET,SOCK_DGRAM)</div><div class="line">message1 = raw_input(&quot;InputNumber1&gt; &quot;)</div><div class="line">message2 = raw_input(&quot;InputNumber2&gt; &quot;)</div><div class="line">d = &#123;</div><div class="line">   &quot;message1&quot; : message1,</div><div class="line">   &quot;message2&quot; : message2</div><div class="line">&#125;   </div><div class="line">data = json.dumps(d)  </div><div class="line">clentSocket.sendto(data,(serverName,serverPort))</div><div class="line">modifidMessage, serverAddress = clentSocket.recvfrom(2048)</div><div class="line">mes = json.loads(modifidMessage)</div><div class="line">print int(mes[&apos;sum&apos;])</div><div class="line">clentSocket.close()</div></pre></td></tr></table></figure>
-<h3 id="UDPServer-py"><a href="#UDPServer-py" class="headerlink" title="UDPServer.py"></a>UDPServer.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import json</div><div class="line">from socket import *</div><div class="line">serverPort = 12000</div><div class="line">serverSocket = socket(AF_INET,SOCK_DGRAM)</div><div class="line">serverSocket.bind((&apos;127.0.0.1&apos;,serverPort))</div><div class="line">print &quot;The server is ready to receive&quot;</div><div class="line">while True:</div><div class="line">   message, clientAddress = serverSocket.recvfrom(2048)</div><div class="line">   dic = json.loads(message)</div><div class="line">   print dic</div><div class="line">   num1 = int(dic[&quot;message1&quot;])</div><div class="line">   num2 = int(dic[&quot;message2&quot;])</div><div class="line">   sum = num1 + num2</div><div class="line">   data = &#123;</div><div class="line">       &quot;sum&quot; : sum</div><div class="line">   &#125;</div><div class="line">   d = json.dumps(data)</div><div class="line">   print d</div><div class="line">   serverSocket.sendto(d, clientAddress)</div></pre></td></tr></table></figure>
-<h2 id="TCP编程"><a href="#TCP编程" class="headerlink" title="TCP编程"></a>TCP编程</h2><h3 id="TCPClient-py"><a href="#TCPClient-py" class="headerlink" title="TCPClient.py"></a>TCPClient.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"># coding:utf8</div><div class="line">from socket import *</div><div class="line">import json</div><div class="line">serverName = &apos;127.0.0.1&apos;</div><div class="line">serverPort = 12000</div><div class="line">clientSocket = socket(AF_INET, SOCK_STREAM)</div><div class="line">clientSocket.connect((serverName,serverPort)) #创建与服务器的连接 也就是三处握手</div><div class="line">number1 = raw_input(&apos;Input Number1:&apos;) </div><div class="line">number2 = raw_input(&apos;Input Number2:&apos;) </div><div class="line">d = &#123;</div><div class="line">   &apos;num1&apos; : number1,</div><div class="line">   &apos;num2&apos; : number2</div><div class="line">&#125;</div><div class="line">jsonStr = json.dumps(d)</div><div class="line">clientSocket.send(jsonStr)</div><div class="line">serverData = clientSocket.recv(1024)</div><div class="line">print &apos;From Server: &apos;, serverData</div><div class="line">data = json.loads(serverData)</div><div class="line">print int(data[&apos;sum&apos;])</div><div class="line">clientSocket.close()</div></pre></td></tr></table></figure>
-<h3 id="TCPServer-py"><a href="#TCPServer-py" class="headerlink" title="TCPServer.py"></a>TCPServer.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">from socket import *</div><div class="line">import json</div><div class="line">serverPort = 12000</div><div class="line">serverSocket = socket(AF_INET, SOCK_STREAM)</div><div class="line">serverSocket.bind((&apos;127.0.0.1&apos;, serverPort))</div><div class="line">serverSocket.listen(1)</div><div class="line">print &apos;The server is ready to receive&apos;</div><div class="line">while True:</div><div class="line">   connectionSocket, address = serverSocket.accept()</div><div class="line">   sentence = connectionSocket.recv(1024)</div><div class="line">   jsonData = json.loads(sentence)</div><div class="line">   print jsonData</div><div class="line">   num1 = int(jsonData[&apos;num1&apos;])</div><div class="line">   num2 = int(jsonData[&apos;num2&apos;])</div><div class="line">   sum = num1 + num2</div><div class="line">   dic = &#123;</div><div class="line">       &apos;sum&apos; : sum</div><div class="line">   &#125;</div><div class="line">   clientData = json.dumps(dic)</div><div class="line">   connectionSocket.send(clientData)</div><div class="line">   connectionSocket.close()</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -739,7 +751,7 @@ virtualenv py3`
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

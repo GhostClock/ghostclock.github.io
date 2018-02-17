@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Mac," />
+  <meta name="keywords" content="Swift," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="iOS插到Mac用终端抓包ifconfig -l # 查看当前能抓包的端口rvictl -s xxxxxxxxxxxxxx# 加入手机的Device IDsudo tcpdump -i rvi0 -w ~/desktop/抓包/100.pcap # 存放包路径">
+<meta name="description" content="Swift 创建栈(Stack)1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950/// 栈// 用数组作为栈的线性表的实现public struct Stack&amp;lt;T&amp;gt; &amp;#123;    // 数组    fileprivate var stackArr">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS插到Mac用终端抓包">
-<meta property="og:url" content="http://yoursite.com/2017/07/27/iOS插到Mac用终端抓包/index.html">
+<meta property="og:title" content="Swift 创建栈(Stack)">
+<meta property="og:url" content="http://yoursite.com/2018/02/17/Swift-创建栈-Stack/index.html">
 <meta property="og:site_name" content="GC的笔记本">
-<meta property="og:description" content="iOS插到Mac用终端抓包ifconfig -l # 查看当前能抓包的端口rvictl -s xxxxxxxxxxxxxx# 加入手机的Device IDsudo tcpdump -i rvi0 -w ~/desktop/抓包/100.pcap # 存放包路径">
-<meta property="og:updated_time" content="2017-07-26T16:01:41.000Z">
+<meta property="og:description" content="Swift 创建栈(Stack)1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950/// 栈// 用数组作为栈的线性表的实现public struct Stack&amp;lt;T&amp;gt; &amp;#123;    // 数组    fileprivate var stackArr">
+<meta property="og:updated_time" content="2018-02-17T06:44:04.375Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS插到Mac用终端抓包">
-<meta name="twitter:description" content="iOS插到Mac用终端抓包ifconfig -l # 查看当前能抓包的端口rvictl -s xxxxxxxxxxxxxx# 加入手机的Device IDsudo tcpdump -i rvi0 -w ~/desktop/抓包/100.pcap # 存放包路径">
+<meta name="twitter:title" content="Swift 创建栈(Stack)">
+<meta name="twitter:description" content="Swift 创建栈(Stack)1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950/// 栈// 用数组作为栈的线性表的实现public struct Stack&amp;lt;T&amp;gt; &amp;#123;    // 数组    fileprivate var stackArr">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> iOS插到Mac用终端抓包 | GC的笔记本 </title>
+  <title> Swift 创建栈(Stack) | GC的笔记本 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans,zh-tw,en,default">
@@ -231,7 +231,7 @@
             
             
               
-                iOS插到Mac用终端抓包
+                Swift 创建栈(Stack)
               
             
           </h1>
@@ -243,8 +243,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-07-27T00:00:13+08:00" content="2017-07-27">
-              2017-07-27
+            <time itemprop="dateCreated" datetime="2018-02-17T14:43:42+08:00" content="2018-02-17">
+              2018-02-17
             </time>
           </span>
 
@@ -271,7 +271,8 @@
       
 
       
-        <h1 id="iOS插到Mac用终端抓包"><a href="#iOS插到Mac用终端抓包" class="headerlink" title="iOS插到Mac用终端抓包"></a>iOS插到Mac用终端抓包</h1><p><code>ifconfig -l</code> # 查看当前能抓包的端口<br><code>rvictl -s xxxxxxxxxxxxxx</code># 加入手机的Device ID<br><code>sudo tcpdump -i rvi0 -w ~/desktop/抓包/100.pcap</code> # 存放包路径</p>
+        <h1 id="Swift-创建栈-Stack"><a href="#Swift-创建栈-Stack" class="headerlink" title="Swift 创建栈(Stack)"></a>Swift 创建栈(Stack)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">/// 栈</div><div class="line">// 用数组作为栈的线性表的实现</div><div class="line">public struct Stack&lt;T&gt; &#123;</div><div class="line">    // 数组</div><div class="line">    fileprivate var stackArray = [T]()</div><div class="line">    </div><div class="line">    // count</div><div class="line">    public var count: Int &#123;</div><div class="line">        return stackArray.count</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 是否为空</div><div class="line">    public var isEmpty: Bool &#123;</div><div class="line">        return stackArray.isEmpty</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 顶部元素</div><div class="line">    public var top: T? &#123;</div><div class="line">        guard !isEmpty else &#123;</div><div class="line">            return nil</div><div class="line">        &#125;</div><div class="line">        return stackArray.last</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // push 操作</div><div class="line">    public mutating func push(_ element: T) &#123;</div><div class="line">        stackArray.append(element)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // pop 操作</div><div class="line">    public mutating func pop() -&gt; T? &#123;</div><div class="line">        guard !isEmpty else &#123;</div><div class="line">            print(&quot;stack is empty&quot;)</div><div class="line">            return nil</div><div class="line">        &#125;</div><div class="line">        return stackArray.removeLast()</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 打印所有元素</div><div class="line">    public mutating func printAllElement() &#123;</div><div class="line">        guard count &gt; 0 else &#123;</div><div class="line">            print(&quot;stack is empty&quot;)</div><div class="line">            return</div><div class="line">        &#125;</div><div class="line">        print(&quot;\npint all stack elements&quot;)</div><div class="line">        for (index, value) in stackArray.enumerated() &#123;</div><div class="line">            print(&quot;[\(index)]\(value)&quot;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用栈<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">var stack = Stack.init(stackArray: [])</div><div class="line">stack.printAllElement()</div><div class="line">stack.isEmpty</div><div class="line"></div><div class="line">stack.push(22)</div><div class="line">stack.printAllElement()</div><div class="line"></div><div class="line">stack.push(33)</div><div class="line">stack.printAllElement()</div><div class="line"></div><div class="line">stack.top</div><div class="line"></div><div class="line">stack.pop()</div><div class="line">stack.printAllElement()</div><div class="line"></div><div class="line">stack.pop()</div><div class="line">stack.printAllElement()</div><div class="line"></div><div class="line">stack.isEmpty</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -293,7 +294,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Mac/" rel="tag">#Mac</a>
+            <a href="/tags/Swift/" rel="tag">#Swift</a>
           
         </div>
       
@@ -302,17 +303,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/30/用好PROJECT-DIR/" rel="next" title="用好PROJECT_DIR">
-                <i class="fa fa-chevron-left"></i> 用好PROJECT_DIR
+              <a href="/2018/02/17/Swift-创建链表-Linked-List/" rel="next" title="Swift 创建链表(Linked List)">
+                <i class="fa fa-chevron-left"></i> Swift 创建链表(Linked List)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/27/Python创建虚拟环境/" rel="prev" title="Python创建虚拟环境">
-                Python创建虚拟环境 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -419,7 +416,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iOS插到Mac用终端抓包"><span class="nav-number">1.</span> <span class="nav-text">iOS插到Mac用终端抓包</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Swift-创建栈-Stack"><span class="nav-number">1.</span> <span class="nav-text">Swift 创建栈(Stack)</span></a></li></ol></div>
             
           </div>
         </section>

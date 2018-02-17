@@ -84,22 +84,19 @@
 
 
 
-<meta name="description" content="理解消息转发机制分为两大阶段:第一阶段:先征询接受者所属的类, 看其是否能动态添加方法,以处理当前这个‘未知的选择器’,这个叫做‘动态方法解析’
-第二阶段:涉及‘完整的消息转发机制’, 如果运行期系统已经把第一阶段执行完,那么接受者就无法再以动态新增的方法的手段来响应包含该选择器的消息了,此时,运行期系统会请求接受者以其他手段来处理与消息有关的方法调用，
-这个细节分为两步,首先请接受者看看有没有其">
+<meta name="description" content="在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction)GCNetworkFetcher.h定义protocol
+1234567891011121314151617#import &amp;lt;Foundation/Foundation.h&amp;gt;@class GCNetworkFetcher;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="理解消息转发机制">
-<meta property="og:url" content="http://yoursite.com/2018/02/17/理解消息转发机制/index.html">
+<meta property="og:title" content="在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction)">
+<meta property="og:url" content="http://yoursite.com/2018/02/17/在用delegate回调数据时，避免避免持续调用-delegate-respondsToSelector-selector-someThingFunction/index.html">
 <meta property="og:site_name" content="GC的笔记本">
-<meta property="og:description" content="理解消息转发机制分为两大阶段:第一阶段:先征询接受者所属的类, 看其是否能动态添加方法,以处理当前这个‘未知的选择器’,这个叫做‘动态方法解析’
-第二阶段:涉及‘完整的消息转发机制’, 如果运行期系统已经把第一阶段执行完,那么接受者就无法再以动态新增的方法的手段来响应包含该选择器的消息了,此时,运行期系统会请求接受者以其他手段来处理与消息有关的方法调用，
-这个细节分为两步,首先请接受者看看有没有其">
-<meta property="og:updated_time" content="2018-02-17T06:36:42.617Z">
+<meta property="og:description" content="在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction)GCNetworkFetcher.h定义protocol
+1234567891011121314151617#import &amp;lt;Foundation/Foundation.h&amp;gt;@class GCNetworkFetcher;">
+<meta property="og:updated_time" content="2018-02-17T06:40:43.177Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="理解消息转发机制">
-<meta name="twitter:description" content="理解消息转发机制分为两大阶段:第一阶段:先征询接受者所属的类, 看其是否能动态添加方法,以处理当前这个‘未知的选择器’,这个叫做‘动态方法解析’
-第二阶段:涉及‘完整的消息转发机制’, 如果运行期系统已经把第一阶段执行完,那么接受者就无法再以动态新增的方法的手段来响应包含该选择器的消息了,此时,运行期系统会请求接受者以其他手段来处理与消息有关的方法调用，
-这个细节分为两步,首先请接受者看看有没有其">
+<meta name="twitter:title" content="在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction)">
+<meta name="twitter:description" content="在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction)GCNetworkFetcher.h定义protocol
+1234567891011121314151617#import &amp;lt;Foundation/Foundation.h&amp;gt;@class GCNetworkFetcher;">
 
 
 
@@ -117,7 +114,7 @@
   };
 </script>
 
-  <title> 理解消息转发机制 | GC的笔记本 </title>
+  <title> 在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction) | GC的笔记本 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans,zh-tw,en,default">
@@ -237,7 +234,7 @@
             
             
               
-                理解消息转发机制
+                在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction)
               
             
           </h1>
@@ -249,7 +246,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-02-17T14:28:38+08:00" content="2018-02-17">
+            <time itemprop="dateCreated" datetime="2018-02-17T14:40:11+08:00" content="2018-02-17">
               2018-02-17
             </time>
           </span>
@@ -277,19 +274,9 @@
       
 
       
-        <h3 id="理解消息转发机制分为两大阶段"><a href="#理解消息转发机制分为两大阶段" class="headerlink" title="理解消息转发机制分为两大阶段:"></a>理解消息转发机制分为两大阶段:</h3><h4 id="第一阶段"><a href="#第一阶段" class="headerlink" title="第一阶段:"></a>第一阶段:</h4><p>先征询接受者所属的类, 看其是否能动态添加方法,以处理当前这个‘未知的选择器’,这个叫做‘动态方法解析’</p>
-<h4 id="第二阶段"><a href="#第二阶段" class="headerlink" title="第二阶段:"></a>第二阶段:</h4><p>涉及‘完整的消息转发机制’, 如果运行期系统已经把第一阶段执行完,那么接受者就无法再以动态新增的方法的手段来响应包含该选择器的消息了,此时,运行期系统会请求接受者以其他手段来处理与消息有关的方法调用，</p>
-<h5 id="这个细节分为两步-首先请接受者看看有没有其他对象能处理这条消息"><a href="#这个细节分为两步-首先请接受者看看有没有其他对象能处理这条消息" class="headerlink" title="这个细节分为两步,首先请接受者看看有没有其他对象能处理这条消息,"></a>这个细节分为两步,首先请接受者看看有没有其他对象能处理这条消息,</h5><ol>
-<li>若有,则运行期系统会把消息转给那个对象,消息转发结束,一切如常;</li>
-<li>若没有,则穷完整的消息转发机制,运行期系统会把消息有关的全部细节都封装到NSInvocation对象中,再给接受者最后一个机会，令其设法解决当前还未处理的这条消息；</li>
-</ol>
-<p>// 创建GCMessageForwarding，在 GCMessageForwarding.h写一个放方法但是不去实现<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-(void)lowercasseString;</div></pre></td></tr></table></figure></p>
-<p>在外部调用时: 就会发生Crash</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">方法没实现，由NSobject的doesNotRecognizeSelector抛出, 此异常表明:接受者的类型是GCMessageForwarding，而该接受者无法理解该选择器</div><div class="line">     -[GCMessageForwarding lowercasseString]: unrecognized selector sent to instance 0x1740044d0</div><div class="line">     *** Terminating app due to uncaught exception &apos;NSInvalidArgumentException&apos;, reason: &apos;-[GCMessageForwarding lowercasseString]: unrecognized selector sent to instance 0x1740044d0&apos;</div></pre></td></tr></table></figure>
-<h5 id="GCMessageForwarding-m里面实现"><a href="#GCMessageForwarding-m里面实现" class="headerlink" title="GCMessageForwarding.m里面实现"></a>GCMessageForwarding.m里面实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">void messageForwarding() &#123;</div><div class="line">    NSLog(@&quot;show Test02&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</div><div class="line">    NSString *selString = NSStringFromSelector(sel);</div><div class="line">    if ([selString isEqualToString:@&quot;lowercasseString&quot;]) &#123;</div><div class="line">        class_addMethod(self, sel, (IMP)messageForwarding, &quot;v@:@&quot;);</div><div class="line">    &#125;</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这时就会打印 <code>show Test02</code></p>
-<h3 id="方法-resolveInstanceMethod-也没实现"><a href="#方法-resolveInstanceMethod-也没实现" class="headerlink" title="方法 resolveInstanceMethod 也没实现"></a>方法 <code>resolveInstanceMethod</code> 也没实现</h3><p>如果方法 <code>resolveInstanceMethod</code> 也没实现，就会掉用备用方法 <code>forwardingTargetForSelector</code>,把这条消息转给其他接受者来处理</p>
-<h3 id="整个调用流程"><a href="#整个调用流程" class="headerlink" title="整个调用流程"></a>整个调用流程</h3><p>lowercasseString(未实现) -&gt; resolveInstanceMethod(未实现) -&gt;forwardingTargetForSelector(未实现) -&gt;  resolveInstanceMethod(未实现) -&gt; NSobject的doesNotRecognizeSelector抛出异常</p>
+        <h1 id="在用delegate回调数据时，避免避免持续调用-delegate-respondsToSelector-selector-someThingFunction"><a href="#在用delegate回调数据时，避免避免持续调用-delegate-respondsToSelector-selector-someThingFunction" class="headerlink" title="在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction)"></a>在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction)</h1><h3 id="GCNetworkFetcher-h"><a href="#GCNetworkFetcher-h" class="headerlink" title="GCNetworkFetcher.h"></a>GCNetworkFetcher.h</h3><p>定义protocol</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">@class GCNetworkFetcher;</div><div class="line"></div><div class="line">@protocol GCNetworkFetcherDelegate &lt;NSObject&gt;</div><div class="line"></div><div class="line">@optional</div><div class="line">- (void)networkFetcher:(GCNetworkFetcher *)fetcher didReceiveData:(NSData *)data;</div><div class="line">- (void)networkFetcher:(GCNetworkFetcher *)fetcher didFaileWithError:(NSError *)error;</div><div class="line">- (void)networkFetcher:(GCNetworkFetcher *)fetcher didUpdateProgressTo:(float)progress;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@interface GCNetworkFetcher : NSObject</div><div class="line"></div><div class="line">@property (nonatomic, weak) id&lt;GCNetworkFetcherDelegate&gt;delegate;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<h3 id="GCNetworkFetcher-m"><a href="#GCNetworkFetcher-m" class="headerlink" title="GCNetworkFetcher.m"></a>GCNetworkFetcher.m</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">#import &quot;GCNetworkFetcher.h&quot;</div><div class="line"></div><div class="line">@interface GCNetworkFetcher () &#123;</div><div class="line">    //用位段的数据类型缓存方法的响应能力，避免每次回调数据的时候都去检测一下 避免持续调用 if( [_delegate respondsToSelector:@selector(networkFetcher:didUpdateProgressTo:)]) &#123;&#125;</div><div class="line">    //用结构体来缓存委托对象是否能响应特定的选择器</div><div class="line">    struct &#123;</div><div class="line">        unsigned int didReceivedData     : 1;</div><div class="line">        unsigned int didFaileWithError   : 1;</div><div class="line">        unsigned int didUpdateProgressTo : 1;</div><div class="line">    &#125;_delegateFlags;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation GCNetworkFetcher</div><div class="line"></div><div class="line">// 实现缓存功能所有的代码可以写在delegate属性所对应的设置方法里</div><div class="line">- (void)setDelegate:(id&lt;GCNetworkFetcherDelegate&gt;)delegate &#123;</div><div class="line">    _delegate = delegate;</div><div class="line">    _delegateFlags.didReceivedData      = [delegate respondsToSelector:@selector(networkFetcher:didReceiveData:)];</div><div class="line">    _delegateFlags.didFaileWithError    = [delegate respondsToSelector:@selector(networkFetcher:didFaileWithError:)];</div><div class="line">    _delegateFlags.didUpdateProgressTo  = [delegate respondsToSelector:@selector(networkFetcher:didUpdateProgressTo:)];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)getData:(NSData *)data &#123;</div><div class="line">    if (_delegateFlags.didReceivedData) &#123;</div><div class="line">        [_delegate networkFetcher:self didReceiveData:data];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setError:(NSError *)error &#123;</div><div class="line">    if (_delegateFlags.didFaileWithError) &#123;</div><div class="line">        [_delegate networkFetcher:self didFaileWithError:error];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)progress:(float)progress &#123;</div><div class="line">    if (_delegateFlags.didUpdateProgressTo) &#123;</div><div class="line">        [_delegate networkFetcher:self didUpdateProgressTo:progress];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -320,16 +307,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/17/在手机上查看相关图层/" rel="next" title="在手机上查看相关图层">
-                <i class="fa fa-chevron-left"></i> 在手机上查看相关图层
+              <a href="/2018/02/17/理解objc-msgSend的作用/" rel="next" title="理解objc_msgSend的作用">
+                <i class="fa fa-chevron-left"></i> 理解objc_msgSend的作用
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/17/理解objc-msgSend的作用/" rel="prev" title="理解objc_msgSend的作用">
-                理解objc_msgSend的作用 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/17/Swift-创建队列-queue/" rel="prev" title="Swift 创建队列(queue)">
+                Swift 创建队列(queue) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -437,7 +424,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#理解消息转发机制分为两大阶段"><span class="nav-number">1.</span> <span class="nav-text">理解消息转发机制分为两大阶段:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一阶段"><span class="nav-number">1.1.</span> <span class="nav-text">第一阶段:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二阶段"><span class="nav-number">1.2.</span> <span class="nav-text">第二阶段:</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#这个细节分为两步-首先请接受者看看有没有其他对象能处理这条消息"><span class="nav-number">1.2.1.</span> <span class="nav-text">这个细节分为两步,首先请接受者看看有没有其他对象能处理这条消息,</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GCMessageForwarding-m里面实现"><span class="nav-number">1.2.2.</span> <span class="nav-text">GCMessageForwarding.m里面实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法-resolveInstanceMethod-也没实现"><span class="nav-number">2.</span> <span class="nav-text">方法 resolveInstanceMethod 也没实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整个调用流程"><span class="nav-number">3.</span> <span class="nav-text">整个调用流程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在用delegate回调数据时，避免避免持续调用-delegate-respondsToSelector-selector-someThingFunction"><span class="nav-number">1.</span> <span class="nav-text">在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GCNetworkFetcher-h"><span class="nav-number">1.0.1.</span> <span class="nav-text">GCNetworkFetcher.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GCNetworkFetcher-m"><span class="nav-number">1.0.2.</span> <span class="nav-text">GCNetworkFetcher.m</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
