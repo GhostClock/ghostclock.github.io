@@ -1,0 +1,569 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Objective-C," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="理解消息转发机制分为两大阶段:第一阶段:先征询接受者所属的类, 看其是否能动态添加方法,以处理当前这个‘未知的选择器’,这个叫做‘动态方法解析’
+第二阶段:涉及‘完整的消息转发机制’, 如果运行期系统已经把第一阶段执行完,那么接受者就无法再以动态新增的方法的手段来响应包含该选择器的消息了,此时,运行期系统会请求接受者以其他手段来处理与消息有关的方法调用，
+这个细节分为两步,首先请接受者看看有没有其">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解消息转发机制">
+<meta property="og:url" content="http://yoursite.com/2018/02/17/理解消息转发机制/index.html">
+<meta property="og:site_name" content="GC的笔记本">
+<meta property="og:description" content="理解消息转发机制分为两大阶段:第一阶段:先征询接受者所属的类, 看其是否能动态添加方法,以处理当前这个‘未知的选择器’,这个叫做‘动态方法解析’
+第二阶段:涉及‘完整的消息转发机制’, 如果运行期系统已经把第一阶段执行完,那么接受者就无法再以动态新增的方法的手段来响应包含该选择器的消息了,此时,运行期系统会请求接受者以其他手段来处理与消息有关的方法调用，
+这个细节分为两步,首先请接受者看看有没有其">
+<meta property="og:updated_time" content="2018-02-17T06:36:42.617Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解消息转发机制">
+<meta name="twitter:description" content="理解消息转发机制分为两大阶段:第一阶段:先征询接受者所属的类, 看其是否能动态添加方法,以处理当前这个‘未知的选择器’,这个叫做‘动态方法解析’
+第二阶段:涉及‘完整的消息转发机制’, 如果运行期系统已经把第一阶段执行完,那么接受者就无法再以动态新增的方法的手段来响应包含该选择器的消息了,此时,运行期系统会请求接受者以其他手段来处理与消息有关的方法调用，
+这个细节分为两步,首先请接受者看看有没有其">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 理解消息转发机制 | GC的笔记本 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans,zh-tw,en,default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">GC的笔记本</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">😄</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                理解消息转发机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-17T14:28:38+08:00" content="2018-02-17">
+              2018-02-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="理解消息转发机制分为两大阶段"><a href="#理解消息转发机制分为两大阶段" class="headerlink" title="理解消息转发机制分为两大阶段:"></a>理解消息转发机制分为两大阶段:</h3><h4 id="第一阶段"><a href="#第一阶段" class="headerlink" title="第一阶段:"></a>第一阶段:</h4><p>先征询接受者所属的类, 看其是否能动态添加方法,以处理当前这个‘未知的选择器’,这个叫做‘动态方法解析’</p>
+<h4 id="第二阶段"><a href="#第二阶段" class="headerlink" title="第二阶段:"></a>第二阶段:</h4><p>涉及‘完整的消息转发机制’, 如果运行期系统已经把第一阶段执行完,那么接受者就无法再以动态新增的方法的手段来响应包含该选择器的消息了,此时,运行期系统会请求接受者以其他手段来处理与消息有关的方法调用，</p>
+<h5 id="这个细节分为两步-首先请接受者看看有没有其他对象能处理这条消息"><a href="#这个细节分为两步-首先请接受者看看有没有其他对象能处理这条消息" class="headerlink" title="这个细节分为两步,首先请接受者看看有没有其他对象能处理这条消息,"></a>这个细节分为两步,首先请接受者看看有没有其他对象能处理这条消息,</h5><ol>
+<li>若有,则运行期系统会把消息转给那个对象,消息转发结束,一切如常;</li>
+<li>若没有,则穷完整的消息转发机制,运行期系统会把消息有关的全部细节都封装到NSInvocation对象中,再给接受者最后一个机会，令其设法解决当前还未处理的这条消息；</li>
+</ol>
+<p>// 创建GCMessageForwarding，在 GCMessageForwarding.h写一个放方法但是不去实现<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-(void)lowercasseString;</div></pre></td></tr></table></figure></p>
+<p>在外部调用时: 就会发生Crash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">方法没实现，由NSobject的doesNotRecognizeSelector抛出, 此异常表明:接受者的类型是GCMessageForwarding，而该接受者无法理解该选择器</div><div class="line">     -[GCMessageForwarding lowercasseString]: unrecognized selector sent to instance 0x1740044d0</div><div class="line">     *** Terminating app due to uncaught exception &apos;NSInvalidArgumentException&apos;, reason: &apos;-[GCMessageForwarding lowercasseString]: unrecognized selector sent to instance 0x1740044d0&apos;</div></pre></td></tr></table></figure>
+<h5 id="GCMessageForwarding-m里面实现"><a href="#GCMessageForwarding-m里面实现" class="headerlink" title="GCMessageForwarding.m里面实现"></a>GCMessageForwarding.m里面实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">void messageForwarding() &#123;</div><div class="line">    NSLog(@&quot;show Test02&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</div><div class="line">    NSString *selString = NSStringFromSelector(sel);</div><div class="line">    if ([selString isEqualToString:@&quot;lowercasseString&quot;]) &#123;</div><div class="line">        class_addMethod(self, sel, (IMP)messageForwarding, &quot;v@:@&quot;);</div><div class="line">    &#125;</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这时就会打印 <code>show Test02</code></p>
+<h3 id="方法-resolveInstanceMethod-也没实现"><a href="#方法-resolveInstanceMethod-也没实现" class="headerlink" title="方法 resolveInstanceMethod 也没实现"></a>方法 <code>resolveInstanceMethod</code> 也没实现</h3><p>如果方法 <code>resolveInstanceMethod</code> 也没实现，就会掉用备用方法 <code>forwardingTargetForSelector</code>,把这条消息转给其他接受者来处理</p>
+<h3 id="整个调用流程"><a href="#整个调用流程" class="headerlink" title="整个调用流程"></a>整个调用流程</h3><p>lowercasseString(未实现) -&gt; resolveInstanceMethod(未实现) -&gt;forwardingTargetForSelector(未实现) -&gt;  resolveInstanceMethod(未实现) -&gt; NSobject的doesNotRecognizeSelector抛出异常</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objective-C/" rel="tag">#Objective-C</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/17/在手机上查看相关图层/" rel="next" title="在手机上查看相关图层">
+                <i class="fa fa-chevron-left"></i> 在手机上查看相关图层
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/17/理解objc-msgSend的作用/" rel="prev" title="理解objc_msgSend的作用">
+                理解objc_msgSend的作用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://img1.gtimg.com/comic/pics/hv1/70/76/1989/129354175.jpg"
+               alt="GhostClock(鬼钟)" />
+          <p class="site-author-name" itemprop="name">GhostClock(鬼钟)</p>
+          <p class="site-description motion-element" itemprop="description">穷折腾 二次元 Mac Win10 iOS Java</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#理解消息转发机制分为两大阶段"><span class="nav-number">1.</span> <span class="nav-text">理解消息转发机制分为两大阶段:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一阶段"><span class="nav-number">1.1.</span> <span class="nav-text">第一阶段:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二阶段"><span class="nav-number">1.2.</span> <span class="nav-text">第二阶段:</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#这个细节分为两步-首先请接受者看看有没有其他对象能处理这条消息"><span class="nav-number">1.2.1.</span> <span class="nav-text">这个细节分为两步,首先请接受者看看有没有其他对象能处理这条消息,</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GCMessageForwarding-m里面实现"><span class="nav-number">1.2.2.</span> <span class="nav-text">GCMessageForwarding.m里面实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法-resolveInstanceMethod-也没实现"><span class="nav-number">2.</span> <span class="nav-text">方法 resolveInstanceMethod 也没实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整个调用流程"><span class="nav-number">3.</span> <span class="nav-text">整个调用流程</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GhostClock(鬼钟)</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

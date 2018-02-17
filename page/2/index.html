@@ -233,6 +233,200 @@
             
               
                 
+                <a class="post-title-link" href="/2017/10/29/用Alamofire发起网络请求/" itemprop="url">
+                  用Alamofire发起网络请求 - swift4
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-10-29T20:14:21+08:00" content="2017-10-29">
+              2017-10-29
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-创建一个NetWorkingTool单例"><a href="#1-创建一个NetWorkingTool单例" class="headerlink" title="1.创建一个NetWorkingTool单例"></a>1.创建一个NetWorkingTool单例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">import UIKit</div><div class="line">import Alamofire</div><div class="line"></div><div class="line">class NetWorkingTool: NSObject &#123;</div><div class="line">    static let shendInstance = NetWorkingTool()</div><div class="line">    private override init() &#123;&#125;</div><div class="line">    public func getData(url: String, dataBlock:@escaping (_ resData: Any) -&gt;(), errorBlock:@escaping (_ error: Error) -&gt; ()) -&gt; Void &#123;</div><div class="line">        Alamofire.request(url).responseJSON &#123; (responseData) in</div><div class="line">            if let json = responseData.result.value &#123;</div><div class="line">                dataBlock(json)</div><div class="line">            &#125;else&#123;</div><div class="line">                errorBlock(responseData.error!)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-在ViewController发起调用"><a href="#2-在ViewController发起调用" class="headerlink" title="2.在ViewController发起调用"></a>2.在ViewController发起调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">import UIKit</div><div class="line">class ViewController: UIViewController &#123;</div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        super.viewDidLoad()</div><div class="line">        NetWorkingTool.shendInstance.getData(url: &quot;https://www.v2ex.com/api/nodes/show.json?name=python&quot;, dataBlock: &#123; (responseData) in</div><div class="line">            //返回的是数组</div><div class="line">            guard responseData is [String: Any] else &#123;</div><div class="line">                let dataArray = responseData as! Array&lt;[String: Any]&gt;</div><div class="line">                for dict in dataArray &#123;</div><div class="line">                    print(dict[&quot;title&quot;]!, dict[&quot;id&quot;]!)</div><div class="line">                &#125;</div><div class="line">                return</div><div class="line">            &#125;</div><div class="line">            //返回的是字典</div><div class="line">            guard responseData is [String: Dictionary&lt;String, Any&gt;] else &#123;</div><div class="line">                let dataArray = responseData as! Dictionary&lt;String, Any&gt;</div><div class="line">                for value in dataArray &#123;</div><div class="line">                    print(type(of: value))</div><div class="line">                &#125;</div><div class="line">                return</div><div class="line">            &#125;</div><div class="line">        &#125;) &#123; (error) in</div><div class="line">            print(error)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/27/Python创建虚拟环境/" itemprop="url">
+                  Python创建虚拟环境
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-07-27T00:04:22+08:00" content="2017-07-27">
+              2017-07-27
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Python创建虚拟环境"><a href="#Python创建虚拟环境" class="headerlink" title="Python创建虚拟环境"></a>Python创建虚拟环境</h1><h2 id="1-通过pip安装virtualenv"><a href="#1-通过pip安装virtualenv" class="headerlink" title="1.通过pip安装virtualenv"></a>1.通过pip安装virtualenv</h2><pre><code>`pip install virtualenv`
+</code></pre><h2 id="2-查看virtualenv-的版本"><a href="#2-查看virtualenv-的版本" class="headerlink" title="2.查看virtualenv 的版本"></a>2.查看virtualenv 的版本</h2><pre><code>`virtualenv --version`
+</code></pre><h2 id="3-创建不同Python版本的解析器"><a href="#3-创建不同Python版本的解析器" class="headerlink" title="3.创建不同Python版本的解析器"></a>3.创建不同Python版本的解析器</h2><pre><code>`virtualenv -p /usr/bin/python2.7 py2
+virtualenv py3`
+</code></pre><h2 id="4-启动虚拟环境"><a href="#4-启动虚拟环境" class="headerlink" title="4.启动虚拟环境"></a>4.启动虚拟环境</h2><p><code>source py2/bin/activate</code></p>
+<h2 id="5-退出虚拟环境"><a href="#5-退出虚拟环境" class="headerlink" title="5.退出虚拟环境"></a>5.退出虚拟环境</h2><p><code>deactivate</code></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/07/27/iOS插到Mac用终端抓包/" itemprop="url">
                   iOS插到Mac用终端抓包
                 </a>
@@ -500,246 +694,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/05/11/Mac下配置CGI环境/" itemprop="url">
-                  Mac下配置CGI环境
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-05-11T22:37:51+08:00" content="2017-05-11">
-              2017-05-11
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Mac下配置CGI环境"><a href="#Mac下配置CGI环境" class="headerlink" title="Mac下配置CGI环境"></a>Mac下配置CGI环境</h1><p>最近在学Python CGI编程，环境一直弄不好，Google了一大圈，看了很多博客，后面实践下来，要么就是403，要么就是解析不出来，直接打印出源码，现在在这里记录一下我自己的操作步骤，以便以后在遇到该问题好直接上手</p>
-<h2 id="1-在httpd-conf文件中开启CGI配置和虚拟主机"><a href="#1-在httpd-conf文件中开启CGI配置和虚拟主机" class="headerlink" title="1.在httpd.conf文件中开启CGI配置和虚拟主机"></a>1.在httpd.conf文件中开启CGI配置和虚拟主机</h2><ol>
-<li><code>sudo vim /etc/apache2/httpd.config</code></li>
-<li>取消注释 <code>Include /private/etc/apache2/extra/httpd-vhosts.conf</code></li>
-<li>取消注释 <code>AddHandler cgi-script .cgi</code></li>
-<li>取消注释 <code>AddType text/html .shtml</code></li>
-<li>取消注释 <code>AddOutputFilter INCLUDES .shtml</code></li>
-<li>在 <code>AddHandler cgi-script .cgi</code>后面添加要支持的cgi文件,比如<code>.pl .py</code></li>
-<li>重启服务器 <code>sudo apachectl restart</code></li>
-</ol>
-<h2 id="2-在httpd-vhosts-conf文件中设置主机目录"><a href="#2-在httpd-vhosts-conf文件中设置主机目录" class="headerlink" title="2.在httpd-vhosts.conf文件中设置主机目录"></a>2.在httpd-vhosts.conf文件中设置主机目录</h2><ol>
-<li><code>sudo vim /etc/apache2/extra/httpd-vhosts.conf</code></li>
-<li>注释掉前面的两个实例主机配置</li>
-<li>添加下面的配置<pre><code>&lt;VirtualHost *:80&gt;
-    DocumentRoot &quot;/Library/WebServer/Documents&quot; #原始的目录
-    ServerName localhost
-    ErrorLog &quot;/private/var/log/apache2/localhost-error_log&quot;
-    CustomLog &quot;/private/var/log/apache2/localhost-access_log&quot; common
-&lt;/VirtualHost&gt; 
-&lt;VirtualHost *:80&gt;
-    DocumentRoot &quot;/Users/mac/Desktop/PyCharm/cgi/&quot; #自定义目录
-    ServerName studycgi  #自定义本地域名
-    ErrorLog &quot;/private/var/log/apache2/sites-error_log&quot;
-    CustomLog &quot;/private/var/log/apache2/sites-access_log&quot; common
-    &lt;Directory &quot;/Users/mac/Desktop/PyCharm/cgi/&quot;&gt;
-        Options Indexes FollowSymLinks MultiViews ExecCGI #这里必须要有ExecCGI否则会403
-        AllowOverride All
-        Require all granted
-    &lt;/Directory&gt; #这里添加权限设置，否则会出现403
-&lt;/VirtualHost&gt;
-</code></pre></li>
-</ol>
-<h2 id="3-设置username-conf"><a href="#3-设置username-conf" class="headerlink" title="3.设置username.conf"></a>3.设置username.conf</h2><ol>
-<li><code>etc/apache2/users/username.conf</code> #这里的username是你的电脑名称</li>
-<li>添加如下配置<pre><code>&lt;Directory &quot;/Users/mac/Desktop/PyCharm/cgi/&quot;&gt;
-    Options Indexes FollowSymLinks MultiViews ExecCGI #这里必须要有ExecCGI否则会403
-    DirectoryIndex index.html index.cgi
-    AllowOverride None
-    Require all granted
-    Order allow,deny
-    Allow from all
-&lt;/Directory&gt;
-</code></pre></li>
-<li>重启服务器 <code>sudo apachectl restart</code></li>
-</ol>
-<h2 id="4-设置hosts文件"><a href="#4-设置hosts文件" class="headerlink" title="4.设置hosts文件"></a>4.设置hosts文件</h2><ol>
-<li><code>sudo vim /etc/hosts</code></li>
-<li>增加 <code>127.0.0.1    studycgi</code></li>
-<li>在浏览器打开 <code>http://studycgi</code> 即可访问自定义的网站目录</li>
-</ol>
-<h2 id="5-开始就可以撸代码"><a href="#5-开始就可以撸代码" class="headerlink" title="5. 开始就可以撸代码"></a>5. 开始就可以撸代码</h2><p>…………</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/25/UIScrollView的分页效果-以及Masonry在UIScrollView中的用法/" itemprop="url">
-                  UIScrollView的分页效果,以及Masonry在UIScrollView中的用法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-03-25T23:12:01+08:00" content="2017-03-25">
-              2017-03-25
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="UIScrollView的分页效果-以及Masonry在UIScrollView中的用法"><a href="#UIScrollView的分页效果-以及Masonry在UIScrollView中的用法" class="headerlink" title="UIScrollView的分页效果,以及Masonry在UIScrollView中的用法"></a>UIScrollView的分页效果,以及Masonry在UIScrollView中的用法</h1><h2 id="1-Masonry是基于AutoLayout的高度封装"><a href="#1-Masonry是基于AutoLayout的高度封装" class="headerlink" title="1.Masonry是基于AutoLayout的高度封装"></a>1.Masonry是基于AutoLayout的高度封装</h2><p>要是你直接用官方的AutoLayout来布局的话，看看下面的代码感受一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">UIView *view = UIView.new;</div><div class="line">view.backgroundColor = [UIColor purpleColor];</div><div class="line">view.translatesAutoresizingMaskIntoConstraints = NO;//键值将Autoresizing转换为Constraints</div><div class="line">[self addSubview:view];</div><div class="line">    </div><div class="line">NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:150];</div><div class="line">[view addConstraint:width];</div><div class="line">    </div><div class="line">NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:150];</div><div class="line">[view addConstraint:height];</div><div class="line">    </div><div class="line">NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:view.superview attribute:NSLayoutAttributeLeft multiplier:1.0 constant:100];</div><div class="line">[view.superview addConstraint:left];</div><div class="line">    </div><div class="line">NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:view.superview attribute:NSLayoutAttributeTop multiplier:1.0 constant:10];</div><div class="line">[view.superview addConstraint:top];</div></pre></td></tr></table></figure></p>
-<h2 id="2-所以还是乖乖的用Masonry吧-：）"><a href="#2-所以还是乖乖的用Masonry吧-：）" class="headerlink" title="2.所以还是乖乖的用Masonry吧 ：）"></a>2.所以还是乖乖的用Masonry吧 ：）</h2><p>创建一个UIScrollView以便测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">UIScrollView *sc = [[UIScrollView alloc]init];</div><div class="line">sc.backgroundColor = [UIColor orangeColor];</div><div class="line">//    sc.bounces = NO;//禁止回弹效果</div><div class="line">sc.delegate = self;</div><div class="line">[self addSubview:sc];</div><div class="line">[sc mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">   make.left.bottom.right.mas_equalTo(0);</div><div class="line">   make.width.equalTo(self);</div><div class="line">   make.height.mas_equalTo(200);</div><div class="line">&#125;];</div><div class="line">    </div><div class="line">UIView *lastView;;</div><div class="line">for (int i = 0; i &lt; [self randomColor].count; i ++) &#123;</div><div class="line">   UIView *view = [[UIView alloc]init];</div><div class="line">   view.backgroundColor = [self randomColor][i];</div><div class="line">   [sc addSubview:view];</div><div class="line">   [view mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">       make.top.bottom.mas_equalTo(0);</div><div class="line">       make.width.height.equalTo(sc);</div><div class="line">//            if (lastView) &#123;</div><div class="line">//                make.left.mas_equalTo(lastView.mas_right).offset(0);</div><div class="line">//            &#125;else&#123;</div><div class="line">//                make.left.mas_equalTo(sc).offset(0);</div><div class="line">//            &#125;</div><div class="line">       </div><div class="line">       make.left.mas_equalTo(lastView ? lastView.mas_right : sc).offset(0);</div><div class="line">       </div><div class="line">   &#125;];</div><div class="line">   lastView = view;</div><div class="line">&#125;</div><div class="line">[lastView mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">   make.right.mas_equalTo(sc).offset(0);</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
-<h2 id="3-遵守其代理方法"><a href="#3-遵守其代理方法" class="headerlink" title="3.遵守其代理方法"></a>3.遵守其代理方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">- (NSArray *)randomColor&#123;</div><div class="line">    NSArray *colors = [NSArray arrayWithObjects:[UIColor redColor],[UIColor greenColor],[UIColor blueColor],[UIColor grayColor], nil];</div><div class="line">//    int number = arc4random() % colors.count;</div><div class="line">//    return colors[number];</div><div class="line">    return colors;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">//分页效果</div><div class="line">- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate&#123;</div><div class="line">    if (!decelerate) &#123;</div><div class="line">        [self customPage:scrollView];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView&#123;</div><div class="line">    [self customPage:scrollView];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (void)customPage:(UIScrollView *)sc&#123;</div><div class="line">    CGFloat contentOffset = sc.contentOffset.x;</div><div class="line"></div><div class="line">    NSInteger index = (contentOffset + sc.frame.size.width) / self.frame.size.width - 0.5; //-0.5的目的就是为了当刚好没有划到一半时，自动划过去</div><div class="line"></div><div class="line">    [sc setContentOffset:CGPointMake(index * self.frame.size.width, 0) animated:YES];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -785,7 +739,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -795,7 +749,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

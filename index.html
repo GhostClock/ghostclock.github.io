@@ -233,6 +233,210 @@
             
               
                 
+                <a class="post-title-link" href="/2018/02/17/理解objc-msgSend的作用/" itemprop="url">
+                  理解objc_msgSend的作用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-17T14:37:33+08:00" content="2018-02-17">
+              2018-02-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="理解objc-msgSend的作用"><a href="#理解objc-msgSend的作用" class="headerlink" title="理解objc_msgSend的作用"></a>理解objc_msgSend的作用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">objc_msgSend(void /* id self, SEL op, ... */ )</div></pre></td></tr></table></figure>
+<p>是一个参数可变的函数，能接受两个或者两个以上的参数,会根据依次的接受者与选择器的类型来调用适当的方法,为了完成此操作,该方法需要在接受者所属的类中寻找其 <code>方法列表</code>,如果找到与选择器相同的方法就调至其实现代码，若找不到沿着继承体系向上查找,等找到合适的方法之后在跳转，如果最终找不到，就执行消息<code>转发</code>;</p>
+<h3 id="objc-msgSend函数举例"><a href="#objc-msgSend函数举例" class="headerlink" title="objc_msgSend函数举例"></a>objc_msgSend函数举例</h3><h4 id="被调方法类"><a href="#被调方法类" class="headerlink" title="被调方法类"></a>被调方法类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">// GCMsgSend.h</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &lt;UIKit/UIKit.h&gt;</div><div class="line"></div><div class="line">struct myStructTest &#123;</div><div class="line">    char *name;</div><div class="line">    int age;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">@interface GCMsgSend : NSObject</div><div class="line"></div><div class="line">- (void)noArgumentAndNoReturnValue;</div><div class="line"></div><div class="line">- (void)hasArguments:(NSString *)arg;</div><div class="line"></div><div class="line">- (NSString *)noArgumentsButRetuenValue;</div><div class="line"></div><div class="line">- (int)hasArguments:(NSString *)arg andReturnValue:(int)arg1;</div><div class="line"></div><div class="line">int cStyleFunc(const void *arg1, const void *arg2);</div><div class="line"></div><div class="line">- (float)noArgumentAndReturnFloatValue;</div><div class="line"></div><div class="line">- (struct myStructTest)returnStructValue;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">@interface GCMsgSendClass: GCMsgSend</div><div class="line"></div><div class="line">- (void)getSuperClass;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">// GCMsgSend.m</div><div class="line">#import &quot;GCMsgSend.h&quot;</div><div class="line"></div><div class="line">@implementation GCMsgSend</div><div class="line"></div><div class="line">- (void)noArgumentAndNoReturnValue &#123;</div><div class="line">    NSLog(@&quot;%s was called, and it has no arguments and return value&quot;, __FUNCTION__);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)hasArguments:(NSString *)arg &#123;</div><div class="line">    NSLog(@&quot;%s was called, and arguments is %@&quot;, __FUNCTION__, arg);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (NSString *)noArgumentsButRetuenValue &#123;</div><div class="line">    NSLog(@&quot;%s was called, and return value is %@&quot;, __FUNCTION__, @&quot;不带参数，但是有返回值&quot;);</div><div class="line">    return @&quot;不带参数，但是有返回值&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (int)hasArguments:(NSString *)arg andReturnValue:(int)arg1 &#123;</div><div class="line">    NSLog(@&quot;%s was called, and argument is %@, retuen value is %d&quot;, __FUNCTION__, arg, arg1);</div><div class="line">    return arg1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//声明一个C函数</div><div class="line">int cStyleFunc(const void *arg1, const void *arg2) &#123;</div><div class="line">    NSLog(@&quot;%s was called, arg1 is %s, and age2 is %s&quot;, __FUNCTION__, arg1, arg2);</div><div class="line">    return 1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (float)noArgumentAndReturnFloatValue &#123;</div><div class="line">    NSLog(@&quot;%s was called, 带浮点数的返回值&quot;, __FUNCTION__);</div><div class="line">    return 10.24;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (struct myStructTest)returnStructValue &#123;</div><div class="line">    struct myStructTest test = &#123;</div><div class="line">        &quot;Ghost&quot;,</div><div class="line">        1024,</div><div class="line">    &#125;;</div><div class="line">    return test;</div><div class="line">&#125;</div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">@implementation GCMsgSendClass</div><div class="line"></div><div class="line">- (void)getSuperClass &#123;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<h4 id="掉用类"><a href="#掉用类" class="headerlink" title="掉用类"></a>掉用类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">#import &quot;GCMsgSend.h&quot;</div><div class="line">#import &lt;objc/message.h&gt;</div><div class="line"></div><div class="line">- (void)msgTest &#123;</div><div class="line">    //创建对象</div><div class="line">    GCMsgSend *msg = ( (GCMsgSend * (*)(id, SEL)) objc_msgSend) ((id)[GCMsgSend class],@selector(alloc));</div><div class="line">    </div><div class="line">    //初始化对象</div><div class="line">    msg = ((GCMsgSend *(*)(id, SEL))objc_msgSend) ((id)msg, @selector(init));</div><div class="line">    </div><div class="line">    //调用无参无返回值的方法</div><div class="line">    ((void (*)(id, SEL))objc_msgSend)((id)msg, @selector(noArgumentAndNoReturnValue));</div><div class="line">    </div><div class="line">    //带参数不带无返回值</div><div class="line">    ((void(*)(id, SEL, NSString *))objc_msgSend)((id)msg, @selector(hasArguments:), @&quot;一个参数，无返回值&quot;);</div><div class="line">    </div><div class="line">    //不带参数有返回值</div><div class="line">    NSString *retValue = ((NSString *(*)(id, SEL))objc_msgSend)((id)msg, @selector(noArgumentsButRetuenValue));</div><div class="line">    NSLog(@&quot;返回值是: %@&quot;, retValue);</div><div class="line">    </div><div class="line">    //带参数带返回值</div><div class="line">    int returnValue = ((int (*)(id, SEL, NSString *, int))objc_msgSend)((id)msg, @selector(hasArguments:andReturnValue:), @&quot;参数1&quot;, 2018);</div><div class="line">    NSLog(@&quot;返回值是: %d&quot;, returnValue);</div><div class="line">    </div><div class="line">    //动态添加方法再调用</div><div class="line">    class_addMethod(msg.class, NSSelectorFromString(@&quot;cStyleFunc&quot;), (IMP)cStyleFunc, &quot;v@:&quot;);</div><div class="line">    returnValue = ((int(*)(id, SEL, const void *, const void *))objc_msgSend)((id)msg, NSSelectorFromString(@&quot;cStyleFunc&quot;), &quot;参数1&quot;, &quot;参数2&quot;);</div><div class="line">    NSLog(@&quot;返回值是: %d&quot;, returnValue);</div><div class="line">    </div><div class="line">    //带浮点返回值</div><div class="line">    float returnFloatValue = ((float(*)(id, SEL))objc_msgSend)((id)msg, @selector(noArgumentAndReturnFloatValue));</div><div class="line">    NSLog(@&quot;浮点数返回值是: %f&quot;, returnFloatValue);</div><div class="line">    </div><div class="line">    //带结构体的返回值 objc_msgSend_stret 已经废弃</div><div class="line">    struct myStructTest structValue = ((struct myStructTest(*)(id, SEL))objc_msgSend)((id)msg, @selector(returnStructValue));</div><div class="line">    NSLog(@&quot;结构体返回: name = %s, age = %d&quot;, structValue.name, structValue.age);</div><div class="line">    </div><div class="line">    //给父类发送消息</div><div class="line">    //初始化子类</div><div class="line">    GCMsgSendClass *msgClass = ((GCMsgSendClass *(*)(id, SEL))objc_msgSend)((id)[GCMsgSendClass class], @selector(alloc));</div><div class="line">    msgClass = ((GCMsgSendClass *(*)(id, SEL))objc_msgSend)((id)msgClass, @selector(init));</div><div class="line">    //给父类的方法发送消息 掉用objc_msgSendSuper 会Crash</div><div class="line">    ((void(*)(id, SEL, NSString *))objc_msgSend)((id)msgClass, @selector(hasArguments:), @&quot;子类调用父类的方法&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/02/17/理解消息转发机制/" itemprop="url">
+                  理解消息转发机制
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-17T14:28:38+08:00" content="2018-02-17">
+              2018-02-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="理解消息转发机制分为两大阶段"><a href="#理解消息转发机制分为两大阶段" class="headerlink" title="理解消息转发机制分为两大阶段:"></a>理解消息转发机制分为两大阶段:</h3><h4 id="第一阶段"><a href="#第一阶段" class="headerlink" title="第一阶段:"></a>第一阶段:</h4><p>先征询接受者所属的类, 看其是否能动态添加方法,以处理当前这个‘未知的选择器’,这个叫做‘动态方法解析’</p>
+<h4 id="第二阶段"><a href="#第二阶段" class="headerlink" title="第二阶段:"></a>第二阶段:</h4><p>涉及‘完整的消息转发机制’, 如果运行期系统已经把第一阶段执行完,那么接受者就无法再以动态新增的方法的手段来响应包含该选择器的消息了,此时,运行期系统会请求接受者以其他手段来处理与消息有关的方法调用，</p>
+<h5 id="这个细节分为两步-首先请接受者看看有没有其他对象能处理这条消息"><a href="#这个细节分为两步-首先请接受者看看有没有其他对象能处理这条消息" class="headerlink" title="这个细节分为两步,首先请接受者看看有没有其他对象能处理这条消息,"></a>这个细节分为两步,首先请接受者看看有没有其他对象能处理这条消息,</h5><ol>
+<li>若有,则运行期系统会把消息转给那个对象,消息转发结束,一切如常;</li>
+<li>若没有,则穷完整的消息转发机制,运行期系统会把消息有关的全部细节都封装到NSInvocation对象中,再给接受者最后一个机会，令其设法解决当前还未处理的这条消息；</li>
+</ol>
+<p>// 创建GCMessageForwarding，在 GCMessageForwarding.h写一个放方法但是不去实现<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-(void)lowercasseString;</div></pre></td></tr></table></figure></p>
+<p>在外部调用时: 就会发生Crash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">方法没实现，由NSobject的doesNotRecognizeSelector抛出, 此异常表明:接受者的类型是GCMessageForwarding，而该接受者无法理解该选择器</div><div class="line">     -[GCMessageForwarding lowercasseString]: unrecognized selector sent to instance 0x1740044d0</div><div class="line">     *** Terminating app due to uncaught exception &apos;NSInvalidArgumentException&apos;, reason: &apos;-[GCMessageForwarding lowercasseString]: unrecognized selector sent to instance 0x1740044d0&apos;</div></pre></td></tr></table></figure>
+<h5 id="GCMessageForwarding-m里面实现"><a href="#GCMessageForwarding-m里面实现" class="headerlink" title="GCMessageForwarding.m里面实现"></a>GCMessageForwarding.m里面实现</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">void messageForwarding() &#123;</div><div class="line">    NSLog(@&quot;show Test02&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</div><div class="line">    NSString *selString = NSStringFromSelector(sel);</div><div class="line">    if ([selString isEqualToString:@&quot;lowercasseString&quot;]) &#123;</div><div class="line">        class_addMethod(self, sel, (IMP)messageForwarding, &quot;v@:@&quot;);</div><div class="line">    &#125;</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这时就会打印 <code>show Test02</code></p>
+<h3 id="方法-resolveInstanceMethod-也没实现"><a href="#方法-resolveInstanceMethod-也没实现" class="headerlink" title="方法 resolveInstanceMethod 也没实现"></a>方法 <code>resolveInstanceMethod</code> 也没实现</h3><p>如果方法 <code>resolveInstanceMethod</code> 也没实现，就会掉用备用方法 <code>forwardingTargetForSelector</code>,把这条消息转给其他接受者来处理</p>
+<h3 id="整个调用流程"><a href="#整个调用流程" class="headerlink" title="整个调用流程"></a>整个调用流程</h3><p>lowercasseString(未实现) -&gt; resolveInstanceMethod(未实现) -&gt;forwardingTargetForSelector(未实现) -&gt;  resolveInstanceMethod(未实现) -&gt; NSobject的doesNotRecognizeSelector抛出异常</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/02/17/在手机上查看相关图层/" itemprop="url">
                   在手机上查看相关图层
                 </a>
@@ -277,9 +481,7 @@
       
         
           
-            <p>`# if DEBUG</p>
-<p>#在应用启动的时候加入下面代码，然后双击状态栏<br>id overlayClass = NSClassFromString(@”UIDebuggingInformationOverlay”);<br>[overlayClass performSelector:NSSelectorFromString(@”prepareDebuggingOverlay”)];</p>
-<p>#endif`</p>
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># if DEBUG</div><div class="line">#在应用启动的时候加入下面代码，然后双击状态栏</div><div class="line">id overlayClass = NSClassFromString(@&quot;UIDebuggingInformationOverlay&quot;);</div><div class="line">[overlayClass performSelector:NSSelectorFromString(@&quot;prepareDebuggingOverlay&quot;)];</div><div class="line">#endif</div></pre></td></tr></table></figure>
 
           
         
@@ -507,200 +709,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/10/29/用Alamofire发起网络请求/" itemprop="url">
-                  用Alamofire发起网络请求 - swift4
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-10-29T20:14:21+08:00" content="2017-10-29">
-              2017-10-29
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-创建一个NetWorkingTool单例"><a href="#1-创建一个NetWorkingTool单例" class="headerlink" title="1.创建一个NetWorkingTool单例"></a>1.创建一个NetWorkingTool单例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">import UIKit</div><div class="line">import Alamofire</div><div class="line"></div><div class="line">class NetWorkingTool: NSObject &#123;</div><div class="line">    static let shendInstance = NetWorkingTool()</div><div class="line">    private override init() &#123;&#125;</div><div class="line">    public func getData(url: String, dataBlock:@escaping (_ resData: Any) -&gt;(), errorBlock:@escaping (_ error: Error) -&gt; ()) -&gt; Void &#123;</div><div class="line">        Alamofire.request(url).responseJSON &#123; (responseData) in</div><div class="line">            if let json = responseData.result.value &#123;</div><div class="line">                dataBlock(json)</div><div class="line">            &#125;else&#123;</div><div class="line">                errorBlock(responseData.error!)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-在ViewController发起调用"><a href="#2-在ViewController发起调用" class="headerlink" title="2.在ViewController发起调用"></a>2.在ViewController发起调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">import UIKit</div><div class="line">class ViewController: UIViewController &#123;</div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        super.viewDidLoad()</div><div class="line">        NetWorkingTool.shendInstance.getData(url: &quot;https://www.v2ex.com/api/nodes/show.json?name=python&quot;, dataBlock: &#123; (responseData) in</div><div class="line">            //返回的是数组</div><div class="line">            guard responseData is [String: Any] else &#123;</div><div class="line">                let dataArray = responseData as! Array&lt;[String: Any]&gt;</div><div class="line">                for dict in dataArray &#123;</div><div class="line">                    print(dict[&quot;title&quot;]!, dict[&quot;id&quot;]!)</div><div class="line">                &#125;</div><div class="line">                return</div><div class="line">            &#125;</div><div class="line">            //返回的是字典</div><div class="line">            guard responseData is [String: Dictionary&lt;String, Any&gt;] else &#123;</div><div class="line">                let dataArray = responseData as! Dictionary&lt;String, Any&gt;</div><div class="line">                for value in dataArray &#123;</div><div class="line">                    print(type(of: value))</div><div class="line">                &#125;</div><div class="line">                return</div><div class="line">            &#125;</div><div class="line">        &#125;) &#123; (error) in</div><div class="line">            print(error)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/27/Python创建虚拟环境/" itemprop="url">
-                  Python创建虚拟环境
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-07-27T00:04:22+08:00" content="2017-07-27">
-              2017-07-27
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Python创建虚拟环境"><a href="#Python创建虚拟环境" class="headerlink" title="Python创建虚拟环境"></a>Python创建虚拟环境</h1><h2 id="1-通过pip安装virtualenv"><a href="#1-通过pip安装virtualenv" class="headerlink" title="1.通过pip安装virtualenv"></a>1.通过pip安装virtualenv</h2><pre><code>`pip install virtualenv`
-</code></pre><h2 id="2-查看virtualenv-的版本"><a href="#2-查看virtualenv-的版本" class="headerlink" title="2.查看virtualenv 的版本"></a>2.查看virtualenv 的版本</h2><pre><code>`virtualenv --version`
-</code></pre><h2 id="3-创建不同Python版本的解析器"><a href="#3-创建不同Python版本的解析器" class="headerlink" title="3.创建不同Python版本的解析器"></a>3.创建不同Python版本的解析器</h2><pre><code>`virtualenv -p /usr/bin/python2.7 py2
-virtualenv py3`
-</code></pre><h2 id="4-启动虚拟环境"><a href="#4-启动虚拟环境" class="headerlink" title="4.启动虚拟环境"></a>4.启动虚拟环境</h2><p><code>source py2/bin/activate</code></p>
-<h2 id="5-退出虚拟环境"><a href="#5-退出虚拟环境" class="headerlink" title="5.退出虚拟环境"></a>5.退出虚拟环境</h2><p><code>deactivate</code></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -746,7 +754,7 @@ virtualenv py3`
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -756,7 +764,7 @@ virtualenv py3`
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
