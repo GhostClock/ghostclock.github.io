@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS," />
+  <meta name="keywords" content="Objective-C," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="12345# if DEBUG#在应用启动的时候加入下面代码，然后双击状态栏id overlayClass = NSClassFromString(@&amp;quot;UIDebuggingInformationOverlay&amp;quot;);[overlayClass performSelector:NSSelectorFromString(@&amp;quot;prepareDebuggingOverlay&amp;">
+<meta name="description" content="foundation 与 coreFoundation的桥接1. 用__bridge桥接 NSArray -&amp;gt; CFArrayRef1234NSArray *fArray = @[@1, @2, @3, @4, @5];// __bridge本身的意思是 ARC仍然具备这个OC对象的所有权, ARC任然会帮助我们释放CFArrayRef cfArray = (__bridge CFArray">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在手机上查看相关图层">
-<meta property="og:url" content="http://yoursite.com/2018/02/17/在手机上查看相关图层/index.html">
+<meta property="og:title" content="桥式转换(bridge cast)">
+<meta property="og:url" content="http://yoursite.com/2018/03/05/桥式转换-bridge-cast/index.html">
 <meta property="og:site_name" content="GC的笔记本">
-<meta property="og:description" content="12345# if DEBUG#在应用启动的时候加入下面代码，然后双击状态栏id overlayClass = NSClassFromString(@&amp;quot;UIDebuggingInformationOverlay&amp;quot;);[overlayClass performSelector:NSSelectorFromString(@&amp;quot;prepareDebuggingOverlay&amp;">
-<meta property="og:updated_time" content="2018-02-17T06:32:30.691Z">
+<meta property="og:description" content="foundation 与 coreFoundation的桥接1. 用__bridge桥接 NSArray -&amp;gt; CFArrayRef1234NSArray *fArray = @[@1, @2, @3, @4, @5];// __bridge本身的意思是 ARC仍然具备这个OC对象的所有权, ARC任然会帮助我们释放CFArrayRef cfArray = (__bridge CFArray">
+<meta property="og:updated_time" content="2018-03-05T15:06:05.780Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在手机上查看相关图层">
-<meta name="twitter:description" content="12345# if DEBUG#在应用启动的时候加入下面代码，然后双击状态栏id overlayClass = NSClassFromString(@&amp;quot;UIDebuggingInformationOverlay&amp;quot;);[overlayClass performSelector:NSSelectorFromString(@&amp;quot;prepareDebuggingOverlay&amp;">
+<meta name="twitter:title" content="桥式转换(bridge cast)">
+<meta name="twitter:description" content="foundation 与 coreFoundation的桥接1. 用__bridge桥接 NSArray -&amp;gt; CFArrayRef1234NSArray *fArray = @[@1, @2, @3, @4, @5];// __bridge本身的意思是 ARC仍然具备这个OC对象的所有权, ARC任然会帮助我们释放CFArrayRef cfArray = (__bridge CFArray">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> 在手机上查看相关图层 | GC的笔记本 </title>
+  <title> 桥式转换(bridge cast) | GC的笔记本 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans,zh-tw,en,default">
@@ -231,7 +231,7 @@
             
             
               
-                在手机上查看相关图层
+                桥式转换(bridge cast)
               
             
           </h1>
@@ -243,8 +243,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-02-17T14:10:22+08:00" content="2018-02-17">
-              2018-02-17
+            <time itemprop="dateCreated" datetime="2018-03-05T23:01:20+08:00" content="2018-03-05">
+              2018-03-05
             </time>
           </span>
 
@@ -271,7 +271,10 @@
       
 
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># if DEBUG</div><div class="line">#在应用启动的时候加入下面代码，然后双击状态栏</div><div class="line">id overlayClass = NSClassFromString(@&quot;UIDebuggingInformationOverlay&quot;);</div><div class="line">[overlayClass performSelector:NSSelectorFromString(@&quot;prepareDebuggingOverlay&quot;)];</div><div class="line">#endif</div></pre></td></tr></table></figure>
+        <h3 id="foundation-与-coreFoundation的桥接"><a href="#foundation-与-coreFoundation的桥接" class="headerlink" title="foundation 与 coreFoundation的桥接"></a>foundation 与 coreFoundation的桥接</h3><h4 id="1-用-bridge桥接-NSArray-gt-CFArrayRef"><a href="#1-用-bridge桥接-NSArray-gt-CFArrayRef" class="headerlink" title="1. 用__bridge桥接 NSArray -&gt; CFArrayRef"></a>1. 用__bridge桥接 NSArray -&gt; CFArrayRef</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">NSArray *fArray = @[@1, @2, @3, @4, @5];</div><div class="line">// __bridge本身的意思是 ARC仍然具备这个OC对象的所有权, ARC任然会帮助我们释放</div><div class="line">CFArrayRef cfArray = (__bridge CFArrayRef)fArray;</div><div class="line">NSLog(@&quot;Size of aray = %li&quot;, CFArrayGetCount(cfArray));</div></pre></td></tr></table></figure>
+<h4 id="2-用-bridge-retained-桥接-NSArray-gt-CFArrayRef"><a href="#2-用-bridge-retained-桥接-NSArray-gt-CFArrayRef" class="headerlink" title="2. 用__bridge_retained 桥接 NSArray -&gt; CFArrayRef"></a>2. 用__bridge_retained 桥接 NSArray -&gt; CFArrayRef</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// __bridge_retained 意味着ARC交出对象的所有权</div><div class="line">cfArray = (__bridge_retained CFArrayRef)fArray;</div><div class="line">NSLog(@&quot;Size of aray = %li&quot;, CFArrayGetCount(cfArray));</div><div class="line">CFRelease(cfArray); //手动释放内存</div></pre></td></tr></table></figure>
+<h4 id="3-用-bridge-transfer-桥接-CFArrayRef-gt-NSArray"><a href="#3-用-bridge-transfer-桥接-CFArrayRef-gt-NSArray" class="headerlink" title="3. 用__bridge_transfer 桥接 CFArrayRef -&gt; NSArray"></a>3. 用__bridge_transfer 桥接 CFArrayRef -&gt; NSArray</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 使ARC获得对象的所有权</div><div class="line">fArray = (__bridge_transfer NSArray*)cfArray;</div></pre></td></tr></table></figure>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">const void* RetainCallback(CFAllocatorRef allocator, const void* value) &#123;</div><div class="line">    return CFRetain(value);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void ReleaseCallback(CFAllocatorRef allocator, const void* value) &#123;</div><div class="line">    CFRelease(value);</div><div class="line">&#125;</div><div class="line"></div><div class="line">CFDictionaryKeyCallBacks keyCallbacks = &#123;</div><div class="line">    0,</div><div class="line">    RetainCallback,</div><div class="line">    ReleaseCallback,</div><div class="line">    NULL, //copyDescription取值为NULL,采用默认实现</div><div class="line">    //equal和hash发布采用CFEqual和CFHash这二者采用的做法与NSMutableDictionary的默认实现相同</div><div class="line">    CFEqual, // CFEqual最终会调用isEqual方法</div><div class="line">    CFHash,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">CFDictionaryValueCallBacks valueCallback = &#123;</div><div class="line">    0,</div><div class="line">    RetainCallback,</div><div class="line">    ReleaseCallback,</div><div class="line">    NULL,</div><div class="line">    CFEqual,</div><div class="line">&#125;;</div><div class="line">// 用CFMutableDictionaryRef来创建NSMutableDictionary</div><div class="line">- (void)createMutableDictionaryForCFMutableDictionaryRef &#123;</div><div class="line">    CFMutableDictionaryRef aCFDicionary = CFDictionaryCreateMutable(NULL, 0, &amp;keyCallbacks, &amp;valueCallback);</div><div class="line">    NSMutableDictionary *anNSDictionary = (__bridge_transfer NSMutableDictionary *)aCFDicionary;</div><div class="line">    anNSDictionary[@&quot;a&quot;] = @123;</div><div class="line">    [anNSDictionary removeObjectForKey:@&quot;a&quot;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -293,7 +296,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
+            <a href="/tags/Objective-C/" rel="tag">#Objective-C</a>
           
         </div>
       
@@ -302,17 +305,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/24/贝塞尔曲线的基本用法/" rel="next" title="贝塞尔曲线的基本用法">
-                <i class="fa fa-chevron-left"></i> 贝塞尔曲线的基本用法
+              <a href="/2018/02/17/Swift-创建栈-Stack/" rel="next" title="Swift 创建栈(Stack)">
+                <i class="fa fa-chevron-left"></i> Swift 创建栈(Stack)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/17/理解消息转发机制/" rel="prev" title="理解消息转发机制">
-                理解消息转发机制 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -419,7 +418,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#foundation-与-coreFoundation的桥接"><span class="nav-number">1.</span> <span class="nav-text">foundation 与 coreFoundation的桥接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-用-bridge桥接-NSArray-gt-CFArrayRef"><span class="nav-number">1.1.</span> <span class="nav-text">1. 用__bridge桥接 NSArray -> CFArrayRef</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-用-bridge-retained-桥接-NSArray-gt-CFArrayRef"><span class="nav-number">1.2.</span> <span class="nav-text">2. 用__bridge_retained 桥接 NSArray -> CFArrayRef</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-用-bridge-transfer-桥接-CFArrayRef-gt-NSArray"><span class="nav-number">1.3.</span> <span class="nav-text">3. 用__bridge_transfer 桥接 CFArrayRef -> NSArray</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子"><span class="nav-number">2.</span> <span class="nav-text">例子</span></a></li></ol></div>
             
           </div>
         </section>
