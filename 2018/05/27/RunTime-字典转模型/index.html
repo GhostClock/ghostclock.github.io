@@ -1,0 +1,556 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="RunTime," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="NSObject+ModelExtension.h1234567891011121314151617#import &amp;lt;Foundation/Foundation.h&amp;gt;@protocol NSObjectDelegate &amp;lt;NSObject&amp;gt;@optional+ (NSDictionary *)arrayContainModelClass; ///&amp;lt; array 转字典">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RunTime - 字典转模型">
+<meta property="og:url" content="http://yoursite.com/2018/05/27/RunTime-字典转模型/index.html">
+<meta property="og:site_name" content="GC的笔记本">
+<meta property="og:description" content="NSObject+ModelExtension.h1234567891011121314151617#import &amp;lt;Foundation/Foundation.h&amp;gt;@protocol NSObjectDelegate &amp;lt;NSObject&amp;gt;@optional+ (NSDictionary *)arrayContainModelClass; ///&amp;lt; array 转字典">
+<meta property="og:updated_time" content="2018-05-27T10:34:22.070Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RunTime - 字典转模型">
+<meta name="twitter:description" content="NSObject+ModelExtension.h1234567891011121314151617#import &amp;lt;Foundation/Foundation.h&amp;gt;@protocol NSObjectDelegate &amp;lt;NSObject&amp;gt;@optional+ (NSDictionary *)arrayContainModelClass; ///&amp;lt; array 转字典">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> RunTime - 字典转模型 | GC的笔记本 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans,zh-tw,en,default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">GC的笔记本</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">😄</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                RunTime - 字典转模型
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-05-27T18:11:32+08:00" content="2018-05-27">
+              2018-05-27
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="NSObject-ModelExtension-h"><a href="#NSObject-ModelExtension-h" class="headerlink" title="NSObject+ModelExtension.h"></a>NSObject+ModelExtension.h</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@protocol NSObjectDelegate &lt;NSObject&gt;</div><div class="line"></div><div class="line">@optional</div><div class="line">+ (NSDictionary *)arrayContainModelClass; ///&lt; array 转字典</div><div class="line">@optional</div><div class="line">+ (NSDictionary *)modelContainModelClass; /// &lt; array 转model</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">@interface NSObject (ModelExtension)</div><div class="line"></div><div class="line">+ (instancetype)modelWithDict:(id)dict;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<h3 id="NSObject-ModelExtension-m"><a href="#NSObject-ModelExtension-m" class="headerlink" title="NSObject+ModelExtension.m"></a>NSObject+ModelExtension.m</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">#import &quot;NSObject+ModelExtension.h&quot;</div><div class="line">#import &lt;objc/runtime.h&gt;</div><div class="line"></div><div class="line">@implementation NSObject (ModelExtension)</div><div class="line"></div><div class="line">+ (instancetype)modelWithDict:(id)dict &#123;</div><div class="line">    id obj = [[self alloc] init];</div><div class="line">    </div><div class="line">    unsigned int count;</div><div class="line">    Ivar *ivarList = class_copyIvarList(self, &amp;count);</div><div class="line">    for (int i = 0; i &lt; count; i ++) &#123;</div><div class="line">        Ivar ivar = ivarList[i];</div><div class="line">        </div><div class="line">        // 获取成员属性</div><div class="line">        NSString *name = [NSString stringWithUTF8String:ivar_getName(ivar)];</div><div class="line">        </div><div class="line">        // 处理成员属性名 -&gt; 字典中的key 去掉下划线</div><div class="line">        NSString *key = [name substringFromIndex:1];</div><div class="line">        </div><div class="line">        // 根据成员属性名去字典查找对应的value</div><div class="line">        id value = dict[key];</div><div class="line">        </div><div class="line">        // 二级转换: 如果字典中还有字典，也需要把对应的字典转换成模型</div><div class="line">        if ([value isKindOfClass:[NSDictionary class]]) &#123;</div><div class="line">            </div><div class="line">            // 获取成员变量的类型</div><div class="line">            NSString *type = [NSString stringWithUTF8String:ivar_getTypeEncoding(ivar)];</div><div class="line">            </div><div class="line">            // 裁剪类型字符串</div><div class="line">            NSRange range = [type rangeOfString:@&quot;\&quot;&quot;];</div><div class="line">            </div><div class="line">            type = [type substringFromIndex:range.location + range.length];</div><div class="line">            </div><div class="line">            range = [type rangeOfString:@&quot;\&quot;&quot;];</div><div class="line">            </div><div class="line">            type = [type substringFromIndex:range.location];</div><div class="line">            </div><div class="line">            // 根据字符串类型生成类对象</div><div class="line">            Class moduleClass = NSClassFromString(type);</div><div class="line">            </div><div class="line">            if (moduleClass) &#123;</div><div class="line">                value = [moduleClass modelWithDict:value];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        // 三级转换: NSArray 中也是字典 把数组中的字典转化成模型</div><div class="line">        if ([value isKindOfClass:[NSArray class]]) &#123;</div><div class="line">            // 判断对应类有没有实现字典数组转模型数组的协议</div><div class="line">            if ([self respondsToSelector:@selector(arrayContainModelClass)]) &#123;</div><div class="line">                // 转换成id类型 就能调用任何对象的方法</div><div class="line">                id idSelf = self;</div><div class="line">                </div><div class="line">                // 获取数组中字典对应的模型</div><div class="line">                NSString *type = [idSelf arrayContainModelClass][key];</div><div class="line">                //生成模型</div><div class="line">                Class classModel = NSClassFromString(type);</div><div class="line">                NSMutableArray *arrayM = [NSMutableArray array];</div><div class="line">                // 遍历字典数组 生成模型数组</div><div class="line">                for (NSDictionary *dict in value) &#123;</div><div class="line">                    // 字典模型</div><div class="line">                    id model = [classModel modelWithDict:dict];</div><div class="line">                    [arrayM addObject:model];</div><div class="line">                &#125;</div><div class="line">                // 把模型数组赋值给value</div><div class="line">                value = arrayM;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            // 模型里面套模型</div><div class="line">            if ([self respondsToSelector:@selector(modelContainModelClass)]) &#123;</div><div class="line">                id idSelf = self;</div><div class="line">                NSString *type = [idSelf modelContainModelClass][key];</div><div class="line">                Class classModel = NSClassFromString(type);</div><div class="line">                NSMutableArray *arrayM = [NSMutableArray array];</div><div class="line">                for (NSDictionary *dict in value) &#123;</div><div class="line">                    id model = [classModel modelWithDict:dict];</div><div class="line">                    [arrayM addObject:model];</div><div class="line">                &#125;</div><div class="line">                value = arrayM;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (value) &#123;// 有值，才需要给模型的属性赋值</div><div class="line">            // 利用KVC给模型的属性赋值</div><div class="line">            [obj setValue:value forKey:key];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return obj;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<h3 id="使用-以请求豆瓣电影250为例"><a href="#使用-以请求豆瓣电影250为例" class="headerlink" title="使用 以请求豆瓣电影250为例"></a>使用 以请求豆瓣电影250为例</h3><h4 id="DouBanModel-h"><a href="#DouBanModel-h" class="headerlink" title="DouBanModel.h"></a>DouBanModel.h</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &quot;NSObject+ModelExtension.h&quot;</div><div class="line"></div><div class="line">@interface MovieInfo : NSObject &lt;NSCoding&gt;</div><div class="line"></div><div class="line">@property (nonatomic, strong)   NSDictionary *rating;</div><div class="line">@property (nonatomic, assign)   NSInteger id;</div><div class="line">@property (nonatomic, copy)     NSString  *original_title;</div><div class="line">@property (nonatomic, assign)   NSInteger collect_count;</div><div class="line">@property (nonatomic, copy)     NSArray *directors;</div><div class="line">@property (nonatomic, copy)     NSString  *title;</div><div class="line">@property (nonatomic, copy)     NSString  *year;</div><div class="line">@property (nonatomic, copy)     NSArray *casts;</div><div class="line">@property (nonatomic, copy)     NSArray *genres;</div><div class="line">@property (nonatomic, strong)   NSDictionary *images;</div><div class="line">@property (nonatomic, copy)     NSString  *subtype;</div><div class="line">@property (nonatomic, copy)     NSString  *alt;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">@interface DouBanModel : NSObject &lt;NSObjectDelegate, NSCoding&gt;</div><div class="line"></div><div class="line">@property (nonatomic, assign)   NSInteger count;</div><div class="line">@property (nonatomic, assign)   NSInteger start;</div><div class="line">@property (nonatomic, assign)   NSInteger total;</div><div class="line">@property (nonatomic, copy)     NSString *title;</div><div class="line">@property (nonatomic, strong)   NSArray&lt;MovieInfo *&gt; *subjects;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<h4 id="DouBanModel-m"><a href="#DouBanModel-m" class="headerlink" title="DouBanModel.m"></a>DouBanModel.m</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@implementation DouBanModel</div><div class="line">+ (NSDictionary *)modelContainModelClass &#123;</div><div class="line">    return @&#123;@&quot;subjects&quot;: NSStringFromClass([MovieInfo class])&#125;;</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
+<h4 id="ViewController-m-网络请求"><a href="#ViewController-m-网络请求" class="headerlink" title="ViewController.m 网络请求"></a>ViewController.m 网络请求</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> [[NetWorkTooth shendeInstence] requestWithUrl:@&quot;https://api.douban.com/v2/movie/top250?start=0&amp;count=50&quot; success:^(NSDictionary *dictData) &#123;</div><div class="line"> DouBanModel *model = [DouBanModel modelWithDict:dictData];</div><div class="line"> [self saveData:model];	</div><div class="line">NSLog(@&quot;请求的到的:&quot;);</div><div class="line"> for (MovieInfo *info in model.subjects) &#123;</div><div class="line">     NSLog(@&quot;%@ - %@&quot;, info.title, info.year);</div><div class="line"> &#125;</div><div class="line">&#125; failed:^(NSError *error) &#123;</div><div class="line"> </div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h3 id="Demo-地址"><a href="#Demo-地址" class="headerlink" title="Demo 地址"></a>Demo 地址</h3><p><a href="https://github.com/GhostClock/Runtime-Demo" target="_blank" rel="external">https://github.com/GhostClock/Runtime-Demo</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RunTime/" rel="tag">#RunTime</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/27/RunTime-performSelector/" rel="next" title="RunTime - performSelector">
+                <i class="fa fa-chevron-left"></i> RunTime - performSelector
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/27/RunTime-KVO/" rel="prev" title="RunTime - 自己实现KVO(isa-swizzling)">
+                RunTime - 自己实现KVO(isa-swizzling) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://img1.gtimg.com/comic/pics/hv1/70/76/1989/129354175.jpg"
+               alt="GhostClock(鬼钟)" />
+          <p class="site-author-name" itemprop="name">GhostClock(鬼钟)</p>
+          <p class="site-description motion-element" itemprop="description">穷折腾 二次元 Mac Win10 iOS Java</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#NSObject-ModelExtension-h"><span class="nav-number">1.</span> <span class="nav-text">NSObject+ModelExtension.h</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSObject-ModelExtension-m"><span class="nav-number">2.</span> <span class="nav-text">NSObject+ModelExtension.m</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-以请求豆瓣电影250为例"><span class="nav-number">3.</span> <span class="nav-text">使用 以请求豆瓣电影250为例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DouBanModel-h"><span class="nav-number">3.1.</span> <span class="nav-text">DouBanModel.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DouBanModel-m"><span class="nav-number">3.2.</span> <span class="nav-text">DouBanModel.m</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ViewController-m-网络请求"><span class="nav-number">3.3.</span> <span class="nav-text">ViewController.m 网络请求</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo-地址"><span class="nav-number">4.</span> <span class="nav-text">Demo 地址</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GhostClock(鬼钟)</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
