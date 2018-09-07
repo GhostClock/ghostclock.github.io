@@ -233,6 +233,102 @@
             
               
                 
+                <a class="post-title-link" href="/2018/09/08/Swift闭包-Closure-回调传值/" itemprop="url">
+                  Swift闭包(Closure)回调传值
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-09-08T01:56:55+08:00" content="2018-09-08">
+              2018-09-08
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Swift闭包-Closure-回调传值"><a href="#Swift闭包-Closure-回调传值" class="headerlink" title="Swift闭包(Closure)回调传值"></a>Swift闭包(Closure)回调传值</h3><h2 id="场景"><a href="#场景" class="headerlink" title="场景:"></a>场景:</h2><p>A页面present到B页面，B页面dismiss到A页面时，把值传递给A页面</p>
+<h3 id="1-在B页面定义一个闭包"><a href="#1-在B页面定义一个闭包" class="headerlink" title="1. 在B页面定义一个闭包"></a>1. 在B页面定义一个闭包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">import UIKit</div><div class="line"></div><div class="line">// 定义一个闭包类型</div><div class="line">typealias callBackCompletion = (_ str: String, _ age: Int) -&gt; Void</div><div class="line"></div><div class="line">class NextViewController: UIViewController &#123;</div><div class="line">    // 定义一个变量，把闭包当变量使用</div><div class="line">    fileprivate var callBack: callBackCompletion?</div><div class="line">    private var name: String?</div><div class="line">    private var age: Int?</div><div class="line">    </div><div class="line">override func touchesBegan(_ touches: Set&lt;UITouch&gt;, with event: UIEvent?) &#123;</div><div class="line">   if self.callBack != nil &#123;</div><div class="line">        self.callBack!(self.name! + &quot;11&quot;, self.age! + 22)</div><div class="line">        self.dismiss(animated: true, completion: nil)</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">    </div><div class="line">// MARK: - 回调函数</div><div class="line">func setCallBackValue(name: String, age: Int, callBack: @escaping callBackCompletion) &#123;</div><div class="line">        self.name = name</div><div class="line">        self.age = age</div><div class="line">        self.callBack = callBack</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h3 id="2-在A页面得到值"><a href="#2-在A页面得到值" class="headerlink" title="2.在A页面得到值"></a>2.在A页面得到值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> override func touchesBegan(_ touches: Set&lt;UITouch&gt;, with event: UIEvent?) &#123;</div><div class="line">    let vc = NextViewController()</div><div class="line">    vc.setCallBackValue(name: &quot;Ghost&quot;, age: 20) &#123; (name, age) in</div><div class="line">        print(&quot;\(name, age)&quot;)</div><div class="line">    &#125;</div><div class="line">    self.present(vc, animated: true, completion: nil)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/05/27/RunTime-归档/" itemprop="url">
                   RunTime - 归档
                 </a>
@@ -598,104 +694,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/05/27/RunTime-运行时/" itemprop="url">
-                  RunTime - 获取类的属性、方法列表、成员变量、协议名
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-05-27T17:58:57+08:00" content="2018-05-27">
-              2018-05-27
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="获取一个类的属性列表"><a href="#获取一个类的属性列表" class="headerlink" title="获取一个类的属性列表"></a>获取一个类的属性列表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)getPropertyList &#123;</div><div class="line">    unsigned int count;</div><div class="line">    objc_property_t *propertys = class_copyPropertyList([self class], &amp;count);</div><div class="line">    for (int i = 0; i &lt; count; i ++) &#123;</div><div class="line">        objc_property_t property = propertys[i];</div><div class="line">        NSLog(@&quot;%s %s\n&quot;, property_getName(property), property_getAttributes(property));</div><div class="line">    &#125;</div><div class="line">    free(propertys);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="获取一个类的方法列表"><a href="#获取一个类的方法列表" class="headerlink" title="获取一个类的方法列表"></a>获取一个类的方法列表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)getMethodList &#123;</div><div class="line">    unsigned int count;</div><div class="line">    Method *methods = class_copyMethodList([self class], &amp;count);</div><div class="line">    for (int i = 0; i &lt; count; i ++) &#123;</div><div class="line">        Method method = methods[i];</div><div class="line">        NSLog(@&quot;%@ %u \n&quot;, NSStringFromSelector(method_getName(method)), method_getNumberOfArguments(method));</div><div class="line">    &#125;</div><div class="line">    free(methods);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="获取成员变量"><a href="#获取成员变量" class="headerlink" title="获取成员变量"></a>获取成员变量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)getIvarList &#123;</div><div class="line">    unsigned int count;</div><div class="line">    Ivar *ivars = class_copyIvarList([self class], &amp;count);</div><div class="line">    for (int i = 0; i &lt; count; i ++) &#123;</div><div class="line">        Ivar ivar = ivars[i];</div><div class="line">        NSLog(@&quot;%s %s \n&quot;, ivar_getName(ivar), ivar_getTypeEncoding(ivar));</div><div class="line">    &#125;</div><div class="line">    free(ivars);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="获取协议名"><a href="#获取协议名" class="headerlink" title="获取协议名"></a>获取协议名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (void)getProtocolList &#123;</div><div class="line">    unsigned int count;</div><div class="line">    __unsafe_unretained Protocol **protocols = class_copyProtocolList([self class], &amp;count);</div><div class="line">    for (int i = 0; i &lt; count; i ++) &#123;</div><div class="line">        NSLog(@&quot;%s&quot;, protocol_getName(protocols[i]));</div><div class="line">    &#125;</div><div class="line">    free(protocols);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="Demo-地址"><a href="#Demo-地址" class="headerlink" title="Demo 地址"></a>Demo 地址</h3><p><a href="https://github.com/GhostClock/Runtime-Demo" target="_blank" rel="external">https://github.com/GhostClock/Runtime-Demo</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -741,7 +739,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

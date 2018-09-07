@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="RunTime," />
+  <meta name="keywords" content="Swift," />
 
 
 
@@ -84,16 +84,19 @@
 
 
 
-<meta name="description" content="面试题：你用过 performSelector 吗？其实就是动态添加方法:12RuntimeTest *test = [[RuntimeTest alloc] initWithLog:@&amp;quot;123&amp;quot;];[test performSelector:@selector(printLog1:log2:) withObject:@&amp;quot;One&amp;quot; withObject:@&amp;">
+<meta name="description" content="Swift闭包(Closure)回调传值场景:A页面present到B页面，B页面dismiss到A页面时，把值传递给A页面
+1. 在B页面定义一个闭包12345678910111213141516171819202122232425import UIKit// 定义一个闭包类型typealias callBackCompletion = (_ str: String, _ age: Int) -">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RunTime - performSelector">
-<meta property="og:url" content="http://yoursite.com/2018/05/27/RunTime-performSelector/index.html">
+<meta property="og:title" content="Swift闭包(Closure)回调传值">
+<meta property="og:url" content="http://yoursite.com/2018/09/08/Swift闭包-Closure-回调传值/index.html">
 <meta property="og:site_name" content="GC的笔记本">
-<meta property="og:description" content="面试题：你用过 performSelector 吗？其实就是动态添加方法:12RuntimeTest *test = [[RuntimeTest alloc] initWithLog:@&amp;quot;123&amp;quot;];[test performSelector:@selector(printLog1:log2:) withObject:@&amp;quot;One&amp;quot; withObject:@&amp;">
-<meta property="og:updated_time" content="2018-05-27T10:34:11.389Z">
+<meta property="og:description" content="Swift闭包(Closure)回调传值场景:A页面present到B页面，B页面dismiss到A页面时，把值传递给A页面
+1. 在B页面定义一个闭包12345678910111213141516171819202122232425import UIKit// 定义一个闭包类型typealias callBackCompletion = (_ str: String, _ age: Int) -">
+<meta property="og:updated_time" content="2018-09-07T18:03:10.708Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RunTime - performSelector">
-<meta name="twitter:description" content="面试题：你用过 performSelector 吗？其实就是动态添加方法:12RuntimeTest *test = [[RuntimeTest alloc] initWithLog:@&amp;quot;123&amp;quot;];[test performSelector:@selector(printLog1:log2:) withObject:@&amp;quot;One&amp;quot; withObject:@&amp;">
+<meta name="twitter:title" content="Swift闭包(Closure)回调传值">
+<meta name="twitter:description" content="Swift闭包(Closure)回调传值场景:A页面present到B页面，B页面dismiss到A页面时，把值传递给A页面
+1. 在B页面定义一个闭包12345678910111213141516171819202122232425import UIKit// 定义一个闭包类型typealias callBackCompletion = (_ str: String, _ age: Int) -">
 
 
 
@@ -111,7 +114,7 @@
   };
 </script>
 
-  <title> RunTime - performSelector | GC的笔记本 </title>
+  <title> Swift闭包(Closure)回调传值 | GC的笔记本 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans,zh-tw,en,default">
@@ -231,7 +234,7 @@
             
             
               
-                RunTime - performSelector
+                Swift闭包(Closure)回调传值
               
             
           </h1>
@@ -243,8 +246,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-05-27T18:07:10+08:00" content="2018-05-27">
-              2018-05-27
+            <time itemprop="dateCreated" datetime="2018-09-08T01:56:55+08:00" content="2018-09-08">
+              2018-09-08
             </time>
           </span>
 
@@ -271,9 +274,9 @@
       
 
       
-        <h3 id="面试题：你用过-performSelector-吗？"><a href="#面试题：你用过-performSelector-吗？" class="headerlink" title="面试题：你用过 performSelector 吗？"></a>面试题：你用过 performSelector 吗？</h3><p>其实就是动态添加方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">RuntimeTest *test = [[RuntimeTest alloc] initWithLog:@&quot;123&quot;];</div><div class="line">[test performSelector:@selector(printLog1:log2:) withObject:@&quot;One&quot; withObject:@&quot;Two&quot;]; // 动态添加方法</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</div><div class="line">    if (sel == @selector(printLog1:log2:)) &#123;</div><div class="line">        class_addMethod(self, @selector(printLog1:log2:), (IMP)printLog, &quot;v@:@@&quot;);</div><div class="line">    &#125;</div><div class="line">    return [super resolveInstanceMethod:sel];</div><div class="line">&#125;</div><div class="line"></div><div class="line">void printLog(id self, SEL _cmd, NSString *log1, NSString *log2) &#123;</div><div class="line">    //TODO</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="Demo-地址"><a href="#Demo-地址" class="headerlink" title="Demo 地址"></a>Demo 地址</h3><p><a href="https://github.com/GhostClock/Runtime-Demo" target="_blank" rel="external">https://github.com/GhostClock/Runtime-Demo</a></p>
+        <h3 id="Swift闭包-Closure-回调传值"><a href="#Swift闭包-Closure-回调传值" class="headerlink" title="Swift闭包(Closure)回调传值"></a>Swift闭包(Closure)回调传值</h3><h2 id="场景"><a href="#场景" class="headerlink" title="场景:"></a>场景:</h2><p>A页面present到B页面，B页面dismiss到A页面时，把值传递给A页面</p>
+<h3 id="1-在B页面定义一个闭包"><a href="#1-在B页面定义一个闭包" class="headerlink" title="1. 在B页面定义一个闭包"></a>1. 在B页面定义一个闭包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">import UIKit</div><div class="line"></div><div class="line">// 定义一个闭包类型</div><div class="line">typealias callBackCompletion = (_ str: String, _ age: Int) -&gt; Void</div><div class="line"></div><div class="line">class NextViewController: UIViewController &#123;</div><div class="line">    // 定义一个变量，把闭包当变量使用</div><div class="line">    fileprivate var callBack: callBackCompletion?</div><div class="line">    private var name: String?</div><div class="line">    private var age: Int?</div><div class="line">    </div><div class="line">override func touchesBegan(_ touches: Set&lt;UITouch&gt;, with event: UIEvent?) &#123;</div><div class="line">   if self.callBack != nil &#123;</div><div class="line">        self.callBack!(self.name! + &quot;11&quot;, self.age! + 22)</div><div class="line">        self.dismiss(animated: true, completion: nil)</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line">    </div><div class="line">// MARK: - 回调函数</div><div class="line">func setCallBackValue(name: String, age: Int, callBack: @escaping callBackCompletion) &#123;</div><div class="line">        self.name = name</div><div class="line">        self.age = age</div><div class="line">        self.callBack = callBack</div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h3 id="2-在A页面得到值"><a href="#2-在A页面得到值" class="headerlink" title="2.在A页面得到值"></a>2.在A页面得到值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> override func touchesBegan(_ touches: Set&lt;UITouch&gt;, with event: UIEvent?) &#123;</div><div class="line">    let vc = NextViewController()</div><div class="line">    vc.setCallBackValue(name: &quot;Ghost&quot;, age: 20) &#123; (name, age) in</div><div class="line">        print(&quot;\(name, age)&quot;)</div><div class="line">    &#125;</div><div class="line">    self.present(vc, animated: true, completion: nil)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -295,7 +298,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/RunTime/" rel="tag">#RunTime</a>
+            <a href="/tags/Swift/" rel="tag">#Swift</a>
           
         </div>
       
@@ -304,17 +307,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/27/RunTime-运行时/" rel="next" title="RunTime - 获取类的属性、方法列表、成员变量、协议名">
-                <i class="fa fa-chevron-left"></i> RunTime - 获取类的属性、方法列表、成员变量、协议名
+              <a href="/2018/05/27/RunTime-归档/" rel="next" title="RunTime - 归档">
+                <i class="fa fa-chevron-left"></i> RunTime - 归档
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/27/RunTime-字典转模型/" rel="prev" title="RunTime - 字典转模型">
-                RunTime - 字典转模型 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -421,7 +420,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#面试题：你用过-performSelector-吗？"><span class="nav-number">1.</span> <span class="nav-text">面试题：你用过 performSelector 吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo-地址"><span class="nav-number">2.</span> <span class="nav-text">Demo 地址</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Swift闭包-Closure-回调传值"><span class="nav-number">1.</span> <span class="nav-text">Swift闭包(Closure)回调传值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景"><span class="nav-number"></span> <span class="nav-text">场景:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-在B页面定义一个闭包"><span class="nav-number">1.</span> <span class="nav-text">1. 在B页面定义一个闭包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-在A页面得到值"><span class="nav-number">2.</span> <span class="nav-text">2.在A页面得到值</span></a></li></ol></div>
             
           </div>
         </section>
