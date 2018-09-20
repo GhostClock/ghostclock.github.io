@@ -1,0 +1,564 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Objective-C," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="在堆上生成的Block创建Block12345678#import &amp;lt;Foundation/Foundation.h&amp;gt;int main()&amp;#123;	void (^Block)(void) = ^&amp;#123;		printf(&amp;quot;Block\n&amp;quot;);	&amp;#125;;	return 0;&amp;#125;
+经过clang编译后123456789101112131415161">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从Block源码看其实现">
+<meta property="og:url" content="http://yoursite.com/2018/09/20/从Block源码看其实现/index.html">
+<meta property="og:site_name" content="GC的笔记本">
+<meta property="og:description" content="在堆上生成的Block创建Block12345678#import &amp;lt;Foundation/Foundation.h&amp;gt;int main()&amp;#123;	void (^Block)(void) = ^&amp;#123;		printf(&amp;quot;Block\n&amp;quot;);	&amp;#125;;	return 0;&amp;#125;
+经过clang编译后123456789101112131415161">
+<meta property="og:updated_time" content="2018-09-20T14:34:15.407Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从Block源码看其实现">
+<meta name="twitter:description" content="在堆上生成的Block创建Block12345678#import &amp;lt;Foundation/Foundation.h&amp;gt;int main()&amp;#123;	void (^Block)(void) = ^&amp;#123;		printf(&amp;quot;Block\n&amp;quot;);	&amp;#125;;	return 0;&amp;#125;
+经过clang编译后123456789101112131415161">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 从Block源码看其实现 | GC的笔记本 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans,zh-tw,en,default">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">GC的笔记本</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">😄</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                从Block源码看其实现
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-09-20T22:18:39+08:00" content="2018-09-20">
+              2018-09-20
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="在堆上生成的Block"><a href="#在堆上生成的Block" class="headerlink" title="在堆上生成的Block"></a>在堆上生成的Block</h3><h4 id="创建Block"><a href="#创建Block" class="headerlink" title="创建Block"></a>创建Block</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	void (^Block)(void) = ^&#123;</div><div class="line">		printf(&quot;Block\n&quot;);</div><div class="line">	&#125;;</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="经过clang编译后"><a href="#经过clang编译后" class="headerlink" title="经过clang编译后"></a>经过clang编译后</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">struct __block_impl &#123;</div><div class="line">  void *isa;</div><div class="line">  int Flags;</div><div class="line">  int Reserved;</div><div class="line">  void *FuncPtr;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">struct   &#123;</div><div class="line">  struct __block_impl impl;</div><div class="line">  struct __main_block_desc_0* Desc;</div><div class="line"></div><div class="line">  // 构造函数初始化__main_block_impl_0</div><div class="line">  __main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int flags=0) &#123;</div><div class="line">    impl.isa = &amp;_NSConcreteStackBlock; // _NSConcreteStackBlock用于初始化__block_impl结构体的isa成员</div><div class="line">    impl.Flags = flags;</div><div class="line">    impl.FuncPtr = fp;</div><div class="line">    Desc = desc;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;;</div><div class="line">// 方法__main_block_func_0传入的是__main_block_impl_0结构体指针</div><div class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</div><div class="line"></div><div class="line">  NSLog((NSString *)&amp;__NSConstantStringImpl__var_folders_dp_q1vmhmws4zvd8s8jq5q8f37c0000gn_T_block_5bf957_mi_0);</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 描述，</div><div class="line">static struct __main_block_desc_0 &#123;</div><div class="line">  size_t reserved; // 今后版本升级所需的区域</div><div class="line">  size_t Block_size; // Block的大小</div><div class="line">&#125; __main_block_desc_0_DATA = &#123; 0, sizeof(struct __main_block_impl_0)&#125;;</div><div class="line"></div><div class="line"></div><div class="line">int main(int argc, char const *argv[])</div><div class="line">&#123;</div><div class="line">  // 转换后，变成了__main_block_func_0，其规则是:__Block语法所在的函数名_block_func_block语法在函数中出现的顺序</div><div class="line"> // void (*block)(void) = ((void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA));</div><div class="line"></div><div class="line">  // 去掉转换后</div><div class="line">  // 将__main_block_impl_0结构体类型的自动变量,既栈上生成的__main_block_impl_0结构体实例指针，赋值给__main_block_impl_0结构体指针类型的block</div><div class="line">  struct __main_block_impl_0 tmp = __main_block_impl_0(__main_block_func_0, &amp;__main_block_desc_0_DATA);</div><div class="line">  struct __main_block_impl_0 *block = &amp;tmp;</div><div class="line">  ||</div><div class="line">  // 对应以下最初识代码</div><div class="line">   void (^block)(void) = ^&#123;</div><div class="line">      printf(&quot;Block\n&quot;);</div><div class="line">   &#125;;</div><div class="line"></div><div class="line"> // ((void (*)(__block_impl *))((__block_impl *)block)-&gt;FuncPtr)((__block_impl *)block);</div><div class="line"> // 去掉转换后</div><div class="line">  (*block -&gt; __block_impl.FuncPtr)(block);</div><div class="line"></div><div class="line"> return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="分配在数据区的全局Block"><a href="#分配在数据区的全局Block" class="headerlink" title="分配在数据区的全局Block"></a>分配在数据区的全局Block</h3><h4 id="创建OC的Block原码"><a href="#创建OC的Block原码" class="headerlink" title="创建OC的Block原码:"></a>创建OC的Block原码:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">// 全局Block</div><div class="line">void (^blk)(void) = ^&#123;</div><div class="line">	printf(&quot;Global Block\n&quot;);</div><div class="line">&#125;;</div><div class="line">int main(int argc, char const *argv[])</div><div class="line">&#123;</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="用clang命令编译该文件"><a href="#用clang命令编译该文件" class="headerlink" title="用clang命令编译该文件"></a>用clang命令编译该文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">clang -rewrite-objc -fobjc-arc blk.m</div></pre></td></tr></table></figure>
+<h4 id="得到如下源码-删除辅助代码后"><a href="#得到如下源码-删除辅助代码后" class="headerlink" title="得到如下源码(删除辅助代码后)"></a>得到如下源码(删除辅助代码后)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">struct __block_impl &#123;</div><div class="line">  void *isa;</div><div class="line">  int Flags;</div><div class="line">  int Reserved;</div><div class="line">  void *FuncPtr;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">struct __blk_block_impl_0 &#123;</div><div class="line">  struct __block_impl impl;</div><div class="line">  struct __blk_block_desc_0* Desc;</div><div class="line">  __blk_block_impl_0(void *fp, struct __blk_block_desc_0 *desc, int flags=0) &#123;</div><div class="line">    impl.isa = &amp;_NSConcreteGlobalBlock; // 分配在数据区的全局Block</div><div class="line">    impl.Flags = flags;</div><div class="line">    impl.FuncPtr = fp;</div><div class="line">    Desc = desc;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line">static void __blk_block_func_0(struct __blk_block_impl_0 *__cself) &#123;</div><div class="line"></div><div class="line"> printf(&quot;Global Block\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">static struct __blk_block_desc_0 &#123;</div><div class="line">  size_t reserved;</div><div class="line">  size_t Block_size;</div><div class="line">&#125; __blk_block_desc_0_DATA = &#123; 0, sizeof(struct __blk_block_impl_0)&#125;;</div><div class="line">static __blk_block_impl_0 __global_blk_block_impl_0((void *)__blk_block_func_0, &amp;__blk_block_desc_0_DATA);</div><div class="line">void (*blk)(void) = ((void (*)())&amp;__global_blk_block_impl_0);</div><div class="line"></div><div class="line">int main(int argc, char const *argv[])</div><div class="line">&#123;</div><div class="line"> return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Block自动截获变量"><a href="#Block自动截获变量" class="headerlink" title="Block自动截获变量"></a>Block自动截获变量</h3><p>源码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">int main(int argc, char const *argv[])</div><div class="line">&#123;</div><div class="line">	int a = 1;</div><div class="line">	const char *fmt = &quot;1&quot;;</div><div class="line">	void (^blk)(void) = ^&#123;</div><div class="line">		printf(&quot;%d %s\n&quot;, a, fmt);</div><div class="line">	&#125;;</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编译后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">struct __main_block_impl_0 &#123;</div><div class="line">  struct __block_impl impl;</div><div class="line">  struct __main_block_desc_0* Desc;</div><div class="line">  // 使用自动变量被当做成员变量追加到__main_block_impl_0结构体中</div><div class="line">  int a;</div><div class="line">  const char *fmt;</div><div class="line"></div><div class="line">  __main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int _a, const char *_fmt, int flags=0) : a(_a), fmt(_fmt) &#123;</div><div class="line">    impl.isa = &amp;_NSConcreteStackBlock;</div><div class="line">    impl.Flags = flags;</div><div class="line">    impl.FuncPtr = fp;</div><div class="line">    Desc = desc;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</div><div class="line">  int a = __cself-&gt;a; // bound by copy</div><div class="line">  const char *fmt = __cself-&gt;fmt; // bound by copy</div><div class="line"></div><div class="line">  printf(&quot;%d %s\n&quot;, a, fmt);</div><div class="line"> &#125;</div><div class="line"></div><div class="line">static struct __main_block_desc_0 &#123;</div><div class="line">  size_t reserved;</div><div class="line">  size_t Block_size;</div><div class="line">&#125; __main_block_desc_0_DATA = &#123; 0, sizeof(struct __main_block_impl_0)&#125;;</div><div class="line"></div><div class="line">int main(int argc, char const *argv[])</div><div class="line">&#123;</div><div class="line"> int a = 1;</div><div class="line"> const char *fmt = &quot;1&quot;;</div><div class="line"> void (*blk)(void) = ((void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA, a, fmt));</div><div class="line"> return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Block修改静态变量-全局变量的值"><a href="#Block修改静态变量-全局变量的值" class="headerlink" title="Block修改静态变量:全局变量的值"></a>Block修改静态变量:全局变量的值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">int global_val = 1; // 全局变量</div><div class="line">static int static_global_val = 2; // 静态全局变量</div><div class="line"></div><div class="line">int main(int argc, char const *argv[])</div><div class="line">&#123;</div><div class="line">	static int static_val = 3;// 静态局部变量</div><div class="line"></div><div class="line">	void (^blk)(void) = ^&#123;</div><div class="line">		global_val ++;</div><div class="line">		static_global_val ++;</div><div class="line">		static_val ++;</div><div class="line">	&#125;;</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>||<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">int global_val = 1;</div><div class="line">static int static_global_val = 2;</div><div class="line"></div><div class="line"></div><div class="line">struct __main_block_impl_0 &#123;</div><div class="line">  struct __block_impl impl;</div><div class="line">  struct __main_block_desc_0* Desc;</div><div class="line">  int *static_val; // 使用指针进行访问，这是这是超出作用域最简单的方法</div><div class="line">  __main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int *_static_val, int flags=0) : static_val(_static_val) &#123;</div><div class="line">    impl.isa = &amp;_NSConcreteStackBlock;</div><div class="line">    impl.Flags = flags;</div><div class="line">    impl.FuncPtr = fp;</div><div class="line">    Desc = desc;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</div><div class="line">  int *static_val = __cself-&gt;static_val; // bound by copy</div><div class="line"></div><div class="line">  // 全局变量和静态全局变量可以直接使用</div><div class="line">  global_val ++;</div><div class="line">  static_global_val ++;</div><div class="line"></div><div class="line">  // 使用static_val的指针进行访问</div><div class="line">  (*static_val) ++;</div><div class="line"> &#125;</div><div class="line"></div><div class="line">static struct __main_block_desc_0 &#123;</div><div class="line">  size_t reserved;</div><div class="line">  size_t Block_size;</div><div class="line">&#125; __main_block_desc_0_DATA = &#123; 0, sizeof(struct __main_block_impl_0)&#125;;</div><div class="line">int main(int argc, char const *argv[])</div><div class="line">&#123;</div><div class="line"> static int static_val = 3;</div><div class="line"></div><div class="line"> void (*blk)(void) = ((void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA, &amp;static_val));</div><div class="line"> return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="Block从栈赋值到堆上"><a href="#Block从栈赋值到堆上" class="headerlink" title="Block从栈赋值到堆上"></a>Block从栈赋值到堆上</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">typedef int (^blk_t)(int);</div><div class="line"></div><div class="line">blk_t func(int rate) &#123;</div><div class="line">	// return ^(int count) &#123;return rate * count;&#125;; // ARC下编译器会自动帮加上copy</div><div class="line">	return [^(int count) &#123;return rate * count;&#125; copy]; //MRC下需要手动copy</div><div class="line">&#125;</div><div class="line"></div><div class="line">NSArray* getBlockArray &#123;</div><div class="line">	return [NSArray alloc] initWithObjects:</div><div class="line">	[^&#123;</div><div class="line">		NSLog(@&quot;blk0&quot;);</div><div class="line">	&#125;; copy],</div><div class="line">	[^&#123;</div><div class="line">		NSLog(@&quot;blk1&quot;);</div><div class="line">	&#125;; copy],</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">typedef int (*blk_t)(int);</div><div class="line"></div><div class="line"></div><div class="line">struct __func_block_impl_0 &#123;</div><div class="line">  struct __block_impl impl;</div><div class="line">  struct __func_block_desc_0* Desc;</div><div class="line">  int rate;</div><div class="line">  __func_block_impl_0(void *fp, struct __func_block_desc_0 *desc, int _rate, int flags=0) : rate(_rate) &#123;</div><div class="line">    impl.isa = &amp;_NSConcreteStackBlock;</div><div class="line">    impl.Flags = flags;</div><div class="line">    impl.FuncPtr = fp;</div><div class="line">    Desc = desc;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line">static int __func_block_func_0(struct __func_block_impl_0 *__cself, int count) &#123;</div><div class="line">  int rate = __cself-&gt;rate; // bound by copy</div><div class="line">return rate * count;&#125;</div><div class="line"></div><div class="line">static struct __func_block_desc_0 &#123;</div><div class="line">  size_t reserved;</div><div class="line">  size_t Block_size;</div><div class="line">&#125; __func_block_desc_0_DATA = &#123; 0, sizeof(struct __func_block_impl_0)&#125;;</div><div class="line">blk_t func(int rate) &#123;</div><div class="line"> return ((int (*)(int))&amp;__func_block_impl_0((void *)__func_block_func_0, &amp;__func_block_desc_0_DATA, rate));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objective-C/" rel="tag">#Objective-C</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/08/Swift闭包-Closure-回调传值/" rel="next" title="Swift闭包(Closure)回调传值">
+                <i class="fa fa-chevron-left"></i> Swift闭包(Closure)回调传值
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/20/block相关的修饰符/" rel="prev" title="block相关的修饰符">
+                block相关的修饰符 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://img1.gtimg.com/comic/pics/hv1/70/76/1989/129354175.jpg"
+               alt="GhostClock(鬼钟)" />
+          <p class="site-author-name" itemprop="name">GhostClock(鬼钟)</p>
+          <p class="site-description motion-element" itemprop="description">穷折腾 二次元 Mac Win10 iOS Java</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#在堆上生成的Block"><span class="nav-number">1.</span> <span class="nav-text">在堆上生成的Block</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建Block"><span class="nav-number">1.1.</span> <span class="nav-text">创建Block</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#经过clang编译后"><span class="nav-number">1.2.</span> <span class="nav-text">经过clang编译后</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分配在数据区的全局Block"><span class="nav-number">2.</span> <span class="nav-text">分配在数据区的全局Block</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建OC的Block原码"><span class="nav-number">2.1.</span> <span class="nav-text">创建OC的Block原码:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用clang命令编译该文件"><span class="nav-number">2.2.</span> <span class="nav-text">用clang命令编译该文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#得到如下源码-删除辅助代码后"><span class="nav-number">2.3.</span> <span class="nav-text">得到如下源码(删除辅助代码后)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Block自动截获变量"><span class="nav-number">3.</span> <span class="nav-text">Block自动截获变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Block修改静态变量-全局变量的值"><span class="nav-number">4.</span> <span class="nav-text">Block修改静态变量:全局变量的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Block从栈赋值到堆上"><span class="nav-number">5.</span> <span class="nav-text">Block从栈赋值到堆上</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GhostClock(鬼钟)</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

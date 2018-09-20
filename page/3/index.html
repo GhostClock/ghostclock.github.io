@@ -233,6 +233,197 @@
             
               
                 
+                <a class="post-title-link" href="/2018/02/17/Swift-创建链表-Linked-List/" itemprop="url">
+                  Swift 创建链表(Linked List)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-17T14:42:53+08:00" content="2018-02-17">
+              2018-02-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Swift-创建链表-Linked-List"><a href="#Swift-创建链表-Linked-List" class="headerlink" title="Swift 创建链表(Linked List)"></a>Swift 创建链表(Linked List)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">// 定义节点</div><div class="line">public class LinkedListNode&lt;T&gt; &#123;</div><div class="line">    var value: T</div><div class="line">    </div><div class="line">    // 前一个节点</div><div class="line">    weak var pervious: LinkedListNode?</div><div class="line">    </div><div class="line">    // 下一个节点</div><div class="line">    var next: LinkedListNode?</div><div class="line">    </div><div class="line">    // 初始化节点</div><div class="line">    public init(value: T) &#123;</div><div class="line">        self.value = value</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div></pre></td><td class="code"><pre><div class="line">public class LinkedList&lt;T&gt; &#123;</div><div class="line">    public typealias Node = LinkedListNode&lt;T&gt;</div><div class="line">    </div><div class="line">    // 指向第一个节点的指针 私有</div><div class="line">    private var head: Node?</div><div class="line">    </div><div class="line">    // 是否为空</div><div class="line">    public var isEmpty: Bool &#123;</div><div class="line">        return head == nil</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 节点总数</div><div class="line">    public var count: Int &#123;</div><div class="line">        guard var node = head else &#123;</div><div class="line">            return 0</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        var count = 1</div><div class="line">        while let next = node.next &#123;</div><div class="line">            node = next</div><div class="line">            count += 1</div><div class="line">        &#125;</div><div class="line">        return count</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 指向第一个节点的指针 公共</div><div class="line">    public var first: Node? &#123;</div><div class="line">        return head</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 指向最后的节点的指针</div><div class="line">    public var last: Node? &#123;</div><div class="line">        guard var node = head else &#123;</div><div class="line">            return nil</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        // 直到 node.next 为nil</div><div class="line">        while let next = node.next &#123;</div><div class="line">            node = next</div><div class="line">        &#125;</div><div class="line">        return node</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 得到index 的 node</div><div class="line">    public func node(atIndex index: Int) -&gt; Node? &#123;</div><div class="line">        guard index != 0 else &#123;</div><div class="line">            return head!</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        var node = head!.next</div><div class="line">        guard index &lt; count else &#123;</div><div class="line">            return nil</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        for _ in 1 ..&lt; index &#123;</div><div class="line">            node = node?.next</div><div class="line">            if node == nil &#123;</div><div class="line">                break</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return node!</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    /// 插入节点</div><div class="line">    //  插入到最后</div><div class="line">    public func appendToTail(value: T) &#123;</div><div class="line">        let newNode = Node(value: value)</div><div class="line">        </div><div class="line">        // 更新最后一个节点，newNode成为最后一个节点</div><div class="line">        // 前一个节点成为成为倒数第二个节点</div><div class="line">        if let lastNode = last &#123;</div><div class="line">            newNode.pervious = lastNode</div><div class="line">            lastNode.next = newNode</div><div class="line">        &#125; else &#123;</div><div class="line">            // 空白链表直接插入</div><div class="line">            head = newNode</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 插入到最前</div><div class="line">    public func insertToHead(value: T) &#123;</div><div class="line">        let newHead = Node(value: value)</div><div class="line">        if head == nil &#123;</div><div class="line">            // 空链表直接插入</div><div class="line">            head = newHead</div><div class="line">        &#125; else &#123;</div><div class="line">            newHead.next = head</div><div class="line">            head?.pervious = newHead</div><div class="line">            head = newHead</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 插入到特定的索引位置</div><div class="line">    public func insert(_ node: Node, atIndex index: Int) &#123;</div><div class="line">        if index &lt; 0 &#123;</div><div class="line">            print(&quot;invalid input index&quot;)</div><div class="line">            return</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        let newNode = node</div><div class="line">        </div><div class="line">        if count == 0 &#123;</div><div class="line">            head = newNode</div><div class="line">        &#125; else &#123;</div><div class="line">            if index == 0 &#123;</div><div class="line">                newNode.next = head</div><div class="line">                head?.pervious = newNode</div><div class="line">                head = newNode</div><div class="line">            &#125; else &#123;</div><div class="line">                if index &gt; count &#123;</div><div class="line">                    print(&quot;out of range&quot;)</div><div class="line">                    return</div><div class="line">                &#125;</div><div class="line">                </div><div class="line">                let prev = self.node(atIndex: index - 1)</div><div class="line">                let next = prev?.next</div><div class="line">                </div><div class="line">                newNode.pervious = prev</div><div class="line">                newNode.next = prev?.next</div><div class="line">                prev?.next = newNode</div><div class="line">                next?.pervious = newNode</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    /// 移除节点</div><div class="line">    // 移除所有节点</div><div class="line">    public func removeAll()&#123;</div><div class="line">        head = nil</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 移除最后一个节点</div><div class="line">    public func removeLast() -&gt; T? &#123;</div><div class="line">        guard !isEmpty else &#123;</div><div class="line">            return nil</div><div class="line">        &#125;</div><div class="line">        return remove(node: last!)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 通过引用移除节点</div><div class="line">    public func remove(node: Node) -&gt; T? &#123;</div><div class="line">        guard head != nil else &#123;</div><div class="line">            print(&quot;Linked List is empty&quot;)</div><div class="line">            return nil</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        let prev = node.pervious</div><div class="line">        let next = node.next</div><div class="line">        </div><div class="line">        if let prev = prev &#123;</div><div class="line">            prev.next = next</div><div class="line">        &#125; else &#123;</div><div class="line">            head = next</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        next?.pervious = prev</div><div class="line">        </div><div class="line">        node.pervious = nil</div><div class="line">        node.next = nil</div><div class="line">        return node.value</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 通过index移除节点</div><div class="line">    public func removeAt(_ index: Int) -&gt; T? &#123;</div><div class="line">        guard head != nil else &#123;</div><div class="line">            print(&quot;Linked List is empty&quot;)</div><div class="line">            return nil</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        let node = self.node(atIndex: index)</div><div class="line">        guard node == nil else &#123;</div><div class="line">            return nil</div><div class="line">        &#125;</div><div class="line">        return remove(node: node!)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 打印所有节点</div><div class="line">    public func printAllNodes() &#123;</div><div class="line">        guard head != nil else &#123;</div><div class="line">            print(&quot;Linked List is empty&quot;)</div><div class="line">            return</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        var node = head</div><div class="line">        print(&quot;\nsatart printing all nodes:&quot;)</div><div class="line">        for index in 0 ..&lt; count &#123;</div><div class="line">            if node == nil &#123;</div><div class="line">                break</div><div class="line">            &#125;</div><div class="line">            print(&quot;[\(index)]\(node!.value)&quot;)</div><div class="line">            node = node!.next</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用链表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">let list = LinkedList&lt;String&gt;()</div><div class="line"></div><div class="line">list.isEmpty</div><div class="line">list.first</div><div class="line">list.count</div><div class="line"></div><div class="line">list.appendToTail(value: &quot;Swift&quot;)</div><div class="line">list.isEmpty</div><div class="line">list.first!.value</div><div class="line">list.count</div><div class="line">list.last!.value</div><div class="line"></div><div class="line">list.appendToTail(value: &quot;Java&quot;)</div><div class="line">list.first!.value</div><div class="line">list.last!.value</div><div class="line"></div><div class="line">list.insert(LinkedListNode.init(value: &quot;C++&quot;), atIndex: 2)</div><div class="line"></div><div class="line">list.printAllNodes()</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/02/17/Swift-创建队列-queue/" itemprop="url">
+                  Swift 创建队列(queue)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-02-17T14:41:42+08:00" content="2018-02-17">
+              2018-02-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Swift-创建队列-queue"><a href="#Swift-创建队列-queue" class="headerlink" title="Swift 创建队列(queue)"></a>Swift 创建队列(queue)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">/// 队列 queue</div><div class="line">// 用数组来实现队列内部的线性表</div><div class="line"></div><div class="line">public struct Queue&lt;T&gt; &#123;</div><div class="line">    fileprivate var queueArray = [T]()</div><div class="line">    </div><div class="line">    public var count: Int &#123;</div><div class="line">        return queueArray.count</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public var isEmpty: Bool &#123;</div><div class="line">        return queueArray.isEmpty</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 前面的元素</div><div class="line">    public var front: T? &#123;</div><div class="line">        if isEmpty &#123;</div><div class="line">            print(&quot;queue is empty&quot;)</div><div class="line">            return nil</div><div class="line">        &#125; else &#123;</div><div class="line">            return queueArray.first</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 添加元素</div><div class="line">    public mutating func enqueue(_ element: T) &#123;</div><div class="line">        queueArray.append(element)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 移除元素</div><div class="line">    public mutating func dequeue() -&gt; T? &#123;</div><div class="line">        if isEmpty &#123;</div><div class="line">            print(&quot;queue is empty&quot;)</div><div class="line">            return nil</div><div class="line">        &#125; else &#123;</div><div class="line">            return queueArray.removeFirst()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // 打印元素</div><div class="line">    public mutating func printAllElements() &#123;</div><div class="line">        guard count &gt; 0 else &#123;</div><div class="line">            print(&quot;queue is empty&quot;)</div><div class="line">            return</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        print(&quot;\nprint all queue elements:&quot;)</div><div class="line">        for (index, value) in queueArray.enumerated() &#123;</div><div class="line">            print(&quot;[\(index)]\(value)&quot;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">        </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">// 使用队列</div><div class="line">var queue = Queue.init(queueArray: [])</div><div class="line">queue.isEmpty</div><div class="line">queue.printAllElements()</div><div class="line">queue.count</div><div class="line"></div><div class="line">queue.enqueue(&quot;abc&quot;)</div><div class="line">queue.printAllElements()</div><div class="line"></div><div class="line">queue.enqueue(&quot;xyz&quot;)</div><div class="line">queue.printAllElements()</div><div class="line"></div><div class="line">queue.front</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/02/17/在用delegate回调数据时，避免避免持续调用-delegate-respondsToSelector-selector-someThingFunction/" itemprop="url">
                   在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction)
                 </a>
@@ -512,205 +703,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/02/17/在手机上查看相关图层/" itemprop="url">
-                  在手机上查看相关图层
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-02-17T14:10:22+08:00" content="2018-02-17">
-              2018-02-17
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># if DEBUG</div><div class="line">#在应用启动的时候加入下面代码，然后双击状态栏</div><div class="line">id overlayClass = NSClassFromString(@&quot;UIDebuggingInformationOverlay&quot;);</div><div class="line">[overlayClass performSelector:NSSelectorFromString(@&quot;prepareDebuggingOverlay&quot;)];</div><div class="line">#endif</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/12/24/贝塞尔曲线的基本用法/" itemprop="url">
-                  贝塞尔曲线的基本用法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-12-24T17:50:25+08:00" content="2017-12-24">
-              2017-12-24
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="画五边形"><a href="#画五边形" class="headerlink" title="画五边形"></a>画五边形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">// 画五边形</div><div class="line">- (void)drawPentagons &#123;</div><div class="line">    UIBezierPath *apath = (&#123;</div><div class="line">        UIBezierPath *path = [UIBezierPath bezierPath];</div><div class="line">        path.lineJoinStyle = kCGLineCapRound;</div><div class="line">        path.lineCapStyle = kCGLineCapRound;</div><div class="line">        path.lineWidth = 5.0;</div><div class="line">        </div><div class="line">        //设置起始点</div><div class="line">        [path moveToPoint:CGPointMake(100, 0)];</div><div class="line">        //增加线条</div><div class="line">        [path addLineToPoint:CGPointMake(200, 40)];</div><div class="line">        [path addLineToPoint:CGPointMake(160, 140)];</div><div class="line">        [path addLineToPoint:CGPointMake(40, 140)];</div><div class="line">        [path addLineToPoint:CGPointMake(0, 40)];</div><div class="line">        </div><div class="line">        //关闭路径</div><div class="line">        [path closePath];</div><div class="line">        </div><div class="line">        path;</div><div class="line">    &#125;);</div><div class="line">    //根据坐标连线</div><div class="line">    [apath stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="画矩形"><a href="#画矩形" class="headerlink" title="画矩形"></a>画矩形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 画矩形</div><div class="line">- (void)drawRectangle &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(10, 40, 200, 100)];</div><div class="line">    path.lineWidth = 5.0;</div><div class="line">//    path.lineCapStyle = kCGLineCapRound;</div><div class="line">//    path.lineJoinStyle = kCGLineCapSquare;</div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="画圆和椭圆"><a href="#画圆和椭圆" class="headerlink" title="画圆和椭圆"></a>画圆和椭圆</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 画圆和椭圆</div><div class="line">- (void)drawCircle &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(100, 40, 200, 200)];</div><div class="line">    path.lineWidth = 5.0;</div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="画带指定圆角的矩形"><a href="#画带指定圆角的矩形" class="headerlink" title="画带指定圆角的矩形"></a>画带指定圆角的矩形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 画带指定圆角的矩形</div><div class="line">- (void)drawOtherRectangle &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(10, 40, 200, 100) byRoundingCorners:UIRectCornerAllCorners  cornerRadii:CGSizeMake(100, 100)];</div><div class="line">    path.lineWidth = 5.0;</div><div class="line">    path.lineJoinStyle = kCGLineCapRound;</div><div class="line">    path.lineCapStyle = kCGLineCapRound;</div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="画圆弧"><a href="#画圆弧" class="headerlink" title="画圆弧"></a>画圆弧</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 画圆弧</div><div class="line">- (void)drawCircleArc &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(100, 200) radius:100 startAngle:M_PI endAngle:M_PI / 2 clockwise: NO];</div><div class="line">    path.lineWidth = 5.0;</div><div class="line">    path.lineJoinStyle = kCGLineCapRound;</div><div class="line">    path.lineCapStyle = kCGLineCapRound;</div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="画贝塞尔曲线"><a href="#画贝塞尔曲线" class="headerlink" title="画贝塞尔曲线"></a>画贝塞尔曲线</h3><p><img src="/2017/12/24/贝塞尔曲线的基本用法/二贝塞尔曲线.png" alt=""><br><img src="/2017/12/24/贝塞尔曲线的基本用法/三贝塞尔曲线.png" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">// 画贝塞尔曲线</div><div class="line">- (void)drawBezierArc &#123;</div><div class="line">    UIBezierPath *path = [UIBezierPath bezierPath];</div><div class="line">    path.lineWidth = 2.0;</div><div class="line">    path.lineJoinStyle = kCGLineCapRound;</div><div class="line">    path.lineCapStyle = kCGLineCapRound;</div><div class="line">    </div><div class="line">    // 曲线1</div><div class="line">    /*</div><div class="line">    // 设置起始点</div><div class="line">    [path moveToPoint:CGPointMake(100, 300)];</div><div class="line">    // 设置结束点和控制点</div><div class="line">    [path addQuadCurveToPoint:CGPointMake(300, 300) controlPoint:CGPointMake(100, 50)];</div><div class="line">    */</div><div class="line">    </div><div class="line">    // 曲线2</div><div class="line">//    [path moveToPoint:CGPointMake(10, 100)];</div><div class="line">//    [path addQuadCurveToPoint:CGPointMake(310, 100) controlPoint:CGPointMake(150, -90)];</div><div class="line">    </div><div class="line">    // 曲线3 三次贝塞尔曲线</div><div class="line">    [path moveToPoint:CGPointMake(10, 100)];</div><div class="line">    [path addCurveToPoint:CGPointMake(310, 100) controlPoint1:CGPointMake(100, -100) controlPoint2:CGPointMake(100, 400)];   </div><div class="line">    [path stroke];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -751,7 +748,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">29</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
