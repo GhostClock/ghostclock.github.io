@@ -1,23 +1,637 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-Hans,zh-tw,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block title %} {{ config.title }} {% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}
-  {% if is_home() %} page-home {% endif %}
-{% endblock %}
 
-{% block content %}
-  <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
-    {% endfor %}
-  </section>
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-  {% include '_partials/pagination.swig' %}
-{% endblock %}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+  <meta name="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GC的笔记本">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="GC的笔记本">
+<meta property="og:description" content="穷折腾 二次元 Mac Win10 iOS Java">
+<meta property="og:locale">
+<meta property="article:author" content="GhostClock(鬼钟)">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>GC的笔记本</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">GC的笔记本</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">😄</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/20/block%E7%9B%B8%E5%85%B3%E7%9A%84%E4%BF%AE%E9%A5%B0%E7%AC%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/09/20/block%E7%9B%B8%E5%85%B3%E7%9A%84%E4%BF%AE%E9%A5%B0%E7%AC%A6/" class="post-title-link" itemprop="url">block相关的修饰符</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2018-09-20 22:35:44 / Modified: 22:55:13" itemprop="dateCreated datePublished" datetime="2018-09-20T22:35:44+08:00">2018-09-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="weak修饰符"><a href="#weak修饰符" class="headerlink" title="__weak修饰符"></a>__weak修饰符</h3><h4 id="weak修饰对象时和废弃对象时的调用流程"><a href="#weak修饰对象时和废弃对象时的调用流程" class="headerlink" title="__weak修饰对象时和废弃对象时的调用流程"></a>__weak修饰对象时和废弃对象时的调用流程</h4><p><img src="/2018/09/20/block%E7%9B%B8%E5%85%B3%E7%9A%84%E4%BF%AE%E9%A5%B0%E7%AC%A6/__weak%E4%BF%AE%E9%A5%B0%E5%AF%B9%E8%B1%A1%E6%97%B6%E5%92%8C%E5%BA%9F%E5%BC%83%E5%AF%B9%E8%B1%A1%E6%97%B6%E7%9A%84%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B.jpg" alt="__weak修饰对象时和废弃对象时的调用流程"></p>
+<h4 id="block说明符"><a href="#block说明符" class="headerlink" title="__block说明符"></a>__block说明符</h4><p>原始代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation&#x2F;Foundation.h&gt;</span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	__block int a &#x3D; 1;</span><br><span class="line">	^&#123;</span><br><span class="line">		a ++;</span><br><span class="line">	&#125;;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>经clang编译后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">struct __block_impl &#123;</span><br><span class="line">  void *isa;</span><br><span class="line">  int Flags;</span><br><span class="line">  int Reserved;</span><br><span class="line">  void *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">struct __Block_byref_a_0 &#123;</span><br><span class="line">  void *__isa;</span><br><span class="line">__Block_byref_a_0 *__forwarding;</span><br><span class="line"> int __flags;</span><br><span class="line"> int __size;</span><br><span class="line"> int a; &#x2F;&#x2F; 最后一个成员变量相当于源自动变量的成员变量</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct __main_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __main_block_desc_0* Desc;</span><br><span class="line">  __Block_byref_a_0 *a; &#x2F;&#x2F; by ref</span><br><span class="line">  __main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, __Block_byref_a_0 *_a, int flags&#x3D;0) : a(_a-&gt;__forwarding) &#123;</span><br><span class="line">    impl.isa &#x3D; &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags &#x3D; flags;</span><br><span class="line">    impl.FuncPtr &#x3D; fp;</span><br><span class="line">    Desc &#x3D; desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</span><br><span class="line">  __Block_byref_a_0 *a &#x3D; __cself-&gt;a; &#x2F;&#x2F; bound by ref</span><br><span class="line"></span><br><span class="line">  (a-&gt;__forwarding-&gt;a) ++;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">static void __main_block_copy_0(struct __main_block_impl_0*dst, struct __main_block_impl_0*src) &#123;_Block_object_assign((void*)&amp;dst-&gt;a, (void*)src-&gt;a, 8&#x2F;*BLOCK_FIELD_IS_BYREF*&#x2F;);&#125;</span><br><span class="line"></span><br><span class="line">static void __main_block_dispose_0(struct __main_block_impl_0*src) &#123;_Block_object_dispose((void*)src-&gt;a, 8&#x2F;*BLOCK_FIELD_IS_BYREF*&#x2F;);&#125;</span><br><span class="line"></span><br><span class="line">static struct __main_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">  void (*copy)(struct __main_block_impl_0*, struct __main_block_impl_0*);</span><br><span class="line">  void (*dispose)(struct __main_block_impl_0*);</span><br><span class="line">&#125; __main_block_desc_0_DATA &#x3D; &#123; 0, sizeof(struct __main_block_impl_0), __main_block_copy_0, __main_block_dispose_0&#125;;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">  &#x2F;&#x2F; __block 变成了__Block_byref_a_0结构体类型的自动变量，既在栈上生成的__Block_byref_a_0结构体实例，命名规则:__Block_byref_变量名_出现的顺序</span><br><span class="line">  __attribute__((__blocks__(byref))) __Block_byref_a_0 a &#x3D; &#123;</span><br><span class="line">    (void*)0,</span><br><span class="line">    (__Block_byref_a_0 *)&amp;a, </span><br><span class="line">    0, </span><br><span class="line">    sizeof(__Block_byref_a_0), </span><br><span class="line">    1 &#x2F;&#x2F; 初始值为1</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line"> ((void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA, (__Block_byref_a_0 *)&amp;a, 570425344));</span><br><span class="line"> return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="block变量和对象"><a href="#block变量和对象" class="headerlink" title="__block变量和对象"></a>__block变量和对象</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation&#x2F;Foundation.h&gt;</span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	__block id obj &#x3D; [[NSObject alloc] init];</span><br><span class="line">	&#x2F;&#x2F; ARC下等同 __block id _strong obj &#x3D; [[NSObject alloc] init];</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line">  当block从栈上复制到堆上时,使用_Block_object_assign函数，持有Block截获的对象</span><br><span class="line">  当堆上的Block被废弃时，使用_Block_object_dispose函数,释放Block截获的对象</span><br><span class="line">*&#x2F;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; __block变量声明部分</span><br><span class="line">struct __Block_byref_obj_0 &#123;</span><br><span class="line">  void *__isa;</span><br><span class="line">__Block_byref_obj_0 *__forwarding;</span><br><span class="line"> int __flags;</span><br><span class="line"> int __size;</span><br><span class="line"> void (*__Block_byref_id_object_copy)(void*, void*);</span><br><span class="line"> void (*__Block_byref_id_object_dispose)(void*);</span><br><span class="line"> __strong id obj;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">  &#x2F;&#x2F; __block 变量赋值部分</span><br><span class="line"> __attribute__((__blocks__(byref))) __Block_byref_obj_0 obj &#x3D; </span><br><span class="line"> &#123;</span><br><span class="line">  (void*)0,</span><br><span class="line">  (__Block_byref_obj_0 *)&amp;obj, </span><br><span class="line">  33554432, </span><br><span class="line">  sizeof(__Block_byref_obj_0), </span><br><span class="line">  __Block_byref_id_object_copy_131, </span><br><span class="line">  __Block_byref_id_object_dispose_131, </span><br><span class="line">  ((NSObject *(*)(id, SEL))(void *)objc_msgSend)((id)((NSObject *(*)(id, SEL))(void *)objc_msgSend)((id)objc_getClass(&quot;NSObject&quot;), sel_registerName(&quot;alloc&quot;)), sel_registerName(&quot;init&quot;))&#125;;</span><br><span class="line"></span><br><span class="line"> return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/20/%E4%BB%8EBlock%E6%BA%90%E7%A0%81%E7%9C%8B%E5%85%B6%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/09/20/%E4%BB%8EBlock%E6%BA%90%E7%A0%81%E7%9C%8B%E5%85%B6%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">从Block源码看其实现</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2018-09-20 22:18:39 / Modified: 22:34:15" itemprop="dateCreated datePublished" datetime="2018-09-20T22:18:39+08:00">2018-09-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="在堆上生成的Block"><a href="#在堆上生成的Block" class="headerlink" title="在堆上生成的Block"></a>在堆上生成的Block</h3><h4 id="创建Block"><a href="#创建Block" class="headerlink" title="创建Block"></a>创建Block</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation&#x2F;Foundation.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	void (^Block)(void) &#x3D; ^&#123;</span><br><span class="line">		printf(&quot;Block\n&quot;);</span><br><span class="line">	&#125;;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="经过clang编译后"><a href="#经过clang编译后" class="headerlink" title="经过clang编译后"></a>经过clang编译后</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">struct __block_impl &#123;</span><br><span class="line">  void *isa;</span><br><span class="line">  int Flags;</span><br><span class="line">  int Reserved;</span><br><span class="line">  void *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct   &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __main_block_desc_0* Desc;</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 构造函数初始化__main_block_impl_0</span><br><span class="line">  __main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int flags&#x3D;0) &#123;</span><br><span class="line">    impl.isa &#x3D; &amp;_NSConcreteStackBlock; &#x2F;&#x2F; _NSConcreteStackBlock用于初始化__block_impl结构体的isa成员</span><br><span class="line">    impl.Flags &#x3D; flags;</span><br><span class="line">    impl.FuncPtr &#x3D; fp;</span><br><span class="line">    Desc &#x3D; desc;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">&#x2F;&#x2F; 方法__main_block_func_0传入的是__main_block_impl_0结构体指针</span><br><span class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</span><br><span class="line"></span><br><span class="line">  NSLog((NSString *)&amp;__NSConstantStringImpl__var_folders_dp_q1vmhmws4zvd8s8jq5q8f37c0000gn_T_block_5bf957_mi_0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 描述，</span><br><span class="line">static struct __main_block_desc_0 &#123;</span><br><span class="line">  size_t reserved; &#x2F;&#x2F; 今后版本升级所需的区域</span><br><span class="line">  size_t Block_size; &#x2F;&#x2F; Block的大小</span><br><span class="line">&#125; __main_block_desc_0_DATA &#x3D; &#123; 0, sizeof(struct __main_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">  &#x2F;&#x2F; 转换后，变成了__main_block_func_0，其规则是:__Block语法所在的函数名_block_func_block语法在函数中出现的顺序</span><br><span class="line"> &#x2F;&#x2F; void (*block)(void) &#x3D; ((void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA));</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 去掉转换后</span><br><span class="line">  &#x2F;&#x2F; 将__main_block_impl_0结构体类型的自动变量,既栈上生成的__main_block_impl_0结构体实例指针，赋值给__main_block_impl_0结构体指针类型的block</span><br><span class="line">  struct __main_block_impl_0 tmp &#x3D; __main_block_impl_0(__main_block_func_0, &amp;__main_block_desc_0_DATA);</span><br><span class="line">  struct __main_block_impl_0 *block &#x3D; &amp;tmp;</span><br><span class="line">  ||</span><br><span class="line">  &#x2F;&#x2F; 对应以下最初识代码</span><br><span class="line">   void (^block)(void) &#x3D; ^&#123;</span><br><span class="line">      printf(&quot;Block\n&quot;);</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line"> &#x2F;&#x2F; ((void (*)(__block_impl *))((__block_impl *)block)-&gt;FuncPtr)((__block_impl *)block);</span><br><span class="line"> &#x2F;&#x2F; 去掉转换后</span><br><span class="line">  (*block -&gt; __block_impl.FuncPtr)(block);</span><br><span class="line"></span><br><span class="line"> return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="分配在数据区的全局Block"><a href="#分配在数据区的全局Block" class="headerlink" title="分配在数据区的全局Block"></a>分配在数据区的全局Block</h3><h4 id="创建OC的Block原码"><a href="#创建OC的Block原码" class="headerlink" title="创建OC的Block原码:"></a>创建OC的Block原码:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation&#x2F;Foundation.h&gt;</span><br><span class="line">&#x2F;&#x2F; 全局Block</span><br><span class="line">void (^blk)(void) &#x3D; ^&#123;</span><br><span class="line">	printf(&quot;Global Block\n&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="用clang命令编译该文件"><a href="#用clang命令编译该文件" class="headerlink" title="用clang命令编译该文件"></a>用clang命令编译该文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -rewrite-objc -fobjc-arc blk.m</span><br></pre></td></tr></table></figure>
+<h4 id="得到如下源码-删除辅助代码后"><a href="#得到如下源码-删除辅助代码后" class="headerlink" title="得到如下源码(删除辅助代码后)"></a>得到如下源码(删除辅助代码后)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">struct __block_impl &#123;</span><br><span class="line">  void *isa;</span><br><span class="line">  int Flags;</span><br><span class="line">  int Reserved;</span><br><span class="line">  void *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct __blk_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __blk_block_desc_0* Desc;</span><br><span class="line">  __blk_block_impl_0(void *fp, struct __blk_block_desc_0 *desc, int flags&#x3D;0) &#123;</span><br><span class="line">    impl.isa &#x3D; &amp;_NSConcreteGlobalBlock; &#x2F;&#x2F; 分配在数据区的全局Block</span><br><span class="line">    impl.Flags &#x3D; flags;</span><br><span class="line">    impl.FuncPtr &#x3D; fp;</span><br><span class="line">    Desc &#x3D; desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">static void __blk_block_func_0(struct __blk_block_impl_0 *__cself) &#123;</span><br><span class="line"></span><br><span class="line"> printf(&quot;Global Block\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static struct __blk_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">&#125; __blk_block_desc_0_DATA &#x3D; &#123; 0, sizeof(struct __blk_block_impl_0)&#125;;</span><br><span class="line">static __blk_block_impl_0 __global_blk_block_impl_0((void *)__blk_block_func_0, &amp;__blk_block_desc_0_DATA);</span><br><span class="line">void (*blk)(void) &#x3D; ((void (*)())&amp;__global_blk_block_impl_0);</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line"> return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Block自动截获变量"><a href="#Block自动截获变量" class="headerlink" title="Block自动截获变量"></a>Block自动截获变量</h3><p>源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation&#x2F;Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	int a &#x3D; 1;</span><br><span class="line">	const char *fmt &#x3D; &quot;1&quot;;</span><br><span class="line">	void (^blk)(void) &#x3D; ^&#123;</span><br><span class="line">		printf(&quot;%d %s\n&quot;, a, fmt);</span><br><span class="line">	&#125;;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">struct __main_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __main_block_desc_0* Desc;</span><br><span class="line">  &#x2F;&#x2F; 使用自动变量被当做成员变量追加到__main_block_impl_0结构体中</span><br><span class="line">  int a;</span><br><span class="line">  const char *fmt;</span><br><span class="line"></span><br><span class="line">  __main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int _a, const char *_fmt, int flags&#x3D;0) : a(_a), fmt(_fmt) &#123;</span><br><span class="line">    impl.isa &#x3D; &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags &#x3D; flags;</span><br><span class="line">    impl.FuncPtr &#x3D; fp;</span><br><span class="line">    Desc &#x3D; desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</span><br><span class="line">  int a &#x3D; __cself-&gt;a; &#x2F;&#x2F; bound by copy</span><br><span class="line">  const char *fmt &#x3D; __cself-&gt;fmt; &#x2F;&#x2F; bound by copy</span><br><span class="line"></span><br><span class="line">  printf(&quot;%d %s\n&quot;, a, fmt);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">static struct __main_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA &#x3D; &#123; 0, sizeof(struct __main_block_impl_0)&#125;;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line"> int a &#x3D; 1;</span><br><span class="line"> const char *fmt &#x3D; &quot;1&quot;;</span><br><span class="line"> void (*blk)(void) &#x3D; ((void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA, a, fmt));</span><br><span class="line"> return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Block修改静态变量-全局变量的值"><a href="#Block修改静态变量-全局变量的值" class="headerlink" title="Block修改静态变量:全局变量的值"></a>Block修改静态变量:全局变量的值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation&#x2F;Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">int global_val &#x3D; 1; &#x2F;&#x2F; 全局变量</span><br><span class="line">static int static_global_val &#x3D; 2; &#x2F;&#x2F; 静态全局变量</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	static int static_val &#x3D; 3;&#x2F;&#x2F; 静态局部变量</span><br><span class="line"></span><br><span class="line">	void (^blk)(void) &#x3D; ^&#123;</span><br><span class="line">		global_val ++;</span><br><span class="line">		static_global_val ++;</span><br><span class="line">		static_val ++;</span><br><span class="line">	&#125;;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>||</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">int global_val &#x3D; 1;</span><br><span class="line">static int static_global_val &#x3D; 2;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">struct __main_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __main_block_desc_0* Desc;</span><br><span class="line">  int *static_val; &#x2F;&#x2F; 使用指针进行访问，这是这是超出作用域最简单的方法</span><br><span class="line">  __main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int *_static_val, int flags&#x3D;0) : static_val(_static_val) &#123;</span><br><span class="line">    impl.isa &#x3D; &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags &#x3D; flags;</span><br><span class="line">    impl.FuncPtr &#x3D; fp;</span><br><span class="line">    Desc &#x3D; desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</span><br><span class="line">  int *static_val &#x3D; __cself-&gt;static_val; &#x2F;&#x2F; bound by copy</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 全局变量和静态全局变量可以直接使用</span><br><span class="line">  global_val ++;</span><br><span class="line">  static_global_val ++;</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; 使用static_val的指针进行访问</span><br><span class="line">  (*static_val) ++;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">static struct __main_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA &#x3D; &#123; 0, sizeof(struct __main_block_impl_0)&#125;;</span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line"> static int static_val &#x3D; 3;</span><br><span class="line"></span><br><span class="line"> void (*blk)(void) &#x3D; ((void (*)())&amp;__main_block_impl_0((void *)__main_block_func_0, &amp;__main_block_desc_0_DATA, &amp;static_val));</span><br><span class="line"> return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Block从栈赋值到堆上"><a href="#Block从栈赋值到堆上" class="headerlink" title="Block从栈赋值到堆上"></a>Block从栈赋值到堆上</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation&#x2F;Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">typedef int (^blk_t)(int);</span><br><span class="line"></span><br><span class="line">blk_t func(int rate) &#123;</span><br><span class="line">	&#x2F;&#x2F; return ^(int count) &#123;return rate * count;&#125;; &#x2F;&#x2F; ARC下编译器会自动帮加上copy</span><br><span class="line">	return [^(int count) &#123;return rate * count;&#125; copy]; &#x2F;&#x2F;MRC下需要手动copy</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NSArray* getBlockArray &#123;</span><br><span class="line">	return [NSArray alloc] initWithObjects:</span><br><span class="line">	[^&#123;</span><br><span class="line">		NSLog(@&quot;blk0&quot;);</span><br><span class="line">	&#125;; copy],</span><br><span class="line">	[^&#123;</span><br><span class="line">		NSLog(@&quot;blk1&quot;);</span><br><span class="line">	&#125;; copy],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">typedef int (*blk_t)(int);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">struct __func_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __func_block_desc_0* Desc;</span><br><span class="line">  int rate;</span><br><span class="line">  __func_block_impl_0(void *fp, struct __func_block_desc_0 *desc, int _rate, int flags&#x3D;0) : rate(_rate) &#123;</span><br><span class="line">    impl.isa &#x3D; &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags &#x3D; flags;</span><br><span class="line">    impl.FuncPtr &#x3D; fp;</span><br><span class="line">    Desc &#x3D; desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">static int __func_block_func_0(struct __func_block_impl_0 *__cself, int count) &#123;</span><br><span class="line">  int rate &#x3D; __cself-&gt;rate; &#x2F;&#x2F; bound by copy</span><br><span class="line">return rate * count;&#125;</span><br><span class="line"></span><br><span class="line">static struct __func_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">&#125; __func_block_desc_0_DATA &#x3D; &#123; 0, sizeof(struct __func_block_impl_0)&#125;;</span><br><span class="line">blk_t func(int rate) &#123;</span><br><span class="line"> return ((int (*)(int))&amp;__func_block_impl_0((void *)__func_block_func_0, &amp;__func_block_desc_0_DATA, rate));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/08/Swift%E9%97%AD%E5%8C%85-Closure-%E5%9B%9E%E8%B0%83%E4%BC%A0%E5%80%BC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/09/08/Swift%E9%97%AD%E5%8C%85-Closure-%E5%9B%9E%E8%B0%83%E4%BC%A0%E5%80%BC/" class="post-title-link" itemprop="url">Swift闭包(Closure)回调传值</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2018-09-08 01:56:55 / Modified: 02:03:10" itemprop="dateCreated datePublished" datetime="2018-09-08T01:56:55+08:00">2018-09-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Swift闭包-Closure-回调传值"><a href="#Swift闭包-Closure-回调传值" class="headerlink" title="Swift闭包(Closure)回调传值"></a>Swift闭包(Closure)回调传值</h3><h2 id="场景"><a href="#场景" class="headerlink" title="场景:"></a>场景:</h2><p>A页面present到B页面，B页面dismiss到A页面时，把值传递给A页面</p>
+<h3 id="1-在B页面定义一个闭包"><a href="#1-在B页面定义一个闭包" class="headerlink" title="1. 在B页面定义一个闭包"></a>1. 在B页面定义一个闭包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 定义一个闭包类型</span><br><span class="line">typealias callBackCompletion &#x3D; (_ str: String, _ age: Int) -&gt; Void</span><br><span class="line"></span><br><span class="line">class NextViewController: UIViewController &#123;</span><br><span class="line">    &#x2F;&#x2F; 定义一个变量，把闭包当变量使用</span><br><span class="line">    fileprivate var callBack: callBackCompletion?</span><br><span class="line">    private var name: String?</span><br><span class="line">    private var age: Int?</span><br><span class="line">    </span><br><span class="line">override func touchesBegan(_ touches: Set&lt;UITouch&gt;, with event: UIEvent?) &#123;</span><br><span class="line">   if self.callBack !&#x3D; nil &#123;</span><br><span class="line">        self.callBack!(self.name! + &quot;11&quot;, self.age! + 22)</span><br><span class="line">        self.dismiss(animated: true, completion: nil)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">&#x2F;&#x2F; MARK: - 回调函数</span><br><span class="line">func setCallBackValue(name: String, age: Int, callBack: @escaping callBackCompletion) &#123;</span><br><span class="line">        self.name &#x3D; name</span><br><span class="line">        self.age &#x3D; age</span><br><span class="line">        self.callBack &#x3D; callBack</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-在A页面得到值"><a href="#2-在A页面得到值" class="headerlink" title="2.在A页面得到值"></a>2.在A页面得到值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> override func touchesBegan(_ touches: Set&lt;UITouch&gt;, with event: UIEvent?) &#123;</span><br><span class="line">    let vc &#x3D; NextViewController()</span><br><span class="line">    vc.setCallBackValue(name: &quot;Ghost&quot;, age: 20) &#123; (name, age) in</span><br><span class="line">        print(&quot;\(name, age)&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    self.present(vc, animated: true, completion: nil)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/27/RunTime-%E5%BD%92%E6%A1%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/27/RunTime-%E5%BD%92%E6%A1%A3/" class="post-title-link" itemprop="url">RunTime - 归档</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2018-05-27 18:26:09 / Modified: 18:34:44" itemprop="dateCreated datePublished" datetime="2018-05-27T18:26:09+08:00">2018-05-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="DouBanModel-m"><a href="#DouBanModel-m" class="headerlink" title="DouBanModel.m"></a>DouBanModel.m</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;DouBanModel.h&quot;</span><br><span class="line">#import &lt;objc&#x2F;runtime.h&gt;</span><br><span class="line"></span><br><span class="line">#pragma mark - 可以写成宏</span><br><span class="line"></span><br><span class="line">#define encodeCoderWithRuntime(model)\</span><br><span class="line">unsigned int count &#x3D; 0;\</span><br><span class="line">Ivar *ivars &#x3D; class_copyIvarList([model class], &amp;count);\</span><br><span class="line">for (int i &#x3D; 0; i &lt; count; i ++) &#123;\</span><br><span class="line">    Ivar ivar &#x3D; ivars[i];\</span><br><span class="line">    NSString *key &#x3D; [NSString stringWithUTF8String:ivar_getName(ivar)];\</span><br><span class="line">    id value &#x3D; [aCoder valueForKey:key];\</span><br><span class="line">    [aCoder encodeObject:value forKey:key];\</span><br><span class="line">&#125;\</span><br><span class="line">free(ivars);\</span><br><span class="line"></span><br><span class="line">#define initCoderWithRuntime(model)\</span><br><span class="line">self &#x3D; [super init];\</span><br><span class="line">if (self) &#123;\</span><br><span class="line">    unsigned int count &#x3D; 0;\</span><br><span class="line">    Ivar *ivars &#x3D; class_copyIvarList([model class], &amp;count);\</span><br><span class="line">    for (int i &#x3D; 0; i &lt; count; i ++) &#123;\</span><br><span class="line">        Ivar ivar &#x3D; ivars[i];\</span><br><span class="line">        NSString *key &#x3D; [NSString stringWithUTF8String:ivar_getName(ivar)];\</span><br><span class="line">        id value &#x3D; [aDecoder decodeObjectForKey:key];\</span><br><span class="line">        [self setValue:value forKey:key];\</span><br><span class="line">    &#125;\</span><br><span class="line">    free(ivars);\</span><br><span class="line">&#125;\</span><br><span class="line">return self;\</span><br><span class="line"></span><br><span class="line">@implementation DouBanModel</span><br><span class="line"></span><br><span class="line">#pragma mark - 用Runtime实现归档解档</span><br><span class="line">&#x2F;&#x2F; 存</span><br><span class="line">- (void)encodeWithCoder:(NSCoder *)aCoder &#123;</span><br><span class="line">    unsigned int count &#x3D; 0;</span><br><span class="line">    Ivar *ivars &#x3D; class_copyIvarList([DouBanModel class], &amp;count);</span><br><span class="line">    for (int i &#x3D; 0; i &lt; count; i ++) &#123;</span><br><span class="line">        Ivar ivar &#x3D; ivars[i];</span><br><span class="line">        NSString *key &#x3D; [NSString stringWithUTF8String:ivar_getName(ivar)];</span><br><span class="line">        &#x2F;&#x2F;归档</span><br><span class="line">        id value &#x3D; [self valueForKey:key];</span><br><span class="line">        [aCoder encodeObject:value forKey:key];</span><br><span class="line">    &#125;</span><br><span class="line">    free(ivars);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 解</span><br><span class="line">- (instancetype)initWithCoder:(NSCoder *)aDecoder &#123;</span><br><span class="line">    self &#x3D; [super init];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        unsigned int count &#x3D; 0;</span><br><span class="line">        Ivar *ivars &#x3D; class_copyIvarList([DouBanModel class], &amp;count);</span><br><span class="line">        for (int i &#x3D; 0; i &lt; count; i ++) &#123;</span><br><span class="line">            &#x2F;&#x2F; 取出成员变量</span><br><span class="line">            Ivar ivar &#x3D; ivars[i];</span><br><span class="line">            NSString *key &#x3D; [NSString stringWithUTF8String:ivar_getName(ivar)];</span><br><span class="line">            &#x2F;&#x2F;归档</span><br><span class="line">            id value &#x3D; [aDecoder decodeObjectForKey:key];</span><br><span class="line">            [self setValue:value forKey:key];</span><br><span class="line">        &#125;</span><br><span class="line">        free(ivars);</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation MovieInfo</span><br><span class="line"></span><br><span class="line">#pragma mark - 模型里面套模型的归档</span><br><span class="line">- (void)encodeWithCoder:(NSCoder *)aCoder &#123;</span><br><span class="line">    unsigned int count &#x3D; 0;</span><br><span class="line">    Ivar *ivars &#x3D; class_copyIvarList([MovieInfo class], &amp;count);</span><br><span class="line">    for (int i &#x3D; 0; i &lt; count; i ++) &#123;</span><br><span class="line">        Ivar ivar &#x3D; ivars[i];</span><br><span class="line">        NSString *key &#x3D; [NSString stringWithUTF8String:ivar_getName(ivar)];</span><br><span class="line">        &#x2F;&#x2F;归档</span><br><span class="line">        id value &#x3D; [self valueForKey:key];</span><br><span class="line">        [aCoder encodeObject:value forKey:key];</span><br><span class="line">    &#125;</span><br><span class="line">    free(ivars);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithCoder:(NSCoder *)aDecoder &#123;</span><br><span class="line">    initCoderWithRuntime(MovieInfo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="Demo-地址"><a href="#Demo-地址" class="headerlink" title="Demo 地址"></a>Demo 地址</h3><p><a target="_blank" rel="noopener" href="https://github.com/GhostClock/Runtime-Demo">https://github.com/GhostClock/Runtime-Demo</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/27/RunTime-KVO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/27/RunTime-KVO/" class="post-title-link" itemprop="url">RunTime - 自己实现KVO(isa-swizzling)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2018-05-27 18:22:55 / Modified: 18:34:31" itemprop="dateCreated datePublished" datetime="2018-05-27T18:22:55+08:00">2018-05-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="NSObject-KVO-h"><a href="#NSObject-KVO-h" class="headerlink" title="NSObject+KVO.h"></a>NSObject+KVO.h</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation&#x2F;Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">typedef void(^GCObserverBlock)(id observedKey, NSString *keyPath, id oldValue, id newValue);</span><br><span class="line"></span><br><span class="line">@interface NSObject (KVO)</span><br><span class="line"></span><br><span class="line">- (void)GC_addObserver:(NSObject *)observer forKey:(NSString *)key withBlock:(GCObserverBlock)observerBlock;</span><br><span class="line"></span><br><span class="line">- (void)GC_removeObserver:(NSObject *)observer forKey:(NSString *)key;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<h3 id="NSObject-KVO-m"><a href="#NSObject-KVO-m" class="headerlink" title="NSObject+KVO.m"></a>NSObject+KVO.m</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;</span><br><span class="line">&#x2F;&#x2F;  NSObject+KVO.m</span><br><span class="line">&#x2F;&#x2F;  Runtime-运行时</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">&#x2F;&#x2F;  Created by GhostClock on 2018&#x2F;5&#x2F;17.</span><br><span class="line">&#x2F;&#x2F;  Copyright © 2018年 GhostClock. All rights reserved.</span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line"></span><br><span class="line">#import &quot;NSObject+KVO.h&quot;</span><br><span class="line">#import &lt;objc&#x2F;runtime.h&gt;</span><br><span class="line">#import &lt;objc&#x2F;message.h&gt;</span><br><span class="line"></span><br><span class="line">@interface GCObservationInfo : NSObject</span><br><span class="line"></span><br><span class="line">@property (nonatomic, weak) NSObject *observer;</span><br><span class="line">@property (nonatomic, copy) NSString *keyPath;</span><br><span class="line">@property (nonatomic, copy) GCObserverBlock observerBlock;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation GCObservationInfo</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithObserver:(NSObject *)observer keyPath:(NSString *)key block:(GCObserverBlock)observerBlock &#123;</span><br><span class="line">    self &#x3D; [super init];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        _observer &#x3D; observer;</span><br><span class="line">        _keyPath &#x3D; key;</span><br><span class="line">        _observerBlock &#x3D; [observerBlock copy];</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#pragma mark - &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">static NSString *const KVONotifying &#x3D; @&quot;GCKVONotifying_&quot;;</span><br><span class="line">static NSString *const AssociatedObjectKey &#x3D; @&quot;AssociatedObjectKey&quot;;</span><br><span class="line"></span><br><span class="line">@implementation NSObject (KVO)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取方法类型</span><br><span class="line">const char* methodTypeEncoding(Method originalMethod) &#123;</span><br><span class="line">    return method_getTypeEncoding(originalMethod);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 观察的属性前面加上set 例如setAge:</span><br><span class="line">NSString * setterForGetter(NSString *key) &#123;</span><br><span class="line">    if (key.length &lt;&#x3D; 0) &#123;</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;把第一个字母变成大写</span><br><span class="line">    NSString *firstLetter &#x3D; [[key substringToIndex:1] uppercaseString];</span><br><span class="line">    &#x2F;&#x2F;其余的全部变成小写</span><br><span class="line">    NSString *remainingLetter &#x3D; [key substringFromIndex:1];</span><br><span class="line">    &#x2F;&#x2F; 拼接成set方法</span><br><span class="line">    NSString *setter &#x3D; [NSString stringWithFormat:@&quot;set%@%@:&quot;, firstLetter, remainingLetter];</span><br><span class="line">    return setter;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 观察的属性前面要是有 set 前缀和 : 后缀，就将其去掉 setAge: -&gt; age</span><br><span class="line">NSString * getterForSetter(NSString *setter) &#123;</span><br><span class="line">    if (setter.length &lt;&#x3D; 0 || ![setter hasPrefix:@&quot;set&quot;] || ![setter hasSuffix:@&quot;:&quot;]) &#123;</span><br><span class="line">        return setter;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 删除set开头和:结尾</span><br><span class="line">    NSRange range &#x3D; NSMakeRange(3, setter.length - 4);</span><br><span class="line">    NSString *getter &#x3D; [setter substringWithRange:range];</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 把第一个字母变成小写</span><br><span class="line">    NSString *firstLetter &#x3D; [[getter substringToIndex:1] lowercaseString];</span><br><span class="line">    getter &#x3D; [getter stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:firstLetter];</span><br><span class="line"></span><br><span class="line">    return getter;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - 判断该kvo类有没有这个setter方法</span><br><span class="line">- (BOOL)haveSelector:(SEL)setter &#123;</span><br><span class="line">    Class class &#x3D; object_getClass(self);</span><br><span class="line">    unsigned int outCount &#x3D; 0;</span><br><span class="line">    Method *methods &#x3D; class_copyMethodList(class, &amp;outCount);</span><br><span class="line">    for (int i &#x3D; 0 ; i &lt; outCount; i ++) &#123;</span><br><span class="line">        SEL setSelector &#x3D; method_getName(methods[i]);</span><br><span class="line">        if (setSelector &#x3D;&#x3D; setter) &#123;</span><br><span class="line">            free(methods);</span><br><span class="line">            return YES;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    free(methods);</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - 重写setter方法</span><br><span class="line">&#x2F;&#x2F; 新的setter方法在调用原setter方法后，通知每个观察者</span><br><span class="line">static void kvo_setter(id self, SEL _cmd, id newValue) &#123;</span><br><span class="line">    NSString *setterName &#x3D; NSStringFromSelector(_cmd);</span><br><span class="line">    NSString *getterName &#x3D; getterForSetter(setterName);</span><br><span class="line">    if (!getterName) &#123;</span><br><span class="line">        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@&quot;没有相应的属性&quot; userInfo:nil];</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    id oldValue &#x3D; [self valueForKey:getterName];</span><br><span class="line">    </span><br><span class="line">    struct objc_super superClass &#x3D; &#123;</span><br><span class="line">        .receiver &#x3D; self,</span><br><span class="line">        .super_class &#x3D; class_getSuperclass(object_getClass(self))</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    void (*objc_msgSendSuperCasted)(void*, SEL, id) &#x3D; (void *)objc_msgSendSuper; &#x2F;&#x2F; 转换objc_msgSendSuper</span><br><span class="line">    objc_msgSendSuperCasted(&amp;superClass, _cmd, newValue);</span><br><span class="line">    </span><br><span class="line">    NSMutableArray *observer &#x3D; objc_getAssociatedObject(self, &amp;AssociatedObjectKey);</span><br><span class="line">    for (GCObservationInfo *info in observer) &#123;</span><br><span class="line">        if ([info.keyPath isEqualToString:getterName]) &#123;</span><br><span class="line">            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">                info.observerBlock(self, getterName, oldValue, newValue);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Class kvo_class(id self, SEL _cmd) &#123;</span><br><span class="line">    return class_getSuperclass(object_getClass(self));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - 动态创建这个kvo类</span><br><span class="line">- (Class)createKVONotifyingClassWithOriginalClassName:(NSString *)originClassName &#123;</span><br><span class="line">    </span><br><span class="line">    NSString *kvoClassName &#x3D; [KVONotifying stringByAppendingString:originClassName];</span><br><span class="line">    &#x2F;&#x2F; 如果这个kvo类存在，就直接返回</span><br><span class="line">    Class kvoClass &#x3D; NSClassFromString(kvoClassName);</span><br><span class="line">    if (kvoClass) &#123;</span><br><span class="line">        return kvoClass;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 这个kvo类不存在, 就用runtime创建一个, 父类是该观察者</span><br><span class="line">    Class originalClass &#x3D; object_getClass(self);</span><br><span class="line">    kvoClass &#x3D; objc_allocateClassPair(originalClass, [kvoClassName UTF8String], 0);</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 重写掉系统的class方法</span><br><span class="line">    Method originMethod &#x3D; class_getInstanceMethod(originalClass, @selector(class));</span><br><span class="line">    class_addMethod(kvoClass, @selector(class), (IMP)kvo_class, methodTypeEncoding(originMethod));</span><br><span class="line">    &#x2F;&#x2F; 向runtime注册这个类</span><br><span class="line">    objc_registerClassPair(kvoClass);</span><br><span class="line">    </span><br><span class="line">    return kvoClass;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - 外部方法</span><br><span class="line">- (void)GC_addObserver:(NSObject *)observer forKey:(NSString *)key withBlock:(GCObserverBlock)observerBlock &#123;</span><br><span class="line">    &#x2F;&#x2F; 用setterForGetter获得相应的setter方法，得到型如 setAge: 的选择器</span><br><span class="line">    SEL setterSelector &#x3D; NSSelectorFromString(setterForGetter(key));</span><br><span class="line">    </span><br><span class="line">    Method setterMethood &#x3D; class_getInstanceMethod([self class], setterSelector);</span><br><span class="line">    &#x2F;&#x2F; 1. 检查对象的类有没有相应的setter方法，如果没有则抛出异常</span><br><span class="line">    if (!setterMethood) &#123;</span><br><span class="line">        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@&quot;没有相应的属性&quot; userInfo:nil];</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 2. 检查对象 isa 指针指向的是否是一个KVO类,如果不是,用runtime新建一个继承原来类的子类,并把 isa 指向这个新建的子类</span><br><span class="line">    Class kvoClass &#x3D; object_getClass(self);</span><br><span class="line">    NSString *className &#x3D; NSStringFromClass(kvoClass);</span><br><span class="line">    if (![className hasPrefix:KVONotifying]) &#123;</span><br><span class="line">        kvoClass &#x3D; [self createKVONotifyingClassWithOriginalClassName:className];</span><br><span class="line">        &#x2F;&#x2F; 把isa指向新建的类</span><br><span class="line">        object_setClass(self, kvoClass);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 3. 检查对象的KVO类有没有重写过这个类的setter方法，如果没有,添加重写的setter方法</span><br><span class="line">    if (![self haveSelector:setterSelector]) &#123;</span><br><span class="line">        &#x2F;&#x2F; 添加setter方法</span><br><span class="line">&#x2F;&#x2F;        class_addMethod(kvoClass, setterSelector, (IMP)kvo_setter, methodTypeEncoding(setterMethood));</span><br><span class="line">        class_addMethod([kvoClass class], setterSelector, class_getMethodImplementation(kvoClass, @selector(kvoSetter:)), methodTypeEncoding(setterMethood));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 4.添加这个观察者</span><br><span class="line">    GCObservationInfo *observerInfo &#x3D; [[GCObservationInfo alloc] initWithObserver:observer keyPath:key block:observerBlock];</span><br><span class="line">    NSMutableArray *observers &#x3D; objc_getAssociatedObject(self, &amp;AssociatedObjectKey);</span><br><span class="line">    if (!observers) &#123;</span><br><span class="line">        observers &#x3D; [NSMutableArray array];</span><br><span class="line">        objc_setAssociatedObject(self, &amp;AssociatedObjectKey, observers, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</span><br><span class="line">    &#125;</span><br><span class="line">    [observers addObject:observerInfo];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)kvoSetter:(id)newValue &#123;</span><br><span class="line">    unsigned int outCount &#x3D; 0;</span><br><span class="line">    Method *methods &#x3D; class_copyMethodList([self class], &amp;outCount);</span><br><span class="line">    for (int i &#x3D; 0; i &lt; outCount; i ++) &#123;</span><br><span class="line">        Method method &#x3D; methods[i];</span><br><span class="line">        NSString *setterName &#x3D; NSStringFromSelector(method_getName(method));</span><br><span class="line">        if ([setterName hasPrefix:@&quot;set&quot;] &amp;&amp; [setterName hasSuffix:@&quot;:&quot;]) &#123;</span><br><span class="line">            NSString *getterName &#x3D; getterForSetter(setterName);</span><br><span class="line">            </span><br><span class="line">            &#x2F;&#x2F; 用kvo获取旧值</span><br><span class="line">            id oldValue &#x3D; [self valueForKey:getterName];</span><br><span class="line">            </span><br><span class="line">            struct objc_super superClass;</span><br><span class="line">            superClass.receiver &#x3D; self;</span><br><span class="line">            superClass.super_class &#x3D; class_getSuperclass(object_getClass(self));</span><br><span class="line">            </span><br><span class="line">            &#x2F;&#x2F; 转换 objc_msgSendSuper</span><br><span class="line">            void(* myMsgSendSuper)(void *, SEL, id) &#x3D; (void *)objc_msgSendSuper;</span><br><span class="line">            </span><br><span class="line">            myMsgSendSuper(&amp;superClass, method_getName(method), newValue);</span><br><span class="line">            </span><br><span class="line">            NSMutableArray *observers &#x3D; objc_getAssociatedObject(self, &amp;AssociatedObjectKey);</span><br><span class="line">            for (GCObservationInfo *info in observers) &#123;</span><br><span class="line">                if ([info.keyPath isEqualToString:getterName]) &#123;</span><br><span class="line">                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">                        info.observerBlock(self, getterName, oldValue, newValue);</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)GC_removeObserver:(NSObject *)observer forKey:(NSString *)key &#123;</span><br><span class="line">    NSMutableArray *observers &#x3D; objc_getAssociatedObject(self, &amp;AssociatedObjectKey);</span><br><span class="line">    GCObservationInfo *removeInfo &#x3D; nil;</span><br><span class="line">    for (GCObservationInfo *info in observers) &#123;</span><br><span class="line">        if ([info.keyPath isEqualToString:key] &amp;&amp; info.observer &#x3D;&#x3D; observer) &#123;</span><br><span class="line">            removeInfo &#x3D; info;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    [observers removeObject:removeInfo];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h3 id="Demo-地址"><a href="#Demo-地址" class="headerlink" title="Demo 地址"></a>Demo 地址</h3><p><a target="_blank" rel="noopener" href="https://github.com/GhostClock/Runtime-Demo">https://github.com/GhostClock/Runtime-Demo</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GhostClock(鬼钟)</p>
+  <div class="site-description" itemprop="description">穷折腾 二次元 Mac Win10 iOS Java</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GhostClock(鬼钟)</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

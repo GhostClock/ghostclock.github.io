@@ -1,23 +1,799 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-Hans,zh-tw,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block title %} {{ config.title }} {% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}
-  {% if is_home() %} page-home {% endif %}
-{% endblock %}
 
-{% block content %}
-  <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
-    {% endfor %}
-  </section>
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-  {% include '_partials/pagination.swig' %}
-{% endblock %}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+  <meta name="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GC的笔记本">
+<meta property="og:url" content="http://yoursite.com/page/6/index.html">
+<meta property="og:site_name" content="GC的笔记本">
+<meta property="og:description" content="穷折腾 二次元 Mac Win10 iOS Java">
+<meta property="og:locale">
+<meta property="article:author" content="GhostClock(鬼钟)">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/page/6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>GC的笔记本</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">GC的笔记本</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">😄</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/19/%E5%B8%B8%E8%A7%81%E5%87%A0%E7%A7%8D%E7%AE%97%E6%B3%95-java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/03/19/%E5%B8%B8%E8%A7%81%E5%87%A0%E7%A7%8D%E7%AE%97%E6%B3%95-java/" class="post-title-link" itemprop="url">常见几种算法 java实现</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2017-03-19 16:44:57 / Modified: 17:22:58" itemprop="dateCreated datePublished" datetime="2017-03-19T16:44:57+08:00">2017-03-19</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="几种常见的算法记录"><a href="#几种常见的算法记录" class="headerlink" title="几种常见的算法记录"></a>几种常见的算法记录</h2><p>记录几种常见的算法，使用java实现的</p>
+<h3 id="排序的介绍"><a href="#排序的介绍" class="headerlink" title="排序的介绍"></a>排序的介绍</h3><p>排序就是将一群数据，依据指定的顺序进行排列的过程<br>排序的分类:</p>
+<h4 id="1-内部排序"><a href="#1-内部排序" class="headerlink" title="1.内部排序"></a>1.内部排序</h4><p>指将需要处理的所有数据都加载到内部存储起中进行排序<br>包括(交换式排序法,选择式排序法,插入式排序法)</p>
+<h4 id="2-外部排序法"><a href="#2-外部排序法" class="headerlink" title="2.外部排序法"></a>2.外部排序法</h4><p>由于数据量过大,无法全部加载到内存中,需要借助外部存储进行排序<br>包括(合并排序法,直接合并排序法)<br>排序(Sorting)是数据处理中一种很重要的运算,同时也是很常见的运算,一般数据处理工作<br>中25%的时间都在进行排序,简单的说,排序就是把一组记录(元素)按照某个域值的递增(从小到大)<br>或者递减(从大到小)的次序重新排列的过程</p>
+<h4 id="3交换式排序"><a href="#3交换式排序" class="headerlink" title="3交换式排序"></a>3交换式排序</h4><p>交换式排序属于内部排序法,是运用数据值比较后,依判断规则对数据位置进行交换,以达到排序的目的交换式排序又可分为:<br>  1.冒泡排序法（Bubble sort）<br>  2.快速排序法 (Quick sort)</p>
+<h3 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1.冒泡排序"></a>1.冒泡排序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class Bubble &#123;</span><br><span class="line">	&#x2F;&#x2F; 排序方法</span><br><span class="line">	&#x2F;*</span><br><span class="line">	 * 交换式排序 - 冒泡排序</span><br><span class="line">	 * 基本思想:通过对待排序序列从后向前(从下标较大的元素开始)，依次比较相邻元素的排序码</span><br><span class="line">	 * 		  若发现逆序则交换,使排序码较小的元素逐渐从后部移到前部(从下标较大的单元移向较小</span><br><span class="line">	 * 		  的单元),就像水底下的气泡一样逐渐向上冒的过程</span><br><span class="line">	 * 因为排序的过程中,各元素不断接近自己的位置,如果一趟比较下来,没有进行交换的过程,就说明序列</span><br><span class="line">	 * 有序,因此在排序过程中设置一个标志flag判断元素是否进行过交换,从而减少不必要的比较</span><br><span class="line">	 * *&#x2F;</span><br><span class="line">	&#x2F;&#x2F; 冒泡排序</span><br><span class="line">	public static void Sort(int[] array) &#123;</span><br><span class="line">		int temp &#x3D; 0;&#x2F;&#x2F; 中间变量</span><br><span class="line">		&#x2F;&#x2F; 外部循环 它决定一共走几趟</span><br><span class="line">		for (int i &#x3D; 0; i &lt; array.length - 1; i++) &#123;</span><br><span class="line">			&#x2F;&#x2F; 内层循环 开始逐个比较 如果发现前一个数比后一个数大 则交换</span><br><span class="line">			for (int j &#x3D; 0; j &lt; array.length - 1 - i; j++) &#123;</span><br><span class="line">				if (array[j] &gt; array[j + 1]) &#123;</span><br><span class="line">					&#x2F;&#x2F; 换位</span><br><span class="line">					temp &#x3D; array[j];</span><br><span class="line">					array[j] &#x3D; array[j + 1];</span><br><span class="line">					array[j + 1] &#x3D; temp;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-选择排序法"><a href="#2-选择排序法" class="headerlink" title="2.选择排序法"></a>2.选择排序法</h3><pre><code>class Selection&#123;
+    /*
+     * 选择式排序法 - 选择排序法
+     * 选择式排序法也属于内部排序法,是从欲排序的数据中，按照指定的规则选出某一元素
+     * 经过和其他元素,重整,再依原则交换位置后达到排序的目的
+     * 
+     * 基本思想:第一次从R[0]-R[n - 1]中选取最小值,与R[0]交换,第二次从R[1]-R[n - 1]中
+     * 选取最小值,与R[1]交换,第三次从R[2]-R[n - 1]中选取最小值与R[2]交换,...,第R[i - 1] -
+     * R[n - 1]中选取最小值，与R[i - 1]交换，... ，第R[n-2]-R[n - 1]中选取最小值,与R[n - 2]
+     * 交换,总共通过n - 1次,得到一个按排序码从小到大排列的有序序列
+     * 
+     * */
+    static void Sort(int[] array)&#123;
+        int temp = 0;
+        for (int i = 0; i &lt; array.length - 1; i++) &#123;
+            //认为第一个数就是最小的
+            int min = array[i];
+            //记录最小数的下标
+            int minIndex = i;
+            for (int j = i + 1; j &lt; array.length; j++) &#123;
+                if (min &gt; array[j]) &#123;
+                    //修改最小值
+                    min = array[j];
+                    minIndex = j;
+                &#125;
+            &#125;
+            //当退出for找到这次的最小值
+            temp = array[i];
+            array[i] = array[minIndex];
+            array[minIndex] = temp;
+        &#125;
+
+    &#125;
+&#125;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 3. 插入式排序 - 插入式排序法</span><br></pre></td></tr></table></figure>
+class InsterSort&#123;
+    //插入式排序 - 插入式排序法
+    /*
+     * 插入式排序属于内部排序法,是对欲排序的元素以插入的方式找寻元素的适当位置，以达到排序的目的
+     * 插入式排序可分为:
+     * 1.插入式排序(INsertion sort)
+     * 2.谢耳排序法(shell sort)
+     * 3.二叉树排序法(Binary-tree sort)
+     * 
+     * */
+
+    /*
+     * 插入式排序
+     * 基本思想:
+     * 把n个待排序的元素看成为一个有序表和一个无序表，开始时有序表中只包含一个元素,无序表中包含有n-1个元素，
+     * 排序过程中每次从无序表中取出一个元素,把它的排序码依次与有序表元素的排序码进行比较,将它插入到有序表中的适当位置,
+     * 使之成为新的有序表
+     * 
+     * */
+    public static void sort(int array[]) &#123;
+        for (int i = 1; i &lt; array.length; i++) &#123;
+            int insertVal = array[i];
+            //insertVal准备和前一个数比较
+            int index = i - 1;
+            while (index &gt;= 0 &amp;&amp; insertVal &lt; array[index]) &#123;
+                //就把这个array[index]向后移动
+                array[index + 1] = array[index];
+                //让index向前移动
+                index --;
+            &#125;
+            //将insertVal插入到适当位置
+            array[index + 1]  = insertVal;
+        &#125;
+    &#125;
+&#125;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 4.快速排序</span><br></pre></td></tr></table></figure>
+class QuickSort&#123;
+    /*
+     * 快速排序
+     * 快速排序对冒泡排序的一种改进，是有C.A.R. Hoare在1962年提出来的
+     * 
+     * 基本思想:
+     * 是通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另一部分的所有数据
+     * 都要小,然后再按此方法对这两部分数据分别进行快速排序,整个过程可以递归进行,
+     * 以此来达到整个数据变成有序序列
+     * 
+     * */
+    /**
+     * @param array
+     *  目标数组
+     * @param left
+     *     起始位
+     * @param right
+     *  结束位
+     * 
+     * **/
+    public static void sort(int[] array,int left,int right) &#123;
+        if (left &lt; right) &#123;
+            int i = left, j = right, x = array[left];
+            while (i &lt; j) &#123;
+                while (i &lt; j &amp;&amp; array[j] &gt;= x) &#123;//从右向左找到第一个小于x的数
+                    j --;
+                &#125;
+                if (i &lt; j) &#123;
+                    array[i ++] = array[j];
+                &#125;
+
+                while (i &lt; j &amp;&amp; array[i] &lt; x    ) &#123;
+                    i ++;
+                &#125;
+                if (i &lt; j) &#123;
+                    array[j --] = array[i];
+                &#125;
+            &#125;
+            array[i] = x;
+            sort(array,left,i - 1);//递归调用
+            sort(array,i + 1,right);
+        &#125;
+    &#125;
+&#125;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## main函数里面使用</span><br></pre></td></tr></table></figure>
+public static void main(String[] args) &#123;
+        // TODO Auto-generated method stub
+//        int array[] = &#123; 1, 5, 4, 6, 8, 4, 1, 3, 6, 9, 41, 3, 6, 1, 3, -10&#125;;
+
+        //创建100000个数据
+        int len = 80000000;
+        int array[] = new int[len];
+        for (int i = 0; i &lt; len; i++) &#123;
+            //让程序随机产生1 - 100000数
+            int t = (int) (Math.random() * len);//会随机产生一个0 ~ 1
+            array[i] = t;
+        &#125;
+
+        //在排序前打印系统时间
+        Calendar calendar1 = Calendar.getInstance();
+        System.out.println(&quot;排序前&quot; + calendar1.getTime());
+
+//        Bubble.Sort(array);//冒泡排序
+
+//        Selection.Sort(array); //选择排序
+
+//        InsterSort.sort(array);//插入排序
+
+        QuickSort.sort(array, 0, array.length - 1);;//快速排序
+
+        calendar1 = Calendar.getInstance();//重新获取单例
+        System.out.println(&quot;排序前&quot; + calendar1.getTime());
+
+//        for (int i = 0; i &lt; array.length; i++) &#123;
+//            System.out.print(array[i] + &quot; &quot;);
+//        &#125;
+
+    &#125;
+    ```
+
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/17/ReactiveCocoa%E7%9A%84%E5%88%9D%E6%AD%A5%E7%94%A8%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/03/17/ReactiveCocoa%E7%9A%84%E5%88%9D%E6%AD%A5%E7%94%A8%E6%B3%95/" class="post-title-link" itemprop="url">ReactiveCocoa的初步用法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2017-03-17 20:41:28 / Modified: 20:49:55" itemprop="dateCreated datePublished" datetime="2017-03-17T20:41:28+08:00">2017-03-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="ReactiveCocoa的初步用法"><a href="#ReactiveCocoa的初步用法" class="headerlink" title="ReactiveCocoa的初步用法"></a>ReactiveCocoa的初步用法</h1><h2 id="1-创建UI便于测试"><a href="#1-创建UI便于测试" class="headerlink" title="1.创建UI便于测试"></a>1.创建UI便于测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;创建一个UITextField</span><br><span class="line">UITextField *textFild &#x3D; [[UITextField alloc]init];</span><br><span class="line">textFild.backgroundColor &#x3D; [UIColor orangeColor];</span><br><span class="line">[self addSubview:textFild];</span><br><span class="line">[textFild mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">    make.left.mas_equalTo(10);</span><br><span class="line">    make.top.mas_equalTo(64 + 5);</span><br><span class="line">    make.width.mas_equalTo(100);</span><br><span class="line">    make.height.mas_equalTo(50);</span><br><span class="line">&#125;];</span><br><span class="line">&#x2F;&#x2F;创建一个UIButton</span><br><span class="line">UIButton *button &#x3D; [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">button.backgroundColor &#x3D; [UIColor redColor];</span><br><span class="line">[self addSubview:button];</span><br><span class="line">[button mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">    make.top.equalTo(textFild.mas_bottom).offset(5);</span><br><span class="line">    make.left.equalTo(textFild);</span><br><span class="line">    make.width.height.mas_equalTo(50);</span><br><span class="line">&#125;];</span><br><span class="line">&#x2F;&#x2F;创建一个UIView</span><br><span class="line">UIView *view &#x3D; [[UIView alloc]init];</span><br><span class="line">view.backgroundColor &#x3D; [UIColor brownColor];</span><br><span class="line">[self addSubview:view];</span><br><span class="line">[view mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">     make.top.equalTo(button.mas_bottom).offset(5);</span><br><span class="line">     make.left.equalTo(button);</span><br><span class="line">     make.width.height.mas_equalTo(50);</span><br><span class="line">&#125;];</span><br><span class="line">&#x2F;&#x2F;创建一个UIScrollView</span><br><span class="line">UIScrollView *sc &#x3D; [[UIScrollView alloc]init];</span><br><span class="line">[self addSubview:sc];</span><br><span class="line">[sc mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">    make.top.equalTo(textFild.mas_top);</span><br><span class="line">    make.width.equalTo(@50);</span><br><span class="line">    make.height.equalTo(@200);</span><br><span class="line">     make.right.equalTo(@(-50));</span><br><span class="line">&#125;];</span><br><span class="line">sc.contentSize &#x3D; CGSizeMake(50, 800);</span><br><span class="line">sc.backgroundColor &#x3D; [UIColor redColor];</span><br><span class="line">sc.delegate &#x3D; self;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-监听textField的触发事件"><a href="#2-监听textField的触发事件" class="headerlink" title="2.监听textField的触发事件"></a>2.监听textField的触发事件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[[textFild rac_signalForControlEvents:UIControlEventEditingChanged] subscribeNext:^(__kindof UIControl * _Nullable x) &#123;</span><br><span class="line">        NSLog(@&quot;----&quot;);</span><br><span class="line">&#125;];</span><br><span class="line">    </span><br><span class="line">[textFild.rac_textSignal subscribeNext:^(NSString * _Nullable x) &#123;</span><br><span class="line">&#x2F;&#x2F;        NSLog(@&quot;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&quot;);</span><br><span class="line">     NSLog(@&quot;%@&quot;,textFild.text);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-监听Button的点击事件"><a href="#3-监听Button的点击事件" class="headerlink" title="3.监听Button的点击事件"></a>3.监听Button的点击事件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[[button rac_signalForControlEvents:UIControlEventTouchUpInside]subscribeNext:^(__kindof UIControl * _Nullable x) &#123;</span><br><span class="line">        NSLog(@&quot;clicking&quot;);</span><br><span class="line">        if ([_delegate respondsToSelector:@selector(getClickButtonPostTextFieldText:)]) &#123;</span><br><span class="line">            [_delegate getClickButtonPostTextFieldText:textFild.text];</span><br><span class="line">        &#125;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<h2 id="4-动态修改UIButton的背景颜色"><a href="#4-动态修改UIButton的背景颜色" class="headerlink" title="4.动态修改UIButton的背景颜色"></a>4.动态修改UIButton的背景颜色</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[[textFild.rac_textSignal map:^id _Nullable(NSString * _Nullable value) &#123;</span><br><span class="line">        return (value.length &gt;&#x3D; 3) ? [UIColor redColor] :  [UIColor brownColor] ;</span><br><span class="line">    &#125;]subscribeNext:^(id  _Nullable x) &#123;</span><br><span class="line">        button.backgroundColor &#x3D; x;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-监听手势点击"><a href="#5-监听手势点击" class="headerlink" title="5.监听手势点击"></a>5.监听手势点击</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">UITapGestureRecognizer *tap &#x3D; [[UITapGestureRecognizer alloc]init];</span><br><span class="line">[view addGestureRecognizer:tap];</span><br><span class="line">[[tap rac_gestureSignal]subscribeNext:^(__kindof UIGestureRecognizer * _Nullable x) &#123;</span><br><span class="line">     NSLog(@&quot;Tap Click&quot;);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<h2 id="6-监听代理"><a href="#6-监听代理" class="headerlink" title="6.监听代理"></a>6.监听代理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[[self rac_signalForSelector:@selector(scrollViewWillBeginDragging:) fromProtocol:@protocol(UIScrollViewDelegate)] subscribeNext:^(id  _Nullable x) &#123;&#x2F;&#x2F;这里的x是表示 当页面有多个UIScrollView时,可以做判断是哪一个</span><br><span class="line">&#x2F;&#x2F;        NSLog(@&quot;点击了&quot;);</span><br><span class="line">&#x2F;&#x2F;        NSLog(@&quot;--- %@ ---&quot;,[x first]);</span><br><span class="line">&#125;];</span><br><span class="line">    </span><br><span class="line">[[self rac_signalForSelector:@selector(scrollViewDidEndDecelerating:) fromProtocol:@protocol(UIScrollViewDelegate)] subscribeNext:^(id  _Nullable x) &#123;</span><br><span class="line">        </span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<h3 id="1-监听自定义的代理"><a href="#1-监听自定义的代理" class="headerlink" title="1.监听自定义的代理"></a>1.监听自定义的代理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[self rac_signalForSelector:@selector(getClickButtonPostTextFieldText:) fromProtocol:@protocol(TestClickDelegate)] subscribeNext:^(id  _Nullable x) &#123;</span><br><span class="line">        NSLog(@&quot;******* %@ *****&quot;,[x first]);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<h2 id="7-监听通知-gt-键盘弹出和隐藏的通知"><a href="#7-监听通知-gt-键盘弹出和隐藏的通知" class="headerlink" title="7.监听通知 -&gt; 键盘弹出和隐藏的通知"></a>7.监听通知 -&gt; 键盘弹出和隐藏的通知</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIKeyboardWillShowNotification object:nil] subscribeNext:^(NSNotification * _Nullable x) &#123;</span><br><span class="line">        NSLog(@&quot;键盘弹出&quot;);</span><br><span class="line">[[NSNotificationCenter defaultCenter] postNotificationName:@&quot;SHOW_LEYBOARD&quot; object:nil];</span><br><span class="line">&#125;];</span><br><span class="line">[[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIKeyboardWillHideNotification object:nil] subscribeNext:^(NSNotification * _Nullable x) &#123;</span><br><span class="line">        NSLog(@&quot;键盘隐藏&quot;);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-KVO-–-gt-监听UIScrollView的滚动"><a href="#8-KVO-–-gt-监听UIScrollView的滚动" class="headerlink" title="8.KVO –&gt; 监听UIScrollView的滚动"></a>8.KVO –&gt; 监听UIScrollView的滚动</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[RACObserve(sc, contentOffset) subscribeNext:^(id  _Nullable x) &#123;</span><br><span class="line">        NSLog(@&quot;contentSize -- %@&quot;,x);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<h2 id="9-timers"><a href="#9-timers" class="headerlink" title="9.timers"></a>9.timers</h2><h3 id="1-延时执行"><a href="#1-延时执行" class="headerlink" title="1.延时执行"></a>1.延时执行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[RACScheduler mainThreadScheduler] afterDelay:5 schedule:^&#123;</span><br><span class="line">        NSLog(@&quot;这是延时5秒后执行的&quot;);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-定时执行"><a href="#2-定时执行" class="headerlink" title="2.定时执行"></a>2.定时执行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[[RACSignal interval:2 onScheduler:[RACScheduler mainThreadScheduler]]subscribeNext:^(NSDate * _Nullable x) &#123;</span><br><span class="line">        NSLog(@&quot;每隔2秒执行一次&quot;);</span><br><span class="line">&#125;];</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/16/ReactiveObjC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/03/16/ReactiveObjC/" class="post-title-link" itemprop="url">ReactiveObjC</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2017-03-16 22:54:09 / Modified: 22:54:36" itemprop="dateCreated datePublished" datetime="2017-03-16T22:54:09+08:00">2017-03-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Unable-to-find-a-specification-for-ReactiveObjC"><a href="#Unable-to-find-a-specification-for-ReactiveObjC" class="headerlink" title="Unable to find a specification for ReactiveObjC"></a>Unable to find a specification for ReactiveObjC</h1><p>今天Pod ReactiveObjC的时候遇到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Unable to find a specification for &#96;ReactiveObjC&#96;</span><br></pre></td></tr></table></figure>
+
+<p>1.先cd到工程目录<br>2.依次在终端输入一下命令，等它done</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pod repo remove master</span><br><span class="line">pod setup</span><br><span class="line">pod install</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/16/%E4%B8%8A%E9%9D%A2%E6%B7%BB%E5%8A%A0UIButton%E5%90%8E-%E4%B8%8D%E8%83%BD%E7%82%B9%E5%87%BB%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/03/16/%E4%B8%8A%E9%9D%A2%E6%B7%BB%E5%8A%A0UIButton%E5%90%8E-%E4%B8%8D%E8%83%BD%E7%82%B9%E5%87%BB%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">上面添加UIButton后,不能点击的问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2017-03-16 22:51:55 / Modified: 22:53:44" itemprop="dateCreated datePublished" datetime="2017-03-16T22:51:55+08:00">2017-03-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="解决-UIPickerView-上面添加UIButton后-不能点击的问题"><a href="#解决-UIPickerView-上面添加UIButton后-不能点击的问题" class="headerlink" title="解决 UIPickerView 上面添加UIButton后,不能点击的问题"></a>解决 UIPickerView 上面添加UIButton后,不能点击的问题</h1><p>背景: 因为我用的 UIPickerView最多只有三个cell，并且还是动态加载的，当只有一个cell的时候UIPickerView的didSelectRow这个选择代理方法就不起作用了，只能在上面放一个Button，但是问题来了，这个Button居然不能接受到点击事件</p>
+<h2 id="1-创建一个PickerView"><a href="#1-创建一个PickerView" class="headerlink" title="1.创建一个PickerView"></a>1.创建一个PickerView</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (UIPickerView *)selectPickView&#123;</span><br><span class="line">    if (_selectPickView &#x3D;&#x3D; nil) &#123;</span><br><span class="line">        _selectPickView &#x3D; [[UIPickerView alloc]init];</span><br><span class="line">        _selectPickView.delegate &#x3D; self;</span><br><span class="line">        _selectPickView.dataSource &#x3D; self;</span><br><span class="line">        _selectPickView.showsSelectionIndicator &#x3D; YES;</span><br><span class="line">        _selectPickView.backgroundColor &#x3D; [UIColor whiteColor];</span><br><span class="line">        _selectPickView.showsSelectionIndicator &#x3D; YES;</span><br><span class="line">    &#125;</span><br><span class="line">    return _selectPickView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-并遵守其代理"><a href="#2-并遵守其代理" class="headerlink" title="2.并遵守其代理"></a>2.并遵守其代理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@interface JoinConferenceView()&lt;UIPickerViewDelegate,UIPickerViewDataSource&gt;&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-相关代理方法"><a href="#3-相关代理方法" class="headerlink" title="3. 相关代理方法"></a>3. 相关代理方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView&#123;</span><br><span class="line">    return 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component&#123;</span><br><span class="line">    return 44.0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component&#123;</span><br><span class="line">    return _pickDataArray.count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view&#123;</span><br><span class="line">    UIButton *button;</span><br><span class="line">    if (view &#x3D;&#x3D; nil) &#123;</span><br><span class="line">        view &#x3D; [[UIView alloc]init];</span><br><span class="line">        view.backgroundColor &#x3D; [UIColor clearColor];</span><br><span class="line">        view.userInteractionEnabled &#x3D; YES;</span><br><span class="line">        if (!button) &#123;</span><br><span class="line">            button &#x3D; [UIButton buttonWithType:UIButtonTypeCustom];</span><br><span class="line">            button.frame &#x3D; CGRectMake(0, 0, pickerView.bounds.size.width, 44.0);</span><br><span class="line">            [button setTitle:_pickDataArray[row] forState:UIControlStateNormal];</span><br><span class="line">            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];</span><br><span class="line">            [button addTarget:self action:@selector(pickButtonAction:) forControlEvents:UIControlEventTouchDown];</span><br><span class="line">            button.tag &#x3D; 1000 + row;</span><br><span class="line">            [view addSubview:button];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return view;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;这里硬是触发不了</span><br><span class="line">- (void)pickButtonAction:(UIButton *)button&#123;</span><br><span class="line">    [_selectPickView selectRow:button.tag - 1000 inComponent:0 animated:YES];</span><br><span class="line">    _passCodeTextField.text &#x3D; _pickDataArray[button.tag - 1000];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component&#123;</span><br><span class="line">    _passCodeTextField.text &#x3D; _pickDataArray[row];</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="4-后来用Reveal看了一下UI，原来是PickerView的cell挡住了"><a href="#4-后来用Reveal看了一下UI，原来是PickerView的cell挡住了" class="headerlink" title="4.后来用Reveal看了一下UI，原来是PickerView的cell挡住了"></a>4.后来用Reveal看了一下UI，原来是PickerView的cell挡住了</h2><p><img src="/2017/03/16/%E4%B8%8A%E9%9D%A2%E6%B7%BB%E5%8A%A0UIButton%E5%90%8E-%E4%B8%8D%E8%83%BD%E7%82%B9%E5%87%BB%E7%9A%84%E9%97%AE%E9%A2%98/IMG_2900.jpg" alt="IMG_2900"></p>
+<h2 id="5-所以，现在只能用重写-hitTest"><a href="#5-所以，现在只能用重写-hitTest" class="headerlink" title="5.所以，现在只能用重写 hitTest:"></a>5.所以，现在只能用重写 hitTest:</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;防止PickerView的cell遮挡Button的点击事件</span><br><span class="line">- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event&#123;</span><br><span class="line">    id view &#x3D; [super hitTest:point withEvent:event];</span><br><span class="line">    if ([view isKindOfClass:[HWJoinConferenceView class]]) &#123;&#x2F;&#x2F;防止点击到HWJoinConferenceView,引起无限递归</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;</span><br><span class="line">    return [view hitTest:[self convertPoint:point toView:view] withEvent:event];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/16/%E5%B7%B2%E6%8D%9F%E5%9D%8F-%E6%89%93%E4%B8%8D%E5%BC%80-%E8%AF%B7%E7%A7%BB%E5%88%B0%E5%BA%9F%E7%BA%B8%E7%AF%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/03/16/%E5%B7%B2%E6%8D%9F%E5%9D%8F-%E6%89%93%E4%B8%8D%E5%BC%80-%E8%AF%B7%E7%A7%BB%E5%88%B0%E5%BA%9F%E7%BA%B8%E7%AF%93/" class="post-title-link" itemprop="url">已损坏,打不开,请移到废纸篓</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2017-03-16 22:47:41 / Modified: 22:50:56" itemprop="dateCreated datePublished" datetime="2017-03-16T22:47:41+08:00">2017-03-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="已损坏-打不开-请移到废纸篓"><a href="#已损坏-打不开-请移到废纸篓" class="headerlink" title="已损坏,打不开,请移到废纸篓"></a>已损坏,打不开,请移到废纸篓</h1><p>今天在安装MWeb的时候出现了，以损坏,打不开,请移到废纸篓 的提示，如下图所示<br>![屏幕快照 2017-03-16 上午9.22.02](已损坏-打不开-请移到废纸篓/屏幕快照 2017-03-16 上午9.22.02.png)</p>
+<p>一般的做法是直接在隐私里面打开任何来源即可,可是在最新的系统里面却没有这个选项，<br>![屏幕快照 2017-03-16 上午9.22.23](已损坏-打不开-请移到废纸篓/屏幕快照 2017-03-16 上午9.22.23.png)</p>
+<p>后来Google一把，原来是macOS Sierra 把这个隐藏了，需要用终端命令打开<br>输入以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo spctl --master-disable </span><br></pre></td></tr></table></figure>
+
+<p>然后输入你电脑的密码，再进入隐私里面，就有了<br>![屏幕快照 2017-03-16 上午9.25.08](已损坏-打不开-请移到废纸篓/屏幕快照 2017-03-16 上午9.25.08.png)</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GhostClock(鬼钟)</p>
+  <div class="site-description" itemprop="description">穷折腾 二次元 Mac Win10 iOS Java</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GhostClock(鬼钟)</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

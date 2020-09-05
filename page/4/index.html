@@ -1,23 +1,633 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-Hans,zh-tw,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block title %} {{ config.title }} {% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}
-  {% if is_home() %} page-home {% endif %}
-{% endblock %}
 
-{% block content %}
-  <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
-    {% endfor %}
-  </section>
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-  {% include '_partials/pagination.swig' %}
-{% endblock %}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+  <meta name="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GC的笔记本">
+<meta property="og:url" content="http://yoursite.com/page/4/index.html">
+<meta property="og:site_name" content="GC的笔记本">
+<meta property="og:description" content="穷折腾 二次元 Mac Win10 iOS Java">
+<meta property="og:locale">
+<meta property="article:author" content="GhostClock(鬼钟)">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/page/4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>GC的笔记本</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">GC的笔记本</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">😄</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/17/%E5%9C%A8%E6%89%8B%E6%9C%BA%E4%B8%8A%E6%9F%A5%E7%9C%8B%E7%9B%B8%E5%85%B3%E5%9B%BE%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/02/17/%E5%9C%A8%E6%89%8B%E6%9C%BA%E4%B8%8A%E6%9F%A5%E7%9C%8B%E7%9B%B8%E5%85%B3%E5%9B%BE%E5%B1%82/" class="post-title-link" itemprop="url">在手机上查看相关图层</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2018-02-17 14:10:22 / Modified: 14:32:30" itemprop="dateCreated datePublished" datetime="2018-02-17T14:10:22+08:00">2018-02-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># if DEBUG</span><br><span class="line">#在应用启动的时候加入下面代码，然后双击状态栏</span><br><span class="line">id overlayClass &#x3D; NSClassFromString(@&quot;UIDebuggingInformationOverlay&quot;);</span><br><span class="line">[overlayClass performSelector:NSSelectorFromString(@&quot;prepareDebuggingOverlay&quot;)];</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/24/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/24/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/" class="post-title-link" itemprop="url">贝塞尔曲线的基本用法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2017-12-24 17:50:25 / Modified: 18:02:02" itemprop="dateCreated datePublished" datetime="2017-12-24T17:50:25+08:00">2017-12-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="画五边形"><a href="#画五边形" class="headerlink" title="画五边形"></a>画五边形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 画五边形</span><br><span class="line">- (void)drawPentagons &#123;</span><br><span class="line">    UIBezierPath *apath &#x3D; (&#123;</span><br><span class="line">        UIBezierPath *path &#x3D; [UIBezierPath bezierPath];</span><br><span class="line">        path.lineJoinStyle &#x3D; kCGLineCapRound;</span><br><span class="line">        path.lineCapStyle &#x3D; kCGLineCapRound;</span><br><span class="line">        path.lineWidth &#x3D; 5.0;</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F;设置起始点</span><br><span class="line">        [path moveToPoint:CGPointMake(100, 0)];</span><br><span class="line">        &#x2F;&#x2F;增加线条</span><br><span class="line">        [path addLineToPoint:CGPointMake(200, 40)];</span><br><span class="line">        [path addLineToPoint:CGPointMake(160, 140)];</span><br><span class="line">        [path addLineToPoint:CGPointMake(40, 140)];</span><br><span class="line">        [path addLineToPoint:CGPointMake(0, 40)];</span><br><span class="line">        </span><br><span class="line">        &#x2F;&#x2F;关闭路径</span><br><span class="line">        [path closePath];</span><br><span class="line">        </span><br><span class="line">        path;</span><br><span class="line">    &#125;);</span><br><span class="line">    &#x2F;&#x2F;根据坐标连线</span><br><span class="line">    [apath stroke];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="画矩形"><a href="#画矩形" class="headerlink" title="画矩形"></a>画矩形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 画矩形</span><br><span class="line">- (void)drawRectangle &#123;</span><br><span class="line">    UIBezierPath *path &#x3D; [UIBezierPath bezierPathWithRect:CGRectMake(10, 40, 200, 100)];</span><br><span class="line">    path.lineWidth &#x3D; 5.0;</span><br><span class="line">&#x2F;&#x2F;    path.lineCapStyle &#x3D; kCGLineCapRound;</span><br><span class="line">&#x2F;&#x2F;    path.lineJoinStyle &#x3D; kCGLineCapSquare;</span><br><span class="line">    [path stroke];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="画圆和椭圆"><a href="#画圆和椭圆" class="headerlink" title="画圆和椭圆"></a>画圆和椭圆</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 画圆和椭圆</span><br><span class="line">- (void)drawCircle &#123;</span><br><span class="line">    UIBezierPath *path &#x3D; [UIBezierPath bezierPathWithOvalInRect:CGRectMake(100, 40, 200, 200)];</span><br><span class="line">    path.lineWidth &#x3D; 5.0;</span><br><span class="line">    [path stroke];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="画带指定圆角的矩形"><a href="#画带指定圆角的矩形" class="headerlink" title="画带指定圆角的矩形"></a>画带指定圆角的矩形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 画带指定圆角的矩形</span><br><span class="line">- (void)drawOtherRectangle &#123;</span><br><span class="line">    UIBezierPath *path &#x3D; [UIBezierPath bezierPathWithRoundedRect:CGRectMake(10, 40, 200, 100) byRoundingCorners:UIRectCornerAllCorners  cornerRadii:CGSizeMake(100, 100)];</span><br><span class="line">    path.lineWidth &#x3D; 5.0;</span><br><span class="line">    path.lineJoinStyle &#x3D; kCGLineCapRound;</span><br><span class="line">    path.lineCapStyle &#x3D; kCGLineCapRound;</span><br><span class="line">    [path stroke];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="画圆弧"><a href="#画圆弧" class="headerlink" title="画圆弧"></a>画圆弧</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 画圆弧</span><br><span class="line">- (void)drawCircleArc &#123;</span><br><span class="line">    UIBezierPath *path &#x3D; [UIBezierPath bezierPathWithArcCenter:CGPointMake(100, 200) radius:100 startAngle:M_PI endAngle:M_PI &#x2F; 2 clockwise: NO];</span><br><span class="line">    path.lineWidth &#x3D; 5.0;</span><br><span class="line">    path.lineJoinStyle &#x3D; kCGLineCapRound;</span><br><span class="line">    path.lineCapStyle &#x3D; kCGLineCapRound;</span><br><span class="line">    [path stroke];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="画贝塞尔曲线"><a href="#画贝塞尔曲线" class="headerlink" title="画贝塞尔曲线"></a>画贝塞尔曲线</h3><p><img src="/2017/12/24/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/%E4%BA%8C%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF.png"><br><img src="/2017/12/24/%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/%E4%B8%89%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 画贝塞尔曲线</span><br><span class="line">- (void)drawBezierArc &#123;</span><br><span class="line">    UIBezierPath *path &#x3D; [UIBezierPath bezierPath];</span><br><span class="line">    path.lineWidth &#x3D; 2.0;</span><br><span class="line">    path.lineJoinStyle &#x3D; kCGLineCapRound;</span><br><span class="line">    path.lineCapStyle &#x3D; kCGLineCapRound;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 曲线1</span><br><span class="line">    &#x2F;*</span><br><span class="line">    &#x2F;&#x2F; 设置起始点</span><br><span class="line">    [path moveToPoint:CGPointMake(100, 300)];</span><br><span class="line">    &#x2F;&#x2F; 设置结束点和控制点</span><br><span class="line">    [path addQuadCurveToPoint:CGPointMake(300, 300) controlPoint:CGPointMake(100, 50)];</span><br><span class="line">    *&#x2F;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 曲线2</span><br><span class="line">&#x2F;&#x2F;    [path moveToPoint:CGPointMake(10, 100)];</span><br><span class="line">&#x2F;&#x2F;    [path addQuadCurveToPoint:CGPointMake(310, 100) controlPoint:CGPointMake(150, -90)];</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 曲线3 三次贝塞尔曲线</span><br><span class="line">    [path moveToPoint:CGPointMake(10, 100)];</span><br><span class="line">    [path addCurveToPoint:CGPointMake(310, 100) controlPoint1:CGPointMake(100, -100) controlPoint2:CGPointMake(100, 400)];   </span><br><span class="line">    [path stroke];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/02/%E5%9C%A8Swift%E4%B8%AD%E5%90%8C%E6%97%B6%E7%94%A8%E4%BB%A3%E7%90%86%E5%92%8CBlock-Closure-%E5%9B%9E%E8%B0%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/11/02/%E5%9C%A8Swift%E4%B8%AD%E5%90%8C%E6%97%B6%E7%94%A8%E4%BB%A3%E7%90%86%E5%92%8CBlock-Closure-%E5%9B%9E%E8%B0%83/" class="post-title-link" itemprop="url">在Swift中同时用代理和Block(Closure)回调</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2017-11-02 22:34:46 / Modified: 22:43:46" itemprop="dateCreated datePublished" datetime="2017-11-02T22:34:46+08:00">2017-11-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>目的：</p>
+<p>A页面push到B页面，点击B页面的按钮传值到A页面，分别用delegate和Block来实现 </p>
+<p>1.在页面B定义delegate和Block</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">importUIKit</span><br><span class="line"></span><br><span class="line">@objcprotocolDetailedViewControllerDelegate &#123;</span><br><span class="line"></span><br><span class="line">	@objcoptionalfuncchangeValue (value:Int) -&gt;Void;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">classDetailedViewController:UIViewController&#123;</span><br><span class="line">	var_title:String?</span><br><span class="line">	vardelegate:DetailedViewControllerDelegate?</span><br><span class="line">	varcount:Int&#x3D;0</span><br><span class="line">	</span><br><span class="line">	varchangeBlock:((Int) -&gt; ())?</span><br><span class="line">	</span><br><span class="line">	overridefuncviewDidLoad() &#123;</span><br><span class="line">	super.viewDidLoad()</span><br><span class="line">	navigationItem.title&#x3D;_title</span><br><span class="line">	self.view.backgroundColor&#x3D;UIColor.brown</span><br><span class="line">	</span><br><span class="line">	weakvarweakSelf &#x3D;self</span><br><span class="line">	letbtn &#x3D;CGButton.shendInstance().createButton(frame:CGRect(), bgColor:UIColor.red, title:&quot;按钮&quot;, superView:self.view) &#123; (action)in</span><br><span class="line">		weakSelf?.count+&#x3D;1</span><br><span class="line">		letcout &#x3D; weakSelf?.count</span><br><span class="line">		&#x2F;&#x2F; Block回调</span><br><span class="line">		if(weakSelf?.changeBlock! !&#x3D;nil) &#123;</span><br><span class="line">			weakSelf?.changeBlock!(cout!)</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		&#x2F;&#x2F; 代理回调</span><br><span class="line">		if((weakSelf?.delegate?.changeValue) !&#x3D;nil) &#123;</span><br><span class="line">			weakSelf?.delegate?.changeValue!(value: cout!)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	funcchangeValue(value:@escaping(Int) -&gt; ()) -&gt;Void&#123;</span><br><span class="line">		self.changeBlock&#x3D; value</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.在push的时候</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">moiveView.clickdidSelectItemAt&#123; (collection, indexPath)in</span><br><span class="line">	letdataModel &#x3D;self._movieView.dataSource[indexPath.item]as!MovieModel</span><br><span class="line">	letDetailedVC &#x3D;DetailedViewController()</span><br><span class="line">	DetailedVC.delegate&#x3D;self</span><br><span class="line">	&#x2F;&#x2F;Block的回调</span><br><span class="line">	DetailedVC.changeValue(value: &#123; (value)in</span><br><span class="line">		print(&quot;blockChange\(value)&quot;)</span><br><span class="line">	&#125;)</span><br><span class="line">	DetailedVC._title&#x3D; dataModel.titleasString</span><br><span class="line">	self.navigationController!.pushViewController(DetailedVC, animated:true)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; delegate的回调</span><br><span class="line">funcchangeValue(value:Int) &#123;</span><br><span class="line">	print(&quot;delegateChange\(value)&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/29/%E7%94%A8Alamofire%E5%8F%91%E8%B5%B7%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/10/29/%E7%94%A8Alamofire%E5%8F%91%E8%B5%B7%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" class="post-title-link" itemprop="url">用Alamofire发起网络请求 - swift4</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2017-10-29 20:14:21 / Modified: 20:21:36" itemprop="dateCreated datePublished" datetime="2017-10-29T20:14:21+08:00">2017-10-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="1-创建一个NetWorkingTool单例"><a href="#1-创建一个NetWorkingTool单例" class="headerlink" title="1.创建一个NetWorkingTool单例"></a>1.创建一个NetWorkingTool单例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line">import Alamofire</span><br><span class="line"></span><br><span class="line">class NetWorkingTool: NSObject &#123;</span><br><span class="line">    static let shendInstance &#x3D; NetWorkingTool()</span><br><span class="line">    private override init() &#123;&#125;</span><br><span class="line">    public func getData(url: String, dataBlock:@escaping (_ resData: Any) -&gt;(), errorBlock:@escaping (_ error: Error) -&gt; ()) -&gt; Void &#123;</span><br><span class="line">        Alamofire.request(url).responseJSON &#123; (responseData) in</span><br><span class="line">            if let json &#x3D; responseData.result.value &#123;</span><br><span class="line">                dataBlock(json)</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                errorBlock(responseData.error!)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-在ViewController发起调用"><a href="#2-在ViewController发起调用" class="headerlink" title="2.在ViewController发起调用"></a>2.在ViewController发起调用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line">class ViewController: UIViewController &#123;</span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">        NetWorkingTool.shendInstance.getData(url: &quot;https:&#x2F;&#x2F;www.v2ex.com&#x2F;api&#x2F;nodes&#x2F;show.json?name&#x3D;python&quot;, dataBlock: &#123; (responseData) in</span><br><span class="line">            &#x2F;&#x2F;返回的是数组</span><br><span class="line">            guard responseData is [String: Any] else &#123;</span><br><span class="line">                let dataArray &#x3D; responseData as! Array&lt;[String: Any]&gt;</span><br><span class="line">                for dict in dataArray &#123;</span><br><span class="line">                    print(dict[&quot;title&quot;]!, dict[&quot;id&quot;]!)</span><br><span class="line">                &#125;</span><br><span class="line">                return</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F;返回的是字典</span><br><span class="line">            guard responseData is [String: Dictionary&lt;String, Any&gt;] else &#123;</span><br><span class="line">                let dataArray &#x3D; responseData as! Dictionary&lt;String, Any&gt;</span><br><span class="line">                for value in dataArray &#123;</span><br><span class="line">                    print(type(of: value))</span><br><span class="line">                &#125;</span><br><span class="line">                return</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;) &#123; (error) in</span><br><span class="line">            print(error)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans,zh-tw,en,default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/27/Python%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/07/27/Python%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">Python创建虚拟环境</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2017-07-27 00:04:22 / Modified: 00:04:44" itemprop="dateCreated datePublished" datetime="2017-07-27T00:04:22+08:00">2017-07-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Python创建虚拟环境"><a href="#Python创建虚拟环境" class="headerlink" title="Python创建虚拟环境"></a>Python创建虚拟环境</h1><h2 id="1-通过pip安装virtualenv"><a href="#1-通过pip安装virtualenv" class="headerlink" title="1.通过pip安装virtualenv"></a>1.通过pip安装virtualenv</h2><pre><code>`pip install virtualenv`</code></pre>
+<h2 id="2-查看virtualenv-的版本"><a href="#2-查看virtualenv-的版本" class="headerlink" title="2.查看virtualenv 的版本"></a>2.查看virtualenv 的版本</h2><pre><code>`virtualenv --version`</code></pre>
+<h2 id="3-创建不同Python版本的解析器"><a href="#3-创建不同Python版本的解析器" class="headerlink" title="3.创建不同Python版本的解析器"></a>3.创建不同Python版本的解析器</h2><pre><code>`virtualenv -p /usr/bin/python2.7 py2
+virtualenv py3`</code></pre>
+<h2 id="4-启动虚拟环境"><a href="#4-启动虚拟环境" class="headerlink" title="4.启动虚拟环境"></a>4.启动虚拟环境</h2><p><code>source py2/bin/activate</code></p>
+<h2 id="5-退出虚拟环境"><a href="#5-退出虚拟环境" class="headerlink" title="5.退出虚拟环境"></a>5.退出虚拟环境</h2><p><code>deactivate</code></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GhostClock(鬼钟)</p>
+  <div class="site-description" itemprop="description">穷折腾 二次元 Mac Win10 iOS Java</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GhostClock(鬼钟)</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

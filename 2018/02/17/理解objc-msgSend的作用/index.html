@@ -1,38 +1,391 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-Hans,zh-tw,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
-{% block title %} {{ page.title }} | {{ config.title }} {% endblock %}
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-{% block page_class %}page-post-detail{% endblock %}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="理解objc_msgSend的作用1objc_msgSend(void &#x2F;* id self, SEL op, ... *&#x2F; ) 是一个参数可变的函数，能接受两个或者两个以上的参数,会根据依次的接受者与选择器的类型来调用适当的方法,为了完成此操作,该方法需要在接受者所属的类中寻找其 方法列表,如果找到与选择器相同的方法就调至其实现代码，若找不到沿着继承体系向上查找,等找到合适的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解objc_msgSend的作用">
+<meta property="og:url" content="http://yoursite.com/2018/02/17/%E7%90%86%E8%A7%A3objc-msgSend%E7%9A%84%E4%BD%9C%E7%94%A8/index.html">
+<meta property="og:site_name" content="GC的笔记本">
+<meta property="og:description" content="理解objc_msgSend的作用1objc_msgSend(void &#x2F;* id self, SEL op, ... *&#x2F; ) 是一个参数可变的函数，能接受两个或者两个以上的参数,会根据依次的接受者与选择器的类型来调用适当的方法,为了完成此操作,该方法需要在接受者所属的类中寻找其 方法列表,如果找到与选择器相同的方法就调至其实现代码，若找不到沿着继承体系向上查找,等找到合适的">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-02-17T06:37:33.000Z">
+<meta property="article:modified_time" content="2018-02-17T06:38:24.860Z">
+<meta property="article:author" content="GhostClock(鬼钟)">
+<meta property="article:tag" content="Objective-C">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2018/02/17/%E7%90%86%E8%A7%A3objc-msgSend%E7%9A%84%E4%BD%9C%E7%94%A8/">
 
 
-{% block content %}
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+  <title>理解objc_msgSend的作用 | GC的笔记本</title>
+  
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">GC的笔记本</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">😄</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
 
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/17/%E7%90%86%E8%A7%A3objc-msgSend%E7%9A%84%E4%BD%9C%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="GhostClock(鬼钟)">
+      <meta itemprop="description" content="穷折腾 二次元 Mac Win10 iOS Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GC的笔记本">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          理解objc_msgSend的作用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2018-02-17 14:37:33 / Modified: 14:38:24" itemprop="dateCreated datePublished" datetime="2018-02-17T14:37:33+08:00">2018-02-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="理解objc-msgSend的作用"><a href="#理解objc-msgSend的作用" class="headerlink" title="理解objc_msgSend的作用"></a>理解objc_msgSend的作用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objc_msgSend(void &#x2F;* id self, SEL op, ... *&#x2F; )</span><br></pre></td></tr></table></figure>
+<p>是一个参数可变的函数，能接受两个或者两个以上的参数,会根据依次的接受者与选择器的类型来调用适当的方法,为了完成此操作,该方法需要在接受者所属的类中寻找其 <code>方法列表</code>,如果找到与选择器相同的方法就调至其实现代码，若找不到沿着继承体系向上查找,等找到合适的方法之后在跳转，如果最终找不到，就执行消息<code>转发</code>;</p>
+<h3 id="objc-msgSend函数举例"><a href="#objc-msgSend函数举例" class="headerlink" title="objc_msgSend函数举例"></a>objc_msgSend函数举例</h3><h4 id="被调方法类"><a href="#被调方法类" class="headerlink" title="被调方法类"></a>被调方法类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; GCMsgSend.h</span><br><span class="line">#import &lt;Foundation&#x2F;Foundation.h&gt;</span><br><span class="line">#import &lt;UIKit&#x2F;UIKit.h&gt;</span><br><span class="line"></span><br><span class="line">struct myStructTest &#123;</span><br><span class="line">    char *name;</span><br><span class="line">    int age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">@interface GCMsgSend : NSObject</span><br><span class="line"></span><br><span class="line">- (void)noArgumentAndNoReturnValue;</span><br><span class="line"></span><br><span class="line">- (void)hasArguments:(NSString *)arg;</span><br><span class="line"></span><br><span class="line">- (NSString *)noArgumentsButRetuenValue;</span><br><span class="line"></span><br><span class="line">- (int)hasArguments:(NSString *)arg andReturnValue:(int)arg1;</span><br><span class="line"></span><br><span class="line">int cStyleFunc(const void *arg1, const void *arg2);</span><br><span class="line"></span><br><span class="line">- (float)noArgumentAndReturnFloatValue;</span><br><span class="line"></span><br><span class="line">- (struct myStructTest)returnStructValue;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@interface GCMsgSendClass: GCMsgSend</span><br><span class="line"></span><br><span class="line">- (void)getSuperClass;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; GCMsgSend.m</span><br><span class="line">#import &quot;GCMsgSend.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation GCMsgSend</span><br><span class="line"></span><br><span class="line">- (void)noArgumentAndNoReturnValue &#123;</span><br><span class="line">    NSLog(@&quot;%s was called, and it has no arguments and return value&quot;, __FUNCTION__);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)hasArguments:(NSString *)arg &#123;</span><br><span class="line">    NSLog(@&quot;%s was called, and arguments is %@&quot;, __FUNCTION__, arg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)noArgumentsButRetuenValue &#123;</span><br><span class="line">    NSLog(@&quot;%s was called, and return value is %@&quot;, __FUNCTION__, @&quot;不带参数，但是有返回值&quot;);</span><br><span class="line">    return @&quot;不带参数，但是有返回值&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (int)hasArguments:(NSString *)arg andReturnValue:(int)arg1 &#123;</span><br><span class="line">    NSLog(@&quot;%s was called, and argument is %@, retuen value is %d&quot;, __FUNCTION__, arg, arg1);</span><br><span class="line">    return arg1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;声明一个C函数</span><br><span class="line">int cStyleFunc(const void *arg1, const void *arg2) &#123;</span><br><span class="line">    NSLog(@&quot;%s was called, arg1 is %s, and age2 is %s&quot;, __FUNCTION__, arg1, arg2);</span><br><span class="line">    return 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (float)noArgumentAndReturnFloatValue &#123;</span><br><span class="line">    NSLog(@&quot;%s was called, 带浮点数的返回值&quot;, __FUNCTION__);</span><br><span class="line">    return 10.24;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (struct myStructTest)returnStructValue &#123;</span><br><span class="line">    struct myStructTest test &#x3D; &#123;</span><br><span class="line">        &quot;Ghost&quot;,</span><br><span class="line">        1024,</span><br><span class="line">    &#125;;</span><br><span class="line">    return test;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation GCMsgSendClass</span><br><span class="line"></span><br><span class="line">- (void)getSuperClass &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="掉用类"><a href="#掉用类" class="headerlink" title="掉用类"></a>掉用类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;GCMsgSend.h&quot;</span><br><span class="line">#import &lt;objc&#x2F;message.h&gt;</span><br><span class="line"></span><br><span class="line">- (void)msgTest &#123;</span><br><span class="line">    &#x2F;&#x2F;创建对象</span><br><span class="line">    GCMsgSend *msg &#x3D; ( (GCMsgSend * (*)(id, SEL)) objc_msgSend) ((id)[GCMsgSend class],@selector(alloc));</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;初始化对象</span><br><span class="line">    msg &#x3D; ((GCMsgSend *(*)(id, SEL))objc_msgSend) ((id)msg, @selector(init));</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;调用无参无返回值的方法</span><br><span class="line">    ((void (*)(id, SEL))objc_msgSend)((id)msg, @selector(noArgumentAndNoReturnValue));</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;带参数不带无返回值</span><br><span class="line">    ((void(*)(id, SEL, NSString *))objc_msgSend)((id)msg, @selector(hasArguments:), @&quot;一个参数，无返回值&quot;);</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;不带参数有返回值</span><br><span class="line">    NSString *retValue &#x3D; ((NSString *(*)(id, SEL))objc_msgSend)((id)msg, @selector(noArgumentsButRetuenValue));</span><br><span class="line">    NSLog(@&quot;返回值是: %@&quot;, retValue);</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;带参数带返回值</span><br><span class="line">    int returnValue &#x3D; ((int (*)(id, SEL, NSString *, int))objc_msgSend)((id)msg, @selector(hasArguments:andReturnValue:), @&quot;参数1&quot;, 2018);</span><br><span class="line">    NSLog(@&quot;返回值是: %d&quot;, returnValue);</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;动态添加方法再调用</span><br><span class="line">    class_addMethod(msg.class, NSSelectorFromString(@&quot;cStyleFunc&quot;), (IMP)cStyleFunc, &quot;v@:&quot;);</span><br><span class="line">    returnValue &#x3D; ((int(*)(id, SEL, const void *, const void *))objc_msgSend)((id)msg, NSSelectorFromString(@&quot;cStyleFunc&quot;), &quot;参数1&quot;, &quot;参数2&quot;);</span><br><span class="line">    NSLog(@&quot;返回值是: %d&quot;, returnValue);</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;带浮点返回值</span><br><span class="line">    float returnFloatValue &#x3D; ((float(*)(id, SEL))objc_msgSend)((id)msg, @selector(noArgumentAndReturnFloatValue));</span><br><span class="line">    NSLog(@&quot;浮点数返回值是: %f&quot;, returnFloatValue);</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;带结构体的返回值 objc_msgSend_stret 已经废弃</span><br><span class="line">    struct myStructTest structValue &#x3D; ((struct myStructTest(*)(id, SEL))objc_msgSend)((id)msg, @selector(returnStructValue));</span><br><span class="line">    NSLog(@&quot;结构体返回: name &#x3D; %s, age &#x3D; %d&quot;, structValue.name, structValue.age);</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;给父类发送消息</span><br><span class="line">    &#x2F;&#x2F;初始化子类</span><br><span class="line">    GCMsgSendClass *msgClass &#x3D; ((GCMsgSendClass *(*)(id, SEL))objc_msgSend)((id)[GCMsgSendClass class], @selector(alloc));</span><br><span class="line">    msgClass &#x3D; ((GCMsgSendClass *(*)(id, SEL))objc_msgSend)((id)msgClass, @selector(init));</span><br><span class="line">    &#x2F;&#x2F;给父类的方法发送消息 掉用objc_msgSendSuper 会Crash</span><br><span class="line">    ((void(*)(id, SEL, NSString *))objc_msgSend)((id)msgClass, @selector(hasArguments:), @&quot;子类调用父类的方法&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Objective-C/" rel="tag"># Objective-C</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/02/17/%E7%90%86%E8%A7%A3%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E6%9C%BA%E5%88%B6/" rel="prev" title="理解消息转发机制">
+      <i class="fa fa-chevron-left"></i> 理解消息转发机制
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/02/17/%E5%9C%A8%E7%94%A8delegate%E5%9B%9E%E8%B0%83%E6%95%B0%E6%8D%AE%E6%97%B6%EF%BC%8C%E9%81%BF%E5%85%8D%E9%81%BF%E5%85%8D%E6%8C%81%E7%BB%AD%E8%B0%83%E7%94%A8-delegate-respondsToSelector-selector-someThingFunction/" rel="next" title="在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction)">
+      在用delegate回调数据时，避免避免持续调用 [_delegate respondsToSelector:@selector(someThingFunction) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%90%86%E8%A7%A3objc-msgSend%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">理解objc_msgSend的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#objc-msgSend%E5%87%BD%E6%95%B0%E4%B8%BE%E4%BE%8B"><span class="nav-number">1.0.1.</span> <span class="nav-text">objc_msgSend函数举例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A2%AB%E8%B0%83%E6%96%B9%E6%B3%95%E7%B1%BB"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">被调方法类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%89%E7%94%A8%E7%B1%BB"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">掉用类</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">GhostClock(鬼钟)</p>
+  <div class="site-description" itemprop="description">穷折腾 二次元 Mac Win10 iOS Java</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GhostClock(鬼钟)</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
